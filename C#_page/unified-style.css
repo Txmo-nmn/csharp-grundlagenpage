@@ -315,7 +315,6 @@ main {
     position: fixed;
     top: 40px;
     left: 20px;
-    z-index: 1000;
 
     display: inline-flex;
     align-items: center;
@@ -588,6 +587,13 @@ code {
     font-feature-settings: "liga" 0;
 }
 
+normal{
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            font-variant-ligatures: none;
+            -webkit-font-feature-settings: "liga" 0; /* Für ältere Safari/Chrome Versionen */
+            font-feature-settings: "liga" 0;
+        }
 /* ========================================
    SYNTAX HIGHLIGHTING
    ======================================== */
