@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einführung in C# - Detailansicht</title>
+    <link rel="stylesheet" href="style-seiten.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Zurück-Button -->
+        <a href="main.html" class="back-button">
+            ← Zurück zur Übersicht
+        </a>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🚀 Einführung in C#</h1>
+            <p>Verstehe die Grundlagen und dein erstes C# Programm</p>
+        </div>
+
+        <!-- Was ist C#? -->
+        <div class="content-section">
+            <h2>📚 Was ist C#?</h2>
+            <p>
+                C# (gesprochen "C Sharp") ist eine <strong>moderne, objektorientierte Programmiersprache</strong>,
+                die von Microsoft entwickelt wurde. Sie wurde im Jahr 2000 veröffentlicht und ist Teil des
+                .NET-Frameworks.
+            </p>
+
+            <h3>Wofür wird C# verwendet?</h3>
+            <ul>
+                <li><strong>Desktop-Anwendungen:</strong> Windows-Programme mit WPF oder WinForms</li>
+                <li><strong>Web-Entwicklung:</strong> Websites und APIs mit ASP.NET Core</li>
+                <li><strong>Spiele:</strong> Unity und Godot sind zwei der beliebtesten Game-Engines und nutzt C#</li>
+                <li><strong>Mobile Apps:</strong> iOS und Android Apps mit Xamarin oder MAUI</li>
+                <li><strong>Cloud & Backend:</strong> Server-Anwendungen und Microservices</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>💡 Warum C# lernen?</strong>
+                <ul>
+                    <li>Sehr gut für Anfänger geeignet (klare Syntax)</li>
+                    <li>Riesige Community und viele Ressourcen</li>
+                    <li>Vielseitig einsetzbar (Desktop, Web, Mobile, Games)</li>
+                    <li>Starke Typisierung verhindert viele Fehler</li>
+                    <li>Hervorragende Tools (Visual Studio, VS Code)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Das erste Programm -->
+        <div class="content-section">
+            <h2>🎯 Dein erstes C# Programm - Zeile für Zeile erklärt</h2>
+
+            <pre><span class="k">using</span> System;
+
+<span class="k">namespace</span> MyApp 
+{
+    <span class="k">class</span> <span class="t">Program</span> 
+    {
+        <span class="k">static void</span> Main(<span class="t">string</span>[] args) 
+        {
+            Console.WriteLine(<span class="s">"Hello World!"</span>);
+        }
+    }
+}</pre>
+
+            <h3>📖 Was passiert hier genau?</h3>
+
+            <div class="line-explanation">
+                <p><span class="line-number">Zeile 1:</span> <code>using System;</code></p>
+                <p>
+                    <strong>Erklärung:</strong> Mit <code>using</code> importieren wir eine Bibliothek (genannt
+                    "Namespace").
+                    <code>System</code> enthält grundlegende Funktionen wie <code>Console.WriteLine()</code>, die wir
+                    später verwenden.
+                </p>
+                <p>
+                    <strong>Analogie:</strong> Wie wenn du in einer Werkstatt bestimmte Werkzeuge aus einem
+                    Werkzeugkasten holst.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <p><span class="line-number">Zeile 3:</span> <code>namespace MyApp { ... }</code></p>
+                <p>
+                    <strong>Erklärung:</strong> Ein Namespace ist wie ein Ordner, der deinen Code organisiert.
+                    Hier heißt unser "Ordner" <code>MyApp</code>. In großen Projekten verhindert das, dass gleiche Namen
+                    durcheinander kommen.
+                </p>
+                <p>
+                    <strong>Beispiel:</strong> Du könntest <code>MyApp.User</code> und <code>GameEngine.User</code>
+                    haben - zwei verschiedene "User" Klassen ohne Konflikt.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <p><span class="line-number">Zeile 5:</span> <code>class Program { ... }</code></p>
+                <p>
+                    <strong>Erklärung:</strong> Eine <code>class</code> (Klasse) ist ein Bauplan für Objekte.
+                    Hier definieren wir eine Klasse namens <code>Program</code>, die unseren Code enthält.
+                </p>
+                <p>
+                    <strong>Analogie:</strong> Eine Klasse ist wie ein Bauplan für ein Haus - sie beschreibt, was drin
+                    ist und was es kann.
+                </p>
+            </div>
+
+            <div class="line-explanation">
+                <p><span class="line-number">Zeile 7:</span> <code>static void Main(string[] args) { ... }</code></p>
+                <p>
+                    <strong>Erklärung:</strong> Das ist die <strong>Einstiegspunkt-Methode</strong> (Main-Methode).
+                    Jedes C# Programm startet hier - das ist die erste Funktion, die ausgeführt wird.
+                </p>
+                <p><strong>Was bedeuten die einzelnen Teile?</strong></p>
+                <ul>
+                    <li><code>static</code> - Die Methode gehört zur Klasse selbst, nicht zu einem bestimmten Objekt
+                    </li>
+                    <li><code>void</code> - Die Methode gibt nichts zurück</li>
+                    <li><code>Main</code> - Der Name der Methode (muss genau so heißen!)</li>
+                    <li><code>string[] args</code> - Parameter, die beim Programmstart übergeben werden können</li>
+                </ul>
+            </div>
+
+            <div class="line-explanation">
+                <p><span class="line-number">Zeile 9:</span> <code>Console.WriteLine("Hello World!");</code></p>
+                <p>
+                    <strong>Erklärung:</strong> Das ist der eigentliche Code, der ausgeführt wird!
+                    <code>Console.WriteLine()</code> gibt Text in der Konsole aus (das schwarze Fenster).
+                </p>
+                <p>
+                    <strong>Wichtig:</strong> Jede Anweisung in C# endet mit einem Semikolon <code>;</code>
+                </p>
+            </div>
+        </div>
+
+        <!-- Geschweifte Klammern -->
+        <div class="content-section">
+            <h2>🔧 Geschweifte Klammern { } verstehen</h2>
+
+            <p>
+                Die geschweiften Klammern <code>{ }</code> markieren <strong>Code-Blöcke</strong>.
+                Alles was zwischen zwei geschweiften Klammern steht, gehört zusammen.
+            </p>
+
+            <div class="explanation">
+                <h4>📦 Denke an Schachteln:</h4>
+                <pre>namespace MyApp           <span class="c">// Große Schachtel</span>
+{
+    class Program         <span class="c">// Mittlere Schachtel</span>
+    {
+        static void Main  <span class="c">// Kleine Schachtel</span>
+        {
+            <span class="c">// Dein Code hier</span>
+        }
+    }
+}</pre>
+                <p>
+                    Jede öffnende Klammer <code>{</code> braucht eine schließende Klammer <code>}</code>.
+                    Der Code zwischen den Klammern gehört zusammen und ist "eingekapselt".
+                </p>
+            </div>
+        </div>
+
+        <!-- Wichtige Konzepte -->
+        <div class="content-section">
+            <h2>💡 Wichtige Konzepte für Anfänger</h2>
+
+            <h3>1. Case-Sensitivity (Groß-/Kleinschreibung)</h3>
+            <p>
+                C# unterscheidet zwischen Groß- und Kleinbuchstaben!
+            </p>
+            <pre><span class="t">string</span> name = <span class="s">"Max"</span>;     <span class="c">// ✅ Richtig</span>
+<span class="t">string</span> Name = <span class="s">"Anna"</span>;    <span class="c">// ✅ Das ist eine ANDERE Variable!</span>
+<span class="t">STRING</span> text = <span class="s">"Test"</span>;    <span class="c">// ❌ Fehler - "STRING" existiert nicht</span></pre>
+
+            <h3>2. Semikolon am Ende</h3>
+            <p>
+                Jede Anweisung endet mit einem Semikolon <code>;</code>
+            </p>
+            <pre>Console.WriteLine(<span class="s">"Hallo"</span>);    <span class="c">// ✅ Richtig</span>
+Console.WriteLine(<span class="s">"Welt"</span>)      <span class="c">// ❌ Fehler - Semikolon fehlt!</span></pre>
+
+            <h3>3. Kommentare</h3>
+            <p>
+                Kommentare sind Notizen für dich und andere Entwickler - sie werden nicht ausgeführt.
+            </p>
+            <pre><span class="c">// Das ist ein einzeiliger Kommentar</span>
+
+<span class="c">/* Das ist ein
+   mehrzeiliger
+   Kommentar */</span>
+
+Console.WriteLine(<span class="s">"Code"</span>);  <span class="c">// Kommentar am Ende der Zeile</span></pre>
+        </div>
+
+        <!-- Nächste Schritte -->
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung & Nächste Schritte</h2>
+
+            <div class="success-box">
+                <h4>✅ Was du jetzt gelernt hast:</h4>
+                <ul>
+                    <li>C# ist eine vielseitige, moderne Programmiersprache</li>
+                    <li>Jedes C# Programm braucht eine <code>Main</code>-Methode als Startpunkt</li>
+                    <li>Code wird mit <code>{ }</code> in Blöcke organisiert</li>
+                    <li><code>using</code> importiert Bibliotheken</li>
+                    <li><code>namespace</code> und <code>class</code> organisieren deinen Code</li>
+                    <li>Anweisungen enden mit <code>;</code></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>➡️ Weitermachen:</h4>
+                <p>
+                    Gehe zurück zur Übersicht und schaue dir als Nächstes <strong>"Datentypen & Variablen"</strong> an.
+                    Dort lernst du, wie du Werte speichern und verwenden kannst!
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datentypen & Variablen - Detailansicht</title>
+    <link rel="stylesheet" href="style-seiten.css">
+</head>
+<body>
+    <div class="container">
+        <a href="main.html" class="back-button">
+            ← Zurück zur Übersicht
+        </a>
+
+        <div class="page-header">
+            <h1>📦 Datentypen & Variablen</h1>
+            <p>Lerne wie du Daten in deinem Programm speicherst und verwendest</p>
+        </div>
+
+        <!-- Was sind Variablen? -->
+        <div class="content-section">
+            <h2>🎯 Was ist eine Variable?</h2>
+            <p>
+                Eine <strong>Variable</strong> ist wie eine Schublade mit einem Namen, in der du Werte speichern kannst. 
+                Du gibst der Schublade einen Namen und legst etwas hinein - später kannst du den Wert wieder herausholen oder ändern.
+            </p>
+
+            <div class="example-box">
+                <h4>🏠 Analogie aus dem echten Leben:</h4>
+                <p>
+                    Stell dir vor, du hast eine Schublade mit der Aufschrift <strong>"alter"</strong>. 
+                    In diese Schublade legst du einen Zettel mit der Zahl <strong>25</strong>. 
+                    Wenn du später wissen willst, wie alt jemand ist, schaust du in die Schublade "alter" und findest die 25.
+                </p>
+            </div>
+
+            <pre><span class="c">// Variable erstellen (deklarieren und initialisieren)</span>
+<span class="t">int</span> alter = 25;
+
+<span class="c">// Jetzt kannst du "alter" verwenden</span>
+Console.WriteLine(alter);  <span class="c">// Ausgabe: 25</span>
+
+<span class="c">// Wert ändern</span>
+alter = 26;
+Console.WriteLine(alter);  <span class="c">// Ausgabe: 26</span></pre>
+
+            <h3>📝 Anatomie einer Variable</h3>
+            <pre><span class="t">int</span> alter = 25;
+<span class="c">│   │    │</span>
+<span class="c">│   │    └─ Wert (was gespeichert wird)</span>
+<span class="c">│   └────── Name (wie du darauf zugreifst)</span>
+<span class="c">└────────── Typ (welche Art von Daten)</span></pre>
+        </div>
+
+        <!-- Value Types -->
+        <div class="content-section">
+            <h2>💎 Value Types (Wertetypen)</h2>
+            <p>
+                Value Types speichern den <strong>tatsächlichen Wert</strong> direkt in der Variable. 
+                Das sind die einfachen, "primitiven" Datentypen.
+            </p>
+
+            <h3>📊 Übersicht der wichtigsten Value Types</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Typ</th>
+                        <th>Beschreibung</th>
+                        <th>Beispiel</th>
+                        <th>Speicher</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>int</code></td>
+                        <td>Ganzzahl (positiv/negativ)</td>
+                        <td>42, -17, 0</td>
+                        <td>4 Bytes</td>
+                    </tr>
+                    <tr>
+                        <td><code>double</code></td>
+                        <td>Dezimalzahl (genau)</td>
+                        <td>3.14, -0.5</td>
+                        <td>8 Bytes</td>
+                    </tr>
+                    <tr>
+                        <td><code>float</code></td>
+                        <td>Dezimalzahl (weniger genau)</td>
+                        <td>2.5f, 1.0f</td>
+                        <td>4 Bytes</td>
+                    </tr>
+                    <tr>
+                        <td><code>bool</code></td>
+                        <td>Wahrheitswert</td>
+                        <td>true, false</td>
+                        <td>1 Byte</td>
+                    </tr>
+                    <tr>
+                        <td><code>char</code></td>
+                        <td>Einzelnes Zeichen</td>
+                        <td>'A', '?', '5'</td>
+                        <td>2 Bytes</td>
+                    </tr>
+                    <tr>
+                        <td><code>decimal</code></td>
+                        <td>Präzise Dezimalzahl (Geld!)</td>
+                        <td>19.99m, 100.50m</td>
+                        <td>16 Bytes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔢 int - Ganzzahlen</h3>
+            <pre><span class="t">int</span> punkte = 100;
+<span class="t">int</span> temperatur = -5;
+<span class="t">int</span> jahr = 2024;
+
+<span class="c">// Berechnungen</span>
+<span class="t">int</span> summe = 10 + 20;        <span class="c">// 30</span>
+<span class="t">int</span> produkt = 5 * 6;        <span class="c">// 30</span>
+<span class="t">int</span> rest = 17 % 5;          <span class="c">// 2 (Modulo - Rest der Division)</span></pre>
+
+            <div class="info-box">
+                <strong>💡 Tipp:</strong> <code>int</code> ist der Standard für Ganzzahlen. 
+                Bereich: -2.147.483.648 bis 2.147.483.647
+            </div>
+
+            <h3>💰 double vs. decimal - Dezimalzahlen</h3>
+            <pre><span class="c">// double - für wissenschaftliche Berechnungen</span>
+<span class="t">double</span> pi = 3.14159;
+<span class="t">double</span> geschwindigkeit = 88.5;
+
+<span class="c">// decimal - für Geld und Finanzen (präziser!)</span>
+<span class="t">decimal</span> preis = 19.99m;     <span class="c">// 'm' am Ende = decimal</span>
+<span class="t">decimal</span> gehalt = 3500.50m;</pre>
+
+            <div class="warning-box">
+                <strong>⚠️ Wichtig für Geldberechnungen:</strong> 
+                Benutze <strong>immer</strong> <code>decimal</code> für Geld! 
+                <code>double</code> kann zu Rundungsfehlern führen (z.B. 0.1 + 0.2 ≠ 0.3).
+            </div>
+
+            <h3>✅ bool - Wahrheitswerte</h3>
+            <pre><span class="t">bool</span> istEingeloggt = <span class="k">true</span>;
+<span class="t">bool</span> hatBezahlt = <span class="k">false</span>;
+<span class="t">bool</span> istVolljährig = alter >= 18;  <span class="c">// Ergebnis eines Vergleichs</span>
+
+<span class="c">// Verwendung in if-Anweisungen</span>
+<span class="k">if</span> (istEingeloggt) 
+{
+    Console.WriteLine(<span class="s">"Willkommen zurück!"</span>);
+}</pre>
+
+            <h3>🔤 char - Einzelne Zeichen</h3>
+            <pre><span class="t">char</span> note = <span class="s">'A'</span>;           <span class="c">// WICHTIG: Einfache Anführungszeichen!</span>
+<span class="t">char</span> symbol = <span class="s">'@'</span>;
+<span class="t">char</span> ziffer = <span class="s">'5'</span>;
+
+<span class="c">// Spezielle Zeichen</span>
+<span class="t">char</span> newline = <span class="s">'\n'</span>;       <span class="c">// Zeilenumbruch</span>
+<span class="t">char</span> tab = <span class="s">'\t'</span>;          <span class="c">// Tabulator</span></pre>
+        </div>
+
+        <!-- Reference Types -->
+        <div class="content-section">
+            <h2>🔗 Reference Types (Referenztypen)</h2>
+            <p>
+                Reference Types speichern nicht den Wert selbst, sondern eine <strong>Referenz (Adresse)</strong> 
+                zu dem Ort im Speicher, wo der Wert liegt.
+            </p>
+
+            <h3>📝 string - Text</h3>
+            <p>
+                Der wichtigste Reference Type! Strings speichern Text beliebiger Länge.
+            </p>
+
+            <pre><span class="c">// String mit doppelten Anführungszeichen!</span>
+<span class="t">string</span> name = <span class="s">"Max Mustermann"</span>;
+<span class="t">string</span> stadt = <span class="s">"Berlin"</span>;
+<span class="t">string</span> leer = <span class="s">""</span>;           <span class="c">// Leerer String</span>
+
+<span class="c">// Strings verketten (zusammenfügen)</span>
+<span class="t">string</span> gruss = <span class="s">"Hallo "</span> + name;  <span class="c">// "Hallo Max Mustermann"</span>
+
+<span class="c">// String-Interpolation (modern und empfohlen!)</span>
+<span class="t">string</span> nachricht = <span class="s">$"Hallo {name}, du wohnst in {stadt}!"</span>;
+<span class="c">// "Hallo Max Mustermann, du wohnst in Berlin!"</span></pre>
+
+            <div class="example-box">
+                <h4>🆚 char vs. string - Was ist der Unterschied?</h4>
+                <pre><span class="t">char</span> buchstabe = <span class="s">'A'</span>;       <span class="c">// Ein einzelnes Zeichen (einfache Anführungszeichen)</span>
+<span class="t">string</span> wort = <span class="s">"A"</span>;         <span class="c">// Ein Text (doppelte Anführungszeichen)</span>
+<span class="t">string</span> satz = <span class="s">"Hallo Welt"</span>;  <span class="c">// Mehrere Zeichen = String</span></pre>
+            </div>
+
+            <h3>📦 object - Der universelle Typ</h3>
+            <p>
+                <code>object</code> kann <strong>jeden</strong> Wert speichern, aber du musst ihn später zurückkonvertieren.
+            </p>
+
+            <pre><span class="t">object</span> obj1 = 42;          <span class="c">// int gespeichert als object</span>
+<span class="t">object</span> obj2 = <span class="s">"Text"</span>;      <span class="c">// string gespeichert als object</span>
+<span class="t">object</span> obj3 = <span class="k">true</span>;        <span class="c">// bool gespeichert als object</span>
+
+<span class="c">// Zurückkonvertieren (Casting)</span>
+<span class="t">int</span> zahl = (<span class="t">int</span>)obj1;     <span class="c">// Cast zurück zu int</span></pre>
+
+            <div class="warning-box">
+                <strong>⚠️ Achtung:</strong> Vermeide <code>object</code> wenn möglich! 
+                Es ist besser, den konkreten Typ zu verwenden. Nutze stattdessen Generics (später im Kurs).
+            </div>
+        </div>
+
+        <!-- var Keyword -->
+        <div class="content-section">
+            <h2>🎨 Das 'var' Keyword - Typ-Inferenz</h2>
+            <p>
+                Mit <code>var</code> muss du den Typ nicht explizit schreiben - der Compiler erkennt ihn automatisch!
+            </p>
+
+            <pre><span class="c">// Explizit (klassisch)</span>
+<span class="t">int</span> alter = 25;
+<span class="t">string</span> name = <span class="s">"Max"</span>;
+<span class="t">double</span> preis = 19.99;
+
+<span class="c">// Mit var (modern, kürzer)</span>
+<span class="k">var</span> alter = 25;         <span class="c">// Compiler weiß: das ist ein int</span>
+<span class="k">var</span> name = <span class="s">"Max"</span>;      <span class="c">// Compiler weiß: das ist ein string</span>
+<span class="k">var</span> preis = 19.99;      <span class="c">// Compiler weiß: das ist ein double</span></pre>
+
+            <div class="success-box">
+                <h4>✅ Wann sollte ich var verwenden?</h4>
+                <ul>
+                    <li><strong>JA:</strong> Wenn der Typ offensichtlich ist (<code>var name = "Max"</code>)</li>
+                    <li><strong>JA:</strong> Bei langen Typnamen (<code>var liste = new List&lt;string&gt;()</code>)</li>
+                    <li><strong>NEIN:</strong> Wenn der Typ unklar ist (<code>var x = GetData()</code>)</li>
+                    <li><strong>NEIN:</strong> Wenn du den Typ bewusst zeigen willst (Lernphase)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            
+            <div class="success-box">
+                <h4>✅ Was du gelernt hast:</h4>
+                <ul>
+                    <li>Variablen sind "Schubladen" mit Namen, die Werte speichern</li>
+                    <li><strong>Value Types</strong> speichern den Wert direkt (int, double, bool, char)</li>
+                    <li><strong>Reference Types</strong> speichern eine Adresse (string, object)</li>
+                    <li><code>int</code> für Ganzzahlen, <code>double</code> für Dezimalzahlen</li>
+                    <li><code>decimal</code> für Geld (präziser!)</li>
+                    <li><code>bool</code> für Ja/Nein-Entscheidungen</li>
+                    <li><code>string</code> für Text (mit doppelten Anführungszeichen)</li>
+                    <li><code>var</code> lässt den Compiler den Typ automatisch erkennen</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🚀 Nächste Schritte:</h4>
+                <p>
+                    Jetzt wo du Variablen verstehst, lerne als Nächstes über <strong>"Kontrollstrukturen"</strong> 
+                    (if, switch, loops), um Entscheidungen zu treffen und Code zu wiederholen!
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
