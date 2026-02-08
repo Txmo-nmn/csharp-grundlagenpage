@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# Ultimate Knowledge Base</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ========================================
+     NAVIGATION SIDEBAR
+     Linke Seitenleiste mit Menü und Suche
+     ======================================== -->
+    <nav>
+        <!-- Logo/Titel Bereich -->
+        <div class="logo">
+            <h2>C# DEVELOPER</h2>
+            <p>Complete Reference Guide</p>
+        </div>
+
+        <!-- SUCHLEISTE -->
+        <!-- Nutzer können hier nach Inhalten suchen -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Suche..." autocomplete="off">
+            <span class="search-icon">🔍</span>
+            <!-- Dropdown für Suchergebnisse (wird per JavaScript gefüllt) -->
+            <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <!-- NAVIGATION - GRUNDLAGEN -->
+        <div class="nav-section">
+            <div class="nav-label">Grundlagen</div>
+            <!-- href="#intro" scrollt zu <section id="intro"> -->
+            <a href="#intro"><span class="icon">🚀</span>Einführung</a>
+            <a href="#vars"><span class="icon">📦</span>Datentypen</a>
+            <a href="#logic"><span class="icon">🔀</span>Logik & Loops</a>
+            <a href="#methods"><span class="icon">⚡</span>Methoden</a>
+            <a href="#collections"><span class="icon">📚</span>Collections</a>
+        </div>
+
+        <!-- NAVIGATION - FORTGESCHRITTEN -->
+        <div class="nav-section">
+            <div class="nav-label">Fortgeschritten</div>
+            <a href="#oop"><span class="icon">🎯</span>OOP</a>
+            <a href="#advanced"><span class="icon">🔮</span>Generics & LINQ</a>
+            <a href="#async"><span class="icon">⏱️</span>Async/Await</a>
+        </div>
+
+        <!-- NAVIGATION - WICHTIGE KONZEPTE -->
+        <div class="nav-section">
+            <div class="nav-label">Wichtige Konzepte</div>
+            <a href="#exceptions"><span class="icon">🛡️</span>Exceptions</a>
+            <a href="#strings"><span class="icon">📝</span>Strings</a>
+            <a href="#nullability"><span class="icon">❓</span>Null-Handling</a>
+            <a href="#fileio"><span class="icon">📁</span>Dateien & I/O</a>
+        </div>
+
+        <!-- NAVIGATION - BEST PRACTICES -->
+        <div class="nav-section">
+            <div class="nav-label">Best Practices</div>
+            <a href="#patterns"><span class="icon">🏗️</span>Design Patterns</a>
+            <a href="#debugging"><span class="icon">🐛</span>Testing & Debug</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>C# Developer Handbook</h1>
+            <p>Eine vollständige, moderne Referenz für C# – von den Grundlagen bis zu fortgeschrittenen Konzepten</p>
+            <div style="margin-top: 25px;">
+                <span class="tag">.NET 8</span>
+                <span class="tag">Modern C#</span>
+                <span class="tag">Best Practices</span>
+            </div>
+        </div>
+
+        <section id="intro" class="clickable-section" onclick="window.location.href='detail-intro.html';">
+            <h2>1. Einführung in C# <span style="float: right; color: var(--accent); font-size: 1.2rem;"></h2>
+            <p>C# ist eine moderne, objektorientierte Programmiersprache von Microsoft. Sie läuft auf der <b>.NET
+                    Runtime</b> und wird für Web, Desktop, Mobile und Games verwendet.</p>
+
+            <div class="success-box">
+                <div>
+                    <strong>Warum C#?</strong> Typsicher, performant, plattformübergreifend und mit einer riesigen
+                    Community!
+                </div>
+            </div>
+
+            <pre><span class="k">using</span> System;
+
+<span class="k">namespace</span> MyApp 
+{
+    <span class="k">class</span> <span class="t">Program</span> 
+    {
+        <span class="k">static void</span> Main(<span class="t">string</span>[] args) 
+        {
+            Console.WriteLine(<span class="s">"Hello World!"</span>);
+            
+            <span class="c">// Das ist dein erstes C# Programm! 🎉</span>
+        }
+    }
+}</pre>
+        </section>
+
+
+        <section id="vars" class="clickable-section" onclick="window.location.href='detail-vars.html';">
+            <h2>2. Datentypen & Variablen</h2>
+
+            <div class="grid">
+                <div class="grid-item">
+                    <h3>Value Types (Wertetypen)</h3>
+                    <pre><span class="t">int</span> age = 25;
+<span class="t">double</span> price = 19.99;
+<span class="t">bool</span> isActive = <span class="k">true</span>;
+<span class="t">char</span> grade = <span class="s">'A'</span>;
+<span class="t">decimal</span> salary = 45000.50m;</pre>
+                </div>
+
+                <div class="grid-item">
+                    <h3>Reference Types</h3>
+                    <pre><span class="t">string</span> name = <span class="s">"Max Mustermann"</span>;
+<span class="t">object</span> obj = <span class="k">new</span> <span class="t">object</span>();
+<span class="t">int</span>[] numbers = { 1, 2, 3, 4, 5 };</pre>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div>
+                    Nutze <code>var</code> für kürzeren Code, wenn der Typ offensichtlich ist:<br>
+                    <code>var name = "Max";</code> statt <code>string name = "Max";</code>
+                </div>
+            </div>
+
+            <h3>Nullable Types</h3>
+            <pre><span class="t">int</span>? nullableInt = <span class="k">null</span>;  <span class="c">// Kann null sein</span>
+<span class="t">string</span>? nullableString = <span class="k">null</span>;  <span class="c">// C# 8+</span></pre>
+        </section>
+
+
+        <section id="logic" class="clickable-section" onclick="window.location.href='detail-Kontrollstrukturen.html';">
+            <h2>3. Kontrollstrukturen</h2>
+
+            <h3>If-Else</h3>
+            <pre><span class="t">int</span> age = 20;
+
+<span class="k">if</span> (age <normal>>=</normal> 18) 
+{
+    Console.WriteLine(<span class="s">"Volljährig"</span>);
+} 
+<span class="k">else</span> 
+{
+    Console.WriteLine(<span class="s">"Minderjährig"</span>);
+}</pre>
+
+            <h3>Switch Statement (Klassisch)</h3>
+            <pre><span class="t">string</span> dayOfWeek = <span class="s">"Monday"</span>;
+<span class="t">string</span> message;
+
+<span class="k">switch</span> (dayOfWeek) 
+{
+    <span class="k">case</span> <span class="s">"Monday"</span>:
+        message = <span class="s">"Start der Woche"</span>;
+        <span class="k">break</span>;  <span class="c">// Wichtig! Verhindert Fall-Through</span>
+    
+    <span class="k">case</span> <span class="s">"Friday"</span>:
+        message = <span class="s">"Fast Wochenende!"</span>;
+        <span class="k">break</span>;
+    
+    <span class="k">case</span> <span class="s">"Saturday"</span>:
+    <span class="k">case</span> <span class="s">"Sunday"</span>:
+        message = <span class="s">"Wochenende! 🎉"</span>;
+        <span class="k">break</span>;
+    
+    <span class="k">default</span>:
+        message = <span class="s">"Ein normaler Tag"</span>;
+        <span class="k">break</span>;
+}
+
+Console.WriteLine(message);</pre>
+
+            <h3>Switch Expression (Modern, C# 8+)</h3>
+            <pre><span class="c">// Kürzere, modernere Syntax - empfohlen!</span>
+<span class="t">string</span> status = dayOfWeek <span class="k">switch</span>
+{
+    <span class="s">"Monday"</span> <normal>=></normal> <span class="s">"Start der Woche"</span>,
+    <span class="s">"Friday"</span> <normal>=></normal> <span class="s">"Fast Wochenende!"</span>,
+    <span class="s">"Saturday"</span> <span class="k">or</span> <span class="s">"Sunday"</span> <normal>=></normal><span class="s">"Wochenende! 🎉"</span>,
+    _ <normal>=></normal> <span class="s">"Ein normaler Tag"</span>  <span class="c">// _ = default (alle anderen Fälle)</span>
+};</pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>Unterschied:</strong> Switch Expression (modern) ist kürzer und gibt direkt einen Wert
+                    zurück. Switch Statement (klassisch) benötigt <code>break</code> Anweisungen und ist eher für
+                    komplexe Logik geeignet.
+                </div>
+            </div>
+
+            <h3>Loops</h3>
+            <pre><span class="c">// For-Loop</span>
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 10; i++) 
+{
+    Console.WriteLine(i);
+}
+
+<span class="c">// Foreach-Loop</span>
+<span class="t">string</span>[] names = { <span class="s">"Anna"</span>, <span class="s">"Bob"</span>, <span class="s">"Clara"</span> };
+<span class="k">foreach</span> (<span class="k">var</span> name <span class="k">in</span> names) 
+{
+    Console.WriteLine(name);
+}
+
+<span class="c">// While-Loop</span>
+<span class="t">int</span> counter = 0;
+<span class="k">while</span> (counter < 5) 
+{
+    Console.WriteLine(counter++);
+}
+
+<span class="c">// Do-While-Loop</span>
+<span class="t">int</span> counter = 0;
+<span class="k">do</span> 
+{
+    Console.WriteLine(counter++);
+}<span class="k">while</span> (counter < 5); <span class="c">
+</pre>
+        </section>
+
+
+        <section id="methods">
+            <h2>4. Methoden & Parameter</h2>
+
+            <h3>Basis-Methoden</h3>
+            <pre><span class="c">// Methode mit Rückgabewert</span>
+<span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b) 
+{
+    <span class="k">return</span> a + b;
+}
+
+<span class="c">// Expression-Body-Syntax (kürzer!)</span>
+<span class="k">public int</span> Multipliziere(<span class="t">int</span> a, <span class="t">int</span> b) <normal>=></normal> a * b;
+
+<span class="c">// Void-Methode (kein Rückgabewert)</span>
+<span class="k">public void</span> PrintMessage(<span class="t">string</span> msg) 
+{
+    Console.WriteLine(msg);
+}</pre>
+
+            <h3>Parameter-Varianten</h3>
+            <pre><span class="c">// Optionale Parameter</span>
+<span class="k">public void</span> Log(<span class="t">string</span> msg, <span class="t">bool</span> wichtig = <span class="k">false</span>) 
+{
+    <span class="k">if</span> (wichtig) Console.WriteLine(<span class="s">"[!] "</span> + msg);
+    <span class="k">else</span> Console.WriteLine(msg);
+}
+
+<span class="c">// Named Arguments</span>
+Log(msg: <span class="s">"Fehler!"</span>, wichtig: <span class="k">true</span>);</pre>
+        </section>
+
+
+        <section id="collections">
+            <h2>5. Collections (Listen & Arrays)</h2>
+
+            <div class="grid">
+                <div class="grid-item">
+                    <h3>Arrays</h3>
+                    <pre><span class="t">int</span>[] numbers = { 1, 2, 3, 4, 5 };
+<span class="t">string</span>[] names = <span class="k">new string</span>[3];
+names[0] = <span class="s">"Anna"</span>;
+
+<span class="c">// Mehrdimensional</span>
+<span class="t">int</span>[,] matrix = <span class="k">new int</span>[3, 3];</pre>
+                </div>
+
+                <div class="grid-item">
+                    <h3>Lists (dynamisch)</h3>
+                    <pre><span class="t">List</span>&lt;<span class="t">int</span>&gt; zahlen = <span class="k">new</span>();
+zahlen.Add(10);
+zahlen.Add(20);
+zahlen.Remove(10);
+zahlen.Contains(20);  <span class="c">// true</span></pre>
+                </div>
+            </div>
+
+            <h3>Dictionary (Key-Value)</h3>
+            <pre><span class="t">Dictionary</span>&lt;<span class="t">string</span>, <span class="t">int</span>&gt; alter = <span class="k">new</span>()
+{
+    { <span class="s">"Max"</span>, 25 },
+    { <span class="s">"Anna"</span>, 30 }
+};
+
+Console.WriteLine(alter[<span class="s">"Max"</span>]);  <span class="c">// Output: 25</span>
+alter.TryGetValue(<span class="s">"Lisa"</span>, <span class="k">out int</span> wert);  <span class="c">// Sicherer Zugriff</span></pre>
+
+            <h3>Weitere Collections</h3>
+            <pre><span class="c">// HashSet - Eindeutige Werte, keine Duplikate</span>
+<span class="t">HashSet</span>&lt;<span class="t">string</span>&gt; unique = <span class="k">new</span>() { <span class="s">"A"</span>, <span class="s">"B"</span>, <span class="s">"A"</span> };  <span class="c">// Nur A, B</span>
+
+<span class="c">// Queue - First In, First Out (FIFO)</span>
+<span class="t">Queue</span>&lt;<span class="t">int</span>&gt; queue = <span class="k">new</span>();
+queue.Enqueue(1);
+<span class="t">int</span> first = queue.Dequeue();
+
+<span class="c">// Stack - Last In, First Out (LIFO)</span>
+<span class="t">Stack</span>&lt;<span class="t">int</span>&gt; stack = <span class="k">new</span>();
+stack.Push(1);
+<span class="t">int</span> last = stack.Pop();</pre>
+        </section>
+
+
+        <section id="oop">
+            <h2>6. Objektorientierung (OOP)</h2>
+
+            <p>Die vier Säulen: <strong>Kapselung, Vererbung, Polymorphie, Abstraktion</strong></p>
+
+            <h3>Klassen & Interfaces</h3>
+            <pre><span class="c">// Interface definiert einen Vertrag</span>
+<span class="k">public interface</span> <span class="t">IDamageable</span> 
+{
+    <span class="k">void</span> TakeDamage(<span class="t">int</span> amount);
+}
+
+<span class="c">// Basis-Klasse</span>
+<span class="k">public class</span> <span class="t">Entity</span> 
+{
+    <span class="k">public string</span> Name { <span class="k">get; protected set;</span> }
+    <span class="k">public int</span> Health { <span class="k">get; set;</span> } = 100;
+}
+
+<span class="c">// Vererbung & Interface-Implementierung</span>
+<span class="k">public class</span> <span class="t">Player</span> : <span class="t">Entity</span>, <span class="t">IDamageable</span> 
+{
+    <span class="k">public void</span> TakeDamage(<span class="t">int</span> amount) 
+    {
+        Health -= amount;
+        Console.WriteLine(<span class="s">$"Autsch! Noch {Health} HP"</span>);
+    }
+}</pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>Wichtig:</strong> In C# kann eine Klasse nur von <em>einer</em> anderen Klasse erben, aber
+                    mehrere Interfaces implementieren!
+                </div>
+            </div>
+        </section>
+
+
+        <section id="advanced">
+            <h2>7. Fortgeschrittene Themen</h2>
+
+            <h3>Generics (Platzhalter für Typen)</h3>
+            <pre><span class="c">// Generische Klasse</span>
+<span class="k">public class</span> <span class="t">Box</span>&lt;T&gt; 
+{
+    <span class="k">public</span> T Inhalt { <span class="k">get; set;</span> }
+    
+    <span class="k">public void</span> Print() <normal>=></normal> Console.WriteLine(Inhalt);
+}
+
+<span class="c">// Verwendung</span>
+<span class="k">var</span> stringBox = <span class="k">new</span> <span class="t">Box</span>&lt;<span class="t">string</span>&gt; { Inhalt = <span class="s">"Hello"</span> };
+<span class="k">var</span> intBox = <span class="k">new</span> <span class="t">Box</span>&lt;<span class="t">int</span>&gt; { Inhalt = 42 };</pre>
+
+            <h3>LINQ (Language Integrated Query)</h3>
+            <pre><span class="t">List</span>&lt;<span class="t">User</span>&gt; users = GetUsers();
+
+<span class="c">// Filtern, Sortieren, Transformieren</span>
+<span class="k">var</span> premiumUsers = users
+    .Where(u <normal>=></normal> u.Level > 50)
+    .OrderBy(u <normal>=></normal> u.Name)
+    .Select(u <normal>=></normal> u.Email)
+    .ToList();
+
+<span class="c">// Aggregation</span>
+<span class="t">int</span> totalScore = users.Sum(u <normal>=></normal> u.Score);
+<span class="t">double</span> avgLevel = users.Average(u <normal>=></normal> u.Level);</pre>
+
+            <h3>Lambda Expressions</h3>
+            <pre><span class="c">// Kurze anonyme Funktion</span>
+<span class="t">Func</span>&lt;<span class="t">int</span>, <span class="t">int</span>, <span class="t">int</span>&gt; add = (a, b) <normal>=></normal> a + b;
+
+<span class="c">// In LINQ</span>
+<span class="k">var</span> filtered = numbers.Where(x <normal>=></normal> x > 10);</pre>
+        </section>
+
+
+        <section id="async">
+            <h2>8. Asynchronität (async / await)</h2>
+
+            <p>Unverzichtbar für moderne Web-Apps, APIs und Games, um nicht-blockierende Operationen durchzuführen.</p>
+
+            <div class="info-box">
+                <div>
+                    <strong>Regel:</strong> Methoden mit <code>async</code> geben immer <code>Task</code> oder
+                    <code>Task&lt;T&gt;</code> zurück!
+                </div>
+            </div>
+
+            <pre><span class="c">// Asynchrone Methode</span>
+<span class="k">public async</span> <span class="t">Task</span>&lt;<span class="t">string</span>&gt; DownloadDataAsync() 
+{
+    <span class="k">var</span> client = <span class="k">new</span> <span class="t">HttpClient</span>();
+    
+    <span class="c">// "await" wartet ohne den Thread zu blockieren</span>
+    <span class="t">string</span> result = <span class="k">await</span> client.GetStringAsync(<span class="s">"https://api.example.com"</span>);
+    
+    <span class="k">return</span> result;
+}
+
+<span class="c">// Verwendung</span>
+<span class="t">string</span> data = <span class="k">await</span> DownloadDataAsync();</pre>
+
+            <h3>Parallele Tasks</h3>
+            <pre><span class="c">// Mehrere Tasks gleichzeitig starten</span>
+<span class="k">var</span> task1 = DownloadDataAsync();
+<span class="k">var</span> task2 = DownloadDataAsync();
+<span class="k">var</span> task3 = DownloadDataAsync();
+
+<span class="c">// Auf alle warten</span>
+<span class="k">await</span> <span class="t">Task</span>.WhenAll(task1, task2, task3);</pre>
+
+            <div class="success-box">
+                <div>
+                    <strong>Performance-Tipp:</strong> Nutze async/await für I/O-Operationen (Netzwerk, Dateien,
+                    Datenbank) – nicht für CPU-intensive Berechnungen!
+                </div>
+            </div>
+        </section>
+
+
+        <section id="exceptions">
+            <h2>9. Exception Handling (Fehlerbehandlung)</h2>
+
+            <p>Robuster Code fängt Fehler ab und behandelt sie sinnvoll.</p>
+
+            <h3>Try-Catch-Finally</h3>
+            <pre><span class="k">try</span> 
+{
+    <span class="t">int</span> result = 10 / 0;  <span class="c">// Wirft DivideByZeroException</span>
+}
+<span class="k">catch</span> (<span class="t">DivideByZeroException</span> ex) 
+{
+    Console.WriteLine(<span class="s">$"Fehler: {ex.Message}"</span>);
+}
+<span class="k">catch</span> (<span class="t">Exception</span> ex)  <span class="c">// Fängt alle anderen Exceptions</span>
+{
+    Console.WriteLine(<span class="s">"Unbekannter Fehler"</span>);
+}
+<span class="k">finally</span> 
+{
+    <span class="c">// Wird IMMER ausgeführt, egal ob Fehler oder nicht</span>
+    Console.WriteLine(<span class="s">"Aufräumen..."</span>);
+}</pre>
+
+            <h3>Eigene Exceptions werfen</h3>
+            <pre><span class="k">public void</span> ValidateAge(<span class="t">int</span> age) 
+{
+    <span class="k">if</span> (age < 0)
+        <span class="k">throw new</span> <span class="t">ArgumentException</span>(<span class="s">"Alter darf nicht negativ sein!"</span>);
+    
+    <span class="k">if</span> (age > 150)
+        <span class="k">throw new</span> <span class="t">ArgumentOutOfRangeException</span>(<span class="k">nameof</span>(age), <span class="s">"Unrealistisches Alter"</span>);
+}</pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>Best Practice:</strong> Fange nur Exceptions, die du auch behandeln kannst! Vermeide leere
+                    catch-Blöcke.
+                </div>
+            </div>
+
+            <h3>Using-Statement (Auto-Dispose)</h3>
+            <pre><span class="c">// Ressourcen werden automatisch freigegeben</span>
+<span class="k">using</span> (<span class="k">var</span> reader = <span class="k">new</span> <span class="t">StreamReader</span>(<span class="s">"file.txt"</span>)) 
+{
+    <span class="t">string</span> content = reader.ReadToEnd();
+}  <span class="c">// reader.Dispose() wird automatisch aufgerufen</span>
+
+<span class="c">// Modern (C# 8+): Kürzere Syntax</span>
+<span class="k">using var</span> writer = <span class="k">new</span> <span class="t">StreamWriter</span>(<span class="s">"output.txt"</span>);
+writer.WriteLine(<span class="s">"Text"</span>);</pre>
+        </section>
+
+
+        <section id="strings">
+            <h2>10. String-Operationen</h2>
+
+            <p>Strings sind in C# <strong>immutable</strong> (unveränderlich) – jede Änderung erstellt einen neuen
+                String!</p>
+
+            <h3>String-Interpolation (Modern)</h3>
+            <pre><span class="t">string</span> name = <span class="s">"Max"</span>;
+<span class="t">int</span> age = 25;
+
+<span class="c">// $ für String-Interpolation (bevorzugt!)</span>
+<span class="t">string</span> msg = <span class="s">$"Hallo {name}, du bist {age} Jahre alt."</span>;
+
+<span class="c">// Mit Formatierung</span>
+<span class="t">double</span> price = 19.99;
+Console.WriteLine(<span class="s">$"Preis: {price:C}"</span>);  <span class="c">// Währungsformat</span>
+Console.WriteLine(<span class="s">$"Datum: {DateTime.Now:dd.MM.yyyy}"</span>);</pre>
+
+            <h3>Wichtige String-Methoden</h3>
+            <pre><span class="t">string</span> text = <span class="s">"  Hallo Welt  "</span>;
+
+text.ToUpper();           <span class="c">// "  HALLO WELT  "</span>
+text.ToLower();           <span class="c">// "  hallo welt  "</span>
+text.Trim();              <span class="c">// "Hallo Welt"</span>
+text.Replace(<span class="s">"Welt"</span>, <span class="s">"C#"</span>);  <span class="c">// "  Hallo C#  "</span>
+text.Contains(<span class="s">"Hallo"</span>);   <span class="c">// true</span>
+text.StartsWith(<span class="s">"  H"</span>);   <span class="c">// true</span>
+text.Split(<span class="s">' '</span>);         <span class="c">// Array: ["", "", "Hallo", "Welt", "", ""]</span></pre>
+
+            <h3>StringBuilder für viele Änderungen</h3>
+            <pre><span class="c">// Effizient bei vielen String-Operationen</span>
+<span class="k">var</span> sb = <span class="k">new</span> <span class="t">StringBuilder</span>();
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 1000; i++) 
+{
+    sb.Append(<span class="s">"Text "</span>);  <span class="c">// Viel schneller als string +</span>
+}
+<span class="t">string</span> result = sb.ToString();</pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>Performance:</strong> Nutze <code>StringBuilder</code> bei 5+ String-Verkettungen in
+                    Schleifen!
+                </div>
+            </div>
+        </section>
+
+
+        <section id="nullability">
+            <h2>11. Null-Handling & Nullable Types</h2>
+
+            <p>Eine der häufigsten Fehlerquellen in C# – aber mit modernen Features gut vermeidbar!</p>
+
+            <h3>Null-Coalescing Operators</h3>
+            <pre><span class="t">string</span>? name = <span class="k">null</span>;
+
+<span class="c">// ?? - Gibt Standardwert zurück, wenn null</span>
+<span class="t">string</span> display = name ?? <span class="s">"Unbekannt"</span>;
+
+<span class="c">// ??= - Weist nur zu, wenn null</span>
+name ??= <span class="s">"Standard"</span>;
+
+<span class="c">// ?. - Null-Conditional Operator (sicherer Zugriff)</span>
+<span class="t">int</span>? length = name?.Length;  <span class="c">// null wenn name null ist</span>
+
+<span class="c">// Verkettung möglich</span>
+<span class="t">string</span>? city = person?.Address?.City;</pre>
+
+            <h3>Null-Forgiving Operator</h3>
+            <pre><span class="c">// ! sagt dem Compiler "Vertrau mir, ist nicht null"</span>
+<span class="t">string</span> text = GetText()!;  <span class="c">// Nutze nur wenn 100% sicher!</span></pre>
+
+            <h3>Pattern Matching für Null-Checks</h3>
+            <pre><span class="k">if</span> (value <span class="k">is not null</span>) 
+{
+    Console.WriteLine(value.ToString());
+}
+
+<span class="c">// Oder mit Switch Expression</span>
+<span class="t">string</span> message = value <span class="k">switch</span>
+{
+    <span class="k">null</span> <normal>=></normal> <span class="s">"Kein Wert"</span>,
+    <span class="t">string</span> s <span class="k">when</span> s.Length > 10 <normal>=></normal> <span class="s">"Langer Text"</span>,
+    _ <normal>=></normal> <span class="s">"Normaler Wert"</span>
+};</pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>NullReferenceException</strong> ist einer der häufigsten Fehler! Nutze Nullable Reference
+                    Types (C# 8+) und aktiviere sie in deinem Projekt.
+                </div>
+            </div>
+        </section>
+
+
+        <section id="fileio">
+            <h2>12. Datei- und Verzeichnis-Operationen</h2>
+
+            <h3>Dateien lesen & schreiben</h3>
+            <pre><span class="c">// Komplette Datei auf einmal lesen</span>
+<span class="t">string</span> content = <span class="t">File</span>.ReadAllText(<span class="s">"data.txt"</span>);
+<span class="t">string</span>[] lines = <span class="t">File</span>.ReadAllLines(<span class="s">"data.txt"</span>);
+
+<span class="c">// Schreiben (überschreibt Datei)</span>
+<span class="t">File</span>.WriteAllText(<span class="s">"output.txt"</span>, <span class="s">"Hallo Welt"</span>);
+<span class="t">File</span>.WriteAllLines(<span class="s">"list.txt"</span>, <span class="k">new</span>[] { <span class="s">"Zeile 1"</span>, <span class="s">"Zeile 2"</span> });
+
+<span class="c">// Anhängen an Datei</span>
+<span class="t">File</span>.AppendAllText(<span class="s">"log.txt"</span>, <span class="s">"Neuer Eintrag\n"</span>);</pre>
+
+            <h3>Stream-basiert (große Dateien)</h3>
+            <pre><span class="c">// Für große Dateien: Zeile für Zeile lesen</span>
+<span class="k">using var</span> reader = <span class="k">new</span> <span class="t">StreamReader</span>(<span class="s">"huge.txt"</span>);
+<span class="k">while</span> (!reader.EndOfStream) 
+{
+    <span class="t">string</span>? line = <span class="k">await</span> reader.ReadLineAsync();
+    <span class="c">// Verarbeite Zeile...</span>
+}</pre>
+
+            <h3>Verzeichnis-Operationen</h3>
+            <pre><span class="c">// Prüfen ob existiert</span>
+<span class="k">if</span> (<span class="t">Directory</span>.Exists(<span class="s">"MyFolder"</span>)) { ... }
+<span class="k">if</span> (<span class="t">File</span>.Exists(<span class="s">"test.txt"</span>)) { ... }
+
+<span class="c">// Erstellen & Löschen</span>
+<span class="t">Directory</span>.CreateDirectory(<span class="s">"NewFolder"</span>);
+<span class="t">File</span>.Delete(<span class="s">"temp.txt"</span>);
+<span class="t">Directory</span>.Delete(<span class="s">"OldFolder"</span>, <span class="k">true</span>);  <span class="c">// true = rekursiv</span>
+
+<span class="c">// Alle Dateien auflisten</span>
+<span class="t">string</span>[] files = <span class="t">Directory</span>.GetFiles(<span class="s">"C:\\Temp"</span>, <span class="s">"*.txt"</span>);</pre>
+
+            <h3>Path-Helper</h3>
+            <pre><span class="c">// Pfade sicher kombinieren</span>
+<span class="t">string</span> path = <span class="t">Path</span>.Combine(<span class="s">"C:\\Users"</span>, <span class="s">"Max"</span>, <span class="s">"Documents"</span>);
+
+<span class="c">// Dateiinformationen extrahieren</span>
+<span class="t">string</span> filename = <span class="t">Path</span>.GetFileName(path);
+<span class="t">string</span> extension = <span class="t">Path</span>.GetExtension(path);
+<span class="t">string</span> directory = <span class="t">Path</span>.GetDirectoryName(path);</pre>
+        </section>
+
+
+        <section id="patterns">
+            <h2>13. Design Patterns & Best Practices</h2>
+
+            <h3>SOLID Principles</h3>
+            <div class="info-box">
+                <div>
+                    <strong>S</strong>ingle Responsibility - Eine Klasse = Eine Aufgabe<br>
+                    <strong>O</strong>pen/Closed - Offen für Erweiterung, geschlossen für Änderung<br>
+                    <strong>L</strong>iskov Substitution - Unterklassen müssen Basisklasse ersetzen können<br>
+                    <strong>I</strong>nterface Segregation - Viele kleine Interfaces statt ein großes<br>
+                    <strong>D</strong>ependency Inversion - Abhängigkeiten von Abstraktionen, nicht Konkretionen
+                </div>
+            </div>
+
+            <h3>Dependency Injection (DI)</h3>
+            <pre><span class="c">// Schlecht: Direkte Abhängigkeit</span>
+<span class="k">public class</span> <span class="t">UserService</span> 
+{
+    <span class="k">private</span> <span class="t">Database</span> _db = <span class="k">new</span> <span class="t">Database</span>();  <span class="c">// ❌ Fest verdrahtet</span>
+}
+
+<span class="c">// Gut: Dependency Injection</span>
+<span class="k">public class</span> <span class="t">UserService</span> 
+{
+    <span class="k">private readonly</span> <span class="t">IDatabase</span> _db;
+    
+    <span class="k">public</span> UserService(<span class="t">IDatabase</span> database)  <span class="c">// ✅ Flexibel & testbar</span>
+    {
+        _db = database;
+    }
+}</pre>
+
+            <h3>Repository Pattern</h3>
+            <pre><span class="k">public interface</span> <span class="t">IRepository</span>&lt;T&gt; 
+{
+    T GetById(<span class="t">int</span> id);
+    <span class="t">IEnumerable</span>&lt;T&gt; GetAll();
+    <span class="k">void</span> Add(T entity);
+    <span class="k">void</span> Update(T entity);
+    <span class="k">void</span> Delete(<span class="t">int</span> id);
+}
+
+<span class="k">public class</span> <span class="t">UserRepository</span> : <span class="t">IRepository</span>&lt;<span class="t">User</span>&gt; 
+{
+    <span class="c">// Implementierung der Datenbankzugriffe</span>
+}</pre>
+
+            <h3>Naming Conventions</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <pre><span class="c">// PascalCase</span>
+<span class="k">public class</span> <span class="t">UserManager</span> { }
+<span class="k">public void</span> CalculateTotal() { }
+
+<span class="c">// camelCase</span>
+<span class="k">private int</span> totalCount;
+<span class="k">var</span> userName = <span class="s">"Max"</span>;</pre>
+                </div>
+                <div class="grid-item">
+                    <pre><span class="c">// _camelCase (private fields)</span>
+<span class="k">private string</span> _firstName;
+
+<span class="c">// SCREAMING_CASE (Constants)</span>
+<span class="k">const int</span> MAX_SIZE = 100;</pre>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <div>
+                    <strong>Code-Qualität:</strong> Schreibe Code, der selbsterklärend ist. Gute Namen sind besser als
+                    Kommentare!
+                </div>
+            </div>
+        </section>
+
+
+        <section id="debugging">
+            <h2>14. Debugging & Testing</h2>
+
+            <h3>Debug-Ausgaben</h3>
+            <pre><span class="c">// Console (für Konsolen-Apps)</span>
+Console.WriteLine(<span class="s">$"Wert: {value}"</span>);
+
+<span class="c">// Debug (erscheint nur im Debug-Modus)</span>
+<span class="t">Debug</span>.WriteLine(<span class="s">"Debug Info"</span>);
+
+<span class="c">// Conditional Compilation</span>
+<span class="k">#if DEBUG</span>
+    Console.WriteLine(<span class="s">"Nur im Debug-Build"</span>);
+<span class="k">#endif</span></pre>
+
+            <h3>Unit Tests (xUnit Beispiel)</h3>
+            <pre><span class="k">using</span> Xunit;
+
+<span class="k">public class</span> <span class="t">CalculatorTests</span> 
+{
+    [<span class="t">Fact</span>]
+    <span class="k">public void</span> Add_TwoNumbers_ReturnsSum() 
+    {
+        <span class="c">// Arrange</span>
+        <span class="k">var</span> calc = <span class="k">new</span> <span class="t">Calculator</span>();
+        
+        <span class="c">// Act</span>
+        <span class="t">int</span> result = calc.Add(2, 3);
+        
+        <span class="c">// Assert</span>
+        <span class="t">Assert</span>.Equal(5, result);
+    }
+    
+    [<span class="t">Theory</span>]
+    [<span class="t">InlineData</span>(1, 1, 2)]
+    [<span class="t">InlineData</span>(5, 5, 10)]
+    <span class="k">public void</span> Add_MultipleInputs(int a, int b, int expected) 
+    {
+        <span class="k">var</span> calc = <span class="k">new</span> <span class="t">Calculator</span>();
+        <span class="t">Assert</span>.Equal(expected, calc.Add(a, b));
+    }
+}</pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>Test-Driven Development (TDD):</strong> Schreibe Tests VOR dem Code! Das führt zu besserem
+                    Design und weniger Bugs.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

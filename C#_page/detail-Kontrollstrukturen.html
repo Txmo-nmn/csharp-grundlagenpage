@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrollstrukturen</title>
+    
+    <link rel="stylesheet" href="style-seiten.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <!-- Zurück-Button -->
+            <a href="main.html" class="back-button">
+                ← Zurück zur Übersicht
+             </a>
+        <div class="page-header">
+            <h1>🔀 Kontrollstrukturen</h1>
+            <p>Steuere den Ablauf deines Programms mit Logik und Schleifen</p>
+        </div>
+
+        <div class="content-section">
+            <h2>⚖️ Entscheidungen (If-Else)</h2>
+            <p>
+                Mit <code>if</code> prüfst du, ob eine Bedingung wahr (<code>true</code>) ist. Wenn ja, wird der Code im Block ausgeführt.
+            </p>
+
+            <pre><span class="t">int</span> temperature = 25;
+
+<span class="k">if</span> (temperature > 30) 
+{
+    Console.WriteLine(<span class="s">"Es ist heiß!"</span>);
+} 
+<span class="k">else if</span> (temperature <normal>>=</normal> 20) 
+{
+    Console.WriteLine(<span class="s">"Es ist angenehm."</span>);
+} 
+<span class="k">else</span> 
+{
+    Console.WriteLine(<span class="s">"Es ist kühl."</span>);
+}</pre>
+
+            <div class="explanation">
+                <h4>Logische Operatoren für Bedingungen:</h4>
+                <ul>
+                    <li><code>==</code> gleich | <code>!=</code> ungleich</li>
+                    <li><code>></code> größer | <code><</code> kleiner</li>
+                    <li><code>>=</code> größer gleich | <code><=</code> kleiner gleich</li>
+                    <li><code>&&</code> UND | <code>||</code> ODER</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔄 Switch: Die Fallunterscheidung</h2>
+            <p>
+                Wenn du eine Variable auf viele verschiedene feste Werte prüfen willst, ist ein <code>switch</code> sauberer als viele If-Abfragen.
+            </p>
+
+            <h3>Die klassische Variante (Statement)</h3>
+            <pre><span class="t">string</span> color = <span class="s">"Red"</span>;
+
+<span class="k">switch</span> (color) 
+{
+    <span class="k">case</span> <span class="s">"Red"</span>:
+        Console.WriteLine(<span class="s">"Stopp!"</span>);
+        <span class="k">break</span>;
+    <span class="k">case</span> <span class="s">"Green"</span>:
+        Console.WriteLine(<span class="s">"Fahren!"</span>);
+        <span class="k">break</span>;
+    <span class="k">default</span>:
+        Console.WriteLine(<span class="s">"Unbekannte Farbe"</span>);
+        <span class="k">break</span>;
+}</pre>
+
+            <h3>Die moderne Variante (Expression) - C# 8+</h3>
+            <p>Ideal, um einen Wert direkt zuzuweisen:</p>
+            <pre><span class="t">int</span> points = 2;
+<span class="t">string</span> result = points <span class="k">switch</span> 
+{
+    1 <normal>=></normal> <span class="s">"Sieg"</span>,
+    2 <normal>=></normal> <span class="s">"Unentschieden"</span>,
+    _ <normal>=></normal> <span class="s">"Niederlage"</span> <span class="c">// _ entspricht default</span>
+};</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔁 Schleifen (Loops)</h2>
+            <p>Schleifen wiederholen Code so lange, wie eine Bedingung erfüllt ist.</p>
+
+            <div class="grid">
+                <div class="example-box">
+                    <h4>For-Schleife</h4>
+                    <p>Wenn du weißt, wie oft etwas passieren soll (Zählschleife).</p>
+                    <pre><span class="k">for</span> (<span class="t">int</span> i = 0; i < 5; i++) 
+{
+    Console.WriteLine(<span class="s">$"Durchlauf {i}"</span>);
+}</pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>Foreach-Schleife</h4>
+                    <p>Der Standard, um Listen oder Arrays zu durchlaufen.</p>
+                    <pre><span class="t">string</span>[] fruits = { <span class="s">"Apfel"</span>, <span class="s">"Banane"</span> };
+<span class="k">foreach</span> (<span class="k">var</span> fruit <span class="k">in</span> fruits) 
+{
+    Console.WriteLine(fruit);
+}</pre>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="example-box">
+                    <h4>While-Schleife</h4>
+                    <p>Prüft die Bedingung <strong>vor</strong> dem Durchlauf.</p>
+                    <pre><span class="t">int</span> c = 0;
+<span class="k">while</span> (c < 3) 
+{
+    Console.WriteLine(c++);
+}</pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>Do-While-Schleife</h4>
+                    <p>Läuft <strong>immer mindestens einmal</strong> (Prüfung danach).</p>
+                    <pre><span class="t">int</span> x = 10;
+<span class="k">do</span> 
+{
+    Console.WriteLine(<span class="s">"Ich laufe einmal!"</span>);
+} <span class="k">while</span> (x < 5);</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🛑 Steuerung in Schleifen</h2>
+            <p>Du kannst den Ablauf innerhalb einer Schleife beeinflussen:</p>
+            <ul>
+                <li><strong><code>break</code>:</strong> Bricht die gesamte Schleife sofort ab.</li>
+                <li><strong><code>continue</code>:</strong> Überspringt den aktuellen Durchlauf und springt zum nächsten.</li>
+            </ul>
+            <pre><span class="k">for</span> (<span class="t">int</span> i = 0; i < 10; i++) 
+{
+    <span class="k">if</span> (i <normal>==</normal> 3) <span class="k">continue</span>; <span class="c">// Überspringt die 3</span>
+    <span class="k">if</span> (i <normal>==</normal> 7) <span class="k">break</span>;    <span class="c">// Stoppt die Schleife bei 7</span>
+    Console.WriteLine(i);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <ul>
+                    <li>Nutze <strong>If-Else</strong> für einfache oder komplexe Ja/Nein-Logik.</li>
+                    <li>Nutze <strong>Switch</strong>, wenn du eine Variable auf viele feste Werte prüfst.</li>
+                    <li>Nutze <strong>For</strong> zum Zählen und <strong>Foreach</strong> für Sammlungen (Listen).</li>
+                    <li>Die <strong>Do-While</strong> Schleife garantiert dir mindestens einen Durchlauf.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4>➡️ Nächster Schritt:</h4>
+                <p>Nachdem du nun weißt, wie man Logik schreibt, schaue dir <strong>"Methoden"</strong> an, um deinen Code wiederverwendbar zu machen!</p>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

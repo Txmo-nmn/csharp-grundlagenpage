@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --accent: #8b5cf6;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg: #0f172a;
+            --bg-secondary: #1e293b;
+            --card: #1e293b;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --code-bg: #0d1117;
+            --border: #334155;
+            --comment: #6a9955;
+            --keyword: #569cd6;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 40px;      
+            left: 20px;    
+            z-index: 1000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--card);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(-5px);
+        }
+
+        .page-header {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .content-section {
+            background: var(--card);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: var(--text);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            color: var(--text);
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            line-height: 1.6;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #21262d;
+            margin: 20px 0;
+        }
+
+        code {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            font-variant-ligatures: none;
+            -webkit-font-feature-settings: "liga" 0; /* Für ältere Safari/Chrome Versionen */
+            font-feature-settings: "liga" 0;
+        }
+        normal{
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            font-variant-ligatures: none;
+            -webkit-font-feature-settings: "liga" 0; /* Für ältere Safari/Chrome Versionen */
+            font-feature-settings: "liga" 0;
+        }
+
+        .k { color: #c678dd; font-weight: 500; }
+        .t { color: #4ec9b0; }
+        .s { color: #ce9178; }
+        .c { color: #6a9955; font-style: italic; }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: var(--bg-secondary);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        ul {
+            margin-left: 25px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .example-box {
+            background: rgba(139, 92, 246, 0.05);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
