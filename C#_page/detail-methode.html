@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methoden</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+
+<body class="detail-page">
+        <div class="container">
+            <!-- Zurück-Button -->
+            <a href="index.html" class="back-button">
+                ← Zurück zur Übersicht
+            </a>
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>⚡ Methoden & Parameter</h1>
+                <p>Lerne wie du wiederverwendbare Code-Blöcke erstellst</p>
+            </div>
+
+            <!-- Was sind Methoden? -->
+            <div class="content-section">
+                <h2>🎯 Was ist eine Methode?</h2>
+                <p>
+                    Eine <strong>Methode</strong> ist ein benannter Code-Block, der eine bestimmte Aufgabe ausführt.
+                    Du kannst eine Methode einmal definieren und dann beliebig oft aufrufen (verwenden).
+                </p>
+
+                <div class="example-box">
+                    <h4>🏭 Analogie aus dem echten Leben:</h4>
+                    <p>
+                        Stell dir eine Methode wie ein <strong>Rezept</strong> vor:
+                    </p>
+                    <ul>
+                        <li><strong>Name:</strong> "Kuchen backen"</li>
+                        <li><strong>Zutaten (Parameter):</strong> Mehl, Zucker, Eier</li>
+                        <li><strong>Anleitung:</strong> Vermischen, in den Ofen, backen</li>
+                        <li><strong>Ergebnis (Rückgabewert):</strong> Ein fertiger Kuchen</li>
+                    </ul>
+                    <p>
+                        Einmal aufgeschrieben, kannst du das Rezept immer wieder verwenden,
+                        ohne die Anleitung neu zu schreiben!
+                    </p>
+                </div>
+
+                <h3>📖 Warum Methoden verwenden?</h3>
+                <ul>
+                    <li><strong>Wiederverwendbarkeit:</strong> Code einmal schreiben, oft nutzen</li>
+                    <li><strong>Lesbarkeit:</strong> Komplexe Operationen bekommen einen Namen</li>
+                    <li><strong>Wartbarkeit:</strong> Änderungen nur an einer Stelle nötig</li>
+                    <li><strong>Organisation:</strong> Code wird in logische Einheiten aufgeteilt</li>
+                </ul>
+            </div>
+
+            <!-- Anatomie einer Methode -->
+            <div class="content-section">
+                <h2>🔬 Anatomie einer Methode</h2>
+
+                <pre><span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b) 
+{
+    <span class="k">return</span> a + b;
+}</pre>
+
+                <h3>📝 Bestandteile im Detail:</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Teil</th>
+                            <th>Beispiel</th>
+                            <th>Bedeutung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Zugriffsmodifizierer</strong></td>
+                            <td><code>public</code></td>
+                            <td>Wer darf die Methode aufrufen? (public, private, protected)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rückgabetyp</strong></td>
+                            <td><code>int</code></td>
+                            <td>Was gibt die Methode zurück? (oder <code>void</code> für nichts)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><code>Addiere</code></td>
+                            <td>Wie heißt die Methode? (PascalCase verwenden!)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parameter</strong></td>
+                            <td><code>(int a, int b)</code></td>
+                            <td>Welche Eingaben braucht die Methode?</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Körper</strong></td>
+                            <td><code>{ ... }</code></td>
+                            <td>Was macht die Methode?</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Return</strong></td>
+                            <td><code>return a + b;</code></td>
+                            <td>Welcher Wert wird zurückgegeben?</td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div> 
+
+            <!-- Methoden mit Rückgabewert -->
+            <div class="content-section">
+                <h2>↩️ Methoden mit Rückgabewert</h2>
+                <p>
+                    Diese Methoden <strong>geben einen Wert zurück</strong>, den du speichern oder weiterverarbeiten
+                    kannst.
+                </p>
+
+                <h3>🔢 Beispiel: Einfache Berechnung</h3>
+                <pre><span class="c">// Methode definieren</span>
+<span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b) 
+{
+    <span class="k">return</span> a + b;  <span class="c">// Gibt die Summe zurück</span>
+}
+
+<span class="c">// Methode aufrufen</span>
+<span class="t">int</span> ergebnis = Addiere(5, 3);  <span class="c">// ergebnis = 8</span>
+Console.WriteLine(ergebnis);        <span class="c">// Ausgabe: 8</span>
+
+<span class="c">// Direkt verwenden ohne Speichern</span>
+Console.WriteLine(Addiere(10, 20)); <span class="c">// Ausgabe: 30</span></pre>
+
+                <div class="info-box">
+                    <div>
+                        <strong>💡 Wichtig:</strong> Der Rückgabetyp muss mit dem <code>return</code>-Wert
+                        übereinstimmen!
+                        <br>
+                        Wenn du <code>public int</code> schreibst, musst du auch eine <code>int</code> zurückgeben.
+                    </div>
+                </div>
+
+                <h3>📊 Verschiedene Rückgabetypen</h3>
+                <pre><span class="c">// int zurückgeben</span>
+<span class="k">public int</span> GetAge() 
+{
+    <span class="k">return</span> 25;
+}
+
+<span class="c">// string zurückgeben</span>
+<span class="k">public string</span> GetGreeting() 
+{
+    <span class="k">return</span> <span class="s">"Hallo Welt!"</span>;
+}
+
+<span class="c">// bool zurückgeben</span>
+<span class="k">public bool</span> IstVolljährig(<span class="t">int</span> alter) 
+{
+    <span class="k">return</span> alter <normal>>=</normal> 18;  <span class="c">// Gibt true oder false zurück</span>
+}
+
+<span class="c">// Verwendung</span>
+<span class="k">if</span> (IstVolljährig(20)) 
+{
+    Console.WriteLine(<span class="s">"Du darfst rein!"</span>);
+}</pre>
+            </div>
+
+            <!-- Void Methoden -->
+            <div class="content-section">
+                <h2>🚫 Void-Methoden (ohne Rückgabewert)</h2>
+                <p>
+                    <code>void</code> bedeutet "nichts". Diese Methoden führen eine Aktion aus,
+                    geben aber keinen Wert zurück.
+                </p>
+
+                <pre><span class="c">// Gibt nichts zurück, macht nur etwas</span>
+<span class="k">public void</span> PrintMessage(<span class="t">string</span> msg) 
+{
+    Console.WriteLine(msg);  <span class="c">// Gibt Text aus</span>
+    <span class="c">// Kein return nötig!</span>
+}
+
+<span class="c">// Aufrufen</span>
+PrintMessage(<span class="s">"Hallo!"</span>);  <span class="c">// Ausgabe: Hallo!</span></pre>
+
+                <div class="example-box">
+                    <h4>🎯 Wann void verwenden?</h4>
+                    <ul>
+                        <li>Wenn die Methode nur etwas ausgibt (<code>Console.WriteLine</code>)</li>
+                        <li>Wenn sie Daten speichert oder ändert</li>
+                        <li>Wenn sie eine Datei schreibt</li>
+                        <li>Wenn sie etwas zeichnet oder anzeigt</li>
+                    </ul>
+                    <p><strong>Faustregel:</strong> Wenn du nichts zurückgeben musst → <code>void</code></p>
+                </div>
+
+                <h3>📝 Void-Methoden können trotzdem early return nutzen</h3>
+                <pre><span class="k">public void</span> PrintIfPositive(<span class="t">int</span> zahl) 
+{
+    <span class="k">if</span> (zahl < 0) 
+    {
+        <span class="k">return</span>;  <span class="c">// Beendet die Methode früh (ohne Wert)</span>
+    }
+    
+    Console.WriteLine(<span class="s">$"Zahl: {zahl}"</span>);
+}</pre>
+            </div>
+
+            <!-- Expression-Body Syntax -->
+            <div class="content-section">
+                <h2>⚡ Expression-Body Syntax (Modern & Kurz)</h2>
+                <p>
+                    Für einfache Methoden mit nur einer Anweisung gibt es eine <strong>kürzere Schreibweise</strong>
+                    mit dem <code>=></code> Operator (Pfeil-Syntax).
+                </p>
+
+                <h3>🔄 Vergleich: Lang vs. Kurz</h3>
+                <pre><span class="c">// Klassische Schreibweise (lang)</span>
+<span class="k">public int</span> Multipliziere(<span class="t">int</span> a, <span class="t">int</span> b) 
+{
+    <span class="k">return</span> a * b;
+}
+
+<span class="c">// Expression-Body Syntax (kurz) ✅ Empfohlen!</span>
+<span class="k">public int</span> Multipliziere(<span class="t">int</span> a, <span class="t">int</span> b) => a * b;</pre>
+
+                <div class="success-box">
+                    <div>
+                        <strong>✅ Vorteile:</strong>
+                        <ul>
+                            <li>Viel kürzer und lesbarer</li>
+                            <li>Keine geschweiften Klammern nötig</li>
+                            <li>Kein <code>return</code> Keyword nötig</li>
+                            <li>Perfekt für einfache Berechnungen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>📚 Weitere Beispiele</h3>
+                <pre><span class="c">// Quadrat einer Zahl</span>
+<span class="k">public int</span> Quadrat(<span class="t">int</span> x) => x * x;
+
+<span class="c">// Ist gerade Zahl?</span>
+<span class="k">public bool</span> IstGerade(<span class="t">int</span> x) => x % 2 == 0;
+
+<span class="c">// Voller Name</span>
+<span class="k">public string</span> VollerName(<span class="t">string</span> vorname, <span class="t">string</span> nachname) 
+    => <span class="s">$"{vorname} {nachname}"</span>;
+
+<span class="c">// Auch für void möglich!</span>
+<span class="k">public void</span> SageHallo(<span class="t">string</span> name) 
+    => Console.WriteLine(<span class="s">$"Hallo {name}!"</span>);</pre>
+
+                <div class="warning-box">
+                    <div>
+                        <strong>⚠️ Nur für einfache Operationen!</strong>
+                        <br>
+                        Wenn deine Methode mehrere Zeilen Code braucht, verwende die normale Syntax mit <code>{ }</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameter -->
+            <div class="content-section">
+                <h2>📥 Parameter - Eingaben für Methoden</h2>
+                <p>
+                    Parameter sind <strong>Eingaben</strong>, die eine Methode braucht, um ihre Aufgabe zu erfüllen.
+                </p>
+
+                <h3>🔢 Mehrere Parameter</h3>
+                <pre><span class="c">// Eine Methode kann mehrere Parameter haben</span>
+<span class="k">public string</span> MacheBegrüßung(<span class="t">string</span> name, <span class="t">int</span> alter, <span class="t">string</span> stadt) 
+{
+    <span class="k">return</span> <span class="s">$"Hallo {name}, {alter} Jahre alt aus {stadt}!"</span>;
+}
+
+<span class="c">// Aufrufen mit Werten</span>
+<span class="t">string</span> gruss = MacheBegrüßung(<span class="s">"Max"</span>, 25, <span class="s">"Berlin"</span>);
+<span class="c">// "Hallo Max, 25 Jahre alt aus Berlin!"</span></pre>
+
+                <div class="info-box">
+                    <div>
+                        <strong>💡 Reihenfolge wichtig!</strong>
+                        <br>
+                        Die Werte beim Aufruf müssen in der <strong>gleichen Reihenfolge</strong>
+                        sein wie die Parameter in der Methoden-Definition.
+                    </div>
+                </div>
+
+                <h3>🎨 Optionale Parameter</h3>
+                <p>
+                    Du kannst Parametern <strong>Standardwerte</strong> geben.
+                    Dann muss der Aufrufer sie nicht zwingend angeben.
+                </p>
+
+                <pre><span class="c">// Parameter "wichtig" hat Standardwert false</span>
+<span class="k">public void</span> Log(<span class="t">string</span> msg, <span class="t">bool</span> wichtig = <span class="k">false</span>) 
+{
+    <span class="k">if</span> (wichtig) 
+    {
+        Console.WriteLine(<span class="s">"[!] "</span> + msg);
+    }
+    <span class="k">else</span> 
+    {
+        Console.WriteLine(msg);
+    }
+}
+
+<span class="c">// Aufrufen mit beiden Parametern</span>
+Log(<span class="s">"Fehler!"</span>, <span class="k">true</span>);     <span class="c">// [!] Fehler!</span>
+
+<span class="c">// Aufrufen nur mit Pflicht-Parameter</span>
+Log(<span class="s">"Info"</span>);              <span class="c">// Info (wichtig = false wird automatisch gesetzt)</span></pre>
+
+                <div class="warning-box">
+                    <div>
+                        <strong>⚠️ Regel für optionale Parameter:</strong>
+                        <br>
+                        Optionale Parameter müssen <strong>am Ende</strong> der Parameterliste stehen!
+                        <br><br>
+                        <code>✅ Richtig: (string msg, bool wichtig = false)</code><br>
+                        <code>❌ Falsch: (bool wichtig = false, string msg)</code>
+                    </div>
+                </div>
+
+                <h3>📛 Named Arguments (benannte Argumente)</h3>
+                <p>
+                    Du kannst beim Aufruf die <strong>Parameter-Namen</strong> explizit angeben.
+                    Das macht den Code lesbarer und erlaubt eine andere Reihenfolge.
+                </p>
+
+                <pre><span class="c">// Methode definieren</span>
+<span class="k">public void</span> CreateUser(<span class="t">string</span> name, <span class="t">int</span> alter, <span class="t">string</span> email) 
+{
+    Console.WriteLine(<span class="s">$"{name}, {alter}, {email}"</span>);
+}
+
+<span class="c">// Normal aufrufen (Reihenfolge wichtig)</span>
+CreateUser(<span class="s">"Max"</span>, 25, <span class="s">"max@email.com"</span>);
+
+<span class="c">// Mit Named Arguments (Reihenfolge egal!)</span>
+CreateUser(
+    email: <span class="s">"max@email.com"</span>,
+    name: <span class="s">"Max"</span>,
+    alter: 25
+);
+
+<span class="c">// Gemischt möglich</span>
+CreateUser(<span class="s">"Max"</span>, email: <span class="s">"max@email.com"</span>, alter: 25);</pre>
+
+                <div class="success-box">
+                    <div>
+                        <strong>✅ Wann Named Arguments verwenden?</strong>
+                        <ul>
+                            <li>Bei vielen Parametern (4+)</li>
+                            <li>Wenn viele Parameter den gleichen Typ haben</li>
+                            <li>Bei optionalen Parametern (macht klar, was gesetzt wird)</li>
+                            <li>Für bessere Lesbarkeit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methoden überladen -->
+            <div class="content-section">
+                <h2>🔄 Method Overloading (Überladung)</h2>
+                <p>
+                    Du kannst <strong>mehrere Methoden mit dem gleichen Namen</strong> haben,
+                    solange sie unterschiedliche Parameter haben!
+                </p>
+
+                <pre><span class="c">// Verschiedene Versionen der gleichen Methode</span>
+<span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b) 
+{
+    <span class="k">return</span> a + b;
+}
+
+<span class="k">public double</span> Addiere(<span class="t">double</span> a, <span class="t">double</span> b) 
+{
+    <span class="k">return</span> a + b;
+}
+
+<span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b, <span class="t">int</span> c) 
+{
+    <span class="k">return</span> a + b + c;
+}
+
+<span class="c">// C# wählt automatisch die richtige Version</span>
+<span class="t">int</span> x = Addiere(5, 3);           <span class="c">// Nutzt Version 1 (int, int)</span>
+<span class="t">double</span> y = Addiere(5.5, 3.2);   <span class="c">// Nutzt Version 2 (double, double)</span>
+<span class="t">int</span> z = Addiere(1, 2, 3);        <span class="c">// Nutzt Version 3 (int, int, int)</span></pre>
+
+                <div class="info-box">
+                    <div>
+                        <strong>💡 Was unterscheidet überladene Methoden?</strong>
+                        <ul>
+                            <li>Anzahl der Parameter</li>
+                            <li>Typen der Parameter</li>
+                            <li>Reihenfolge der Parameter (bei verschiedenen Typen)</li>
+                        </ul>
+                        <strong>NICHT:</strong> Der Rückgabetyp allein reicht nicht!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="content-section">
+                <h2>🎯 Best Practices für Methoden</h2>
+
+                <div class="success-box">
+                    <div>
+                        <strong>✅ Gute Methoden sind:</strong>
+                        <ul>
+                            <li><strong>Kurz:</strong> Eine Methode = Eine Aufgabe (Single Responsibility)</li>
+                            <li><strong>Gut benannt:</strong> Name sagt, was sie tut (<code>BerechnePreis</code> statt
+                                <code>Rechne</code>)
+                            </li>
+                            <li><strong>Verben verwenden:</strong> <code>GetUser()</code>, <code>SaveData()</code>,
+                                <code>CalculateTotal()</code>
+                            </li>
+                            <li><strong>PascalCase:</strong> Erster Buchstabe groß: <code>MacheDas()</code></li>
+                            <li><strong>Nicht zu viele Parameter:</strong> Max. 3-4 ist ideal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>❌ Schlechtes Beispiel</h3>
+                <pre><span class="c">// Zu lang, macht zu viel, unklarer Name</span>
+<span class="k">public void</span> DoStuff(<span class="t">string</span> a, <span class="t">int</span> b, <span class="t">bool</span> c, <span class="t">string</span> d, <span class="t">int</span> e) 
+{
+    <span class="c">// 50 Zeilen Code...</span>
+}</pre>
+
+                <h3>✅ Gutes Beispiel</h3>
+                <pre><span class="c">// Klar, fokussiert, gut benannt</span>
+<span class="k">public decimal</span> BerechneRabatt(<span class="t">decimal</span> preis, <span class="t">int</span> prozent) => preis * prozent / 100;
+
+<span class="k">public bool</span> IstEmailGültig(<span class="t">string</span> email) => email.Contains(<span class="s">"@"</span>);
+
+<span class="k">public void</span> SpeichereBenutzer(<span class="t">User</span> user) 
+{
+    database.Save(user);
+}</pre>
+            </div>
+
+            <!-- Zusammenfassung -->
+            <div class="content-section">
+                <h2>🎓 Zusammenfassung</h2>
+
+                <div class="success-box">
+                    <div>
+                        <strong>✅ Was du gelernt hast:</strong>
+                        <ul>
+                            <li>Methoden sind wiederverwendbare Code-Blöcke mit einem Namen</li>
+                            <li><strong>Rückgabewert:</strong> Was die Methode zurückgibt (<code>int</code>,
+                                <code>string</code>, etc.)
+                            </li>
+                            <li><strong>void:</strong> Wenn nichts zurückgegeben wird</li>
+                            <li><strong>Parameter:</strong> Eingaben für die Methode</li>
+                            <li><strong>Expression-Body:</strong> Kurze Syntax mit <code>=></code> für einfache Methoden
+                            </li>
+                            <li><strong>Optionale Parameter:</strong> Mit Standardwerten (<code>= false</code>)</li>
+                            <li><strong>Named Arguments:</strong> Parameter mit Namen angeben</li>
+                            <li><strong>Overloading:</strong> Gleicher Name, verschiedene Parameter</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div>
+                        <strong>🚀 Nächste Schritte:</strong>
+                        <p>
+                            Jetzt verstehst du Methoden! Als Nächstes lerne über <strong>Collections</strong>
+                            (Listen, Arrays), um viele Werte gleichzeitig zu verwalten!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

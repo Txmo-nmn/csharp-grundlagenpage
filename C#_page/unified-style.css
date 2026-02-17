@@ -1,147 +1,119 @@
+/* ========================================
+   UNIFIED CSS - Für Hauptseite & Detailseiten
+   ======================================== */
+
+/* Google Fonts importieren */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ========================================
-    CSS STYLES - Hier wird das Aussehen definiert
-    ======================================== -->
-        
-/* Google Fonts importieren (moderne Schriftarten) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* ========================================
-    CSS VARIABLEN (:root)
-    Zentrale Farbdefinitionen - änderbar für andere Designs
-    ======================================== */
+   CSS VARIABLEN
+   Zentrale Farbdefinitionen
+   ======================================== */
 :root {
-    /* Hauptfarben für das Design */
+    /* Hauptfarben */
     --primary: #0ea5e9;
-    /* Primäre Akzentfarbe (Hellblau) */
     --primary-dark: #0284c7;
-    /* Dunklere Version der Primärfarbe */
     --accent: #8b5cf6;
-    /* Sekundäre Akzentfarbe (Lila) */
-
+    
     /* Farbverläufe */
     --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    /* Lila-Blau Verlauf */
-
+    
     /* Hintergrundfarben */
     --bg: #0f172a;
-    /* Haupthintergrund (Dunkelblau) */
     --bg-secondary: #1e293b;
-    /* Sekundärer Hintergrund (heller) */
     --card: #1e293b;
-    /* Farbe für Karten/Boxen */
     --card-hover: #2d3b52;
-    /* Hover-Effekt für Karten */
-
+    
     /* Textfarben */
     --text: #f1f5f9;
-    /* Haupttextfarbe (Hell) */
     --text-secondary: #94a3b8;
-    /* Sekundärer Text (Grau) */
-
+    
     /* Code-Block Farben */
     --code-bg: #0d1117;
-    /* Hintergrund für Code-Blöcke */
     --border: #334155;
-    /* Farbe für Rahmen/Borders */
-
-    /* Syntax-Highlighting im Code */
     --comment: #6a9955;
-    /* Farbe für Kommentare */
     --keyword: #569cd6;
-    /* Farbe für Keywords (if, class, etc.) */
-
+    
     /* Status-Farben */
     --success: #10b981;
-    /* Grün für Erfolg */
     --warning: #f59e0b;
-    /* Orange für Warnungen */
 }
 
 /* ========================================
-    GLOBALE RESET-STYLES
-    Entfernt Browser-Standardabstände
-    ======================================== */
+   GLOBALE RESET-STYLES
+   ======================================== */
 * {
     margin: 0;
-    /* Entfernt alle Außenabstände */
     padding: 0;
-    /* Entfernt alle Innenabstände */
     box-sizing: border-box;
-    /* Border und Padding werden in width/height eingerechnet */
 }
+
 /* ========================================
-    BODY - Hauptcontainer der Seite
-    ======================================== */
+   BODY - Basis-Layout
+   ======================================== */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
-    /* Dunkler Hintergrund */
     color: var(--text);
-    /* Helle Textfarbe */
     line-height: 1.7;
-    /* Zeilenabstand für bessere Lesbarkeit */
 }
 
-/* Animierter Hintergrund-Effekt (Lila/Blau Lichter) */
-body::before {
+/* Animierter Hintergrund (für Hauptseite) */
+body.main-page::before {
     content: '';
-    /* Pseudo-Element ohne Inhalt */
     position: fixed;
-    /* Fixiert im Viewport */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Zwei radiale Farbverläufe für Lichteffekte */
-    background:
+    background: 
         radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
     pointer-events: none;
-    /* Klicks gehen durch dieses Element durch */
     z-index: 0;
-    /* Hinter allen anderen Elementen */
+}
+
+/* Padding für Detailseiten */
+body.detail-page {
+    padding: 40px 20px;
 }
 
 /* ========================================
-           SIDEBAR NAVIGATION (nav)
-           Fixierte Seitenleiste links
-           ======================================== */
-nav {
-    width: 280px;
-    /* Feste Breite */
-    height: 100vh;
-    /* 100% der Viewport-Höhe */
-    background: var(--card);
-    /* Dunkler Hintergrund */
-    border-right: 1px solid var(--border);
-    /* Rechter Rand */
-    position: fixed;
-    /* Bleibt beim Scrollen an Ort und Stelle */
-    overflow-y: auto;
-    /* Vertikales Scrollen bei viel Inhalt */
-    padding: 30px 0;
-    z-index: 100;
-    /* Über anderen Elementen */
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
-    /* Leichter Schatten */
+   CONTAINER (für Detailseiten)
+   ======================================== */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
-/* Scrollbar-Styling für die Navigation */
+/* ========================================
+   SIDEBAR NAVIGATION
+   Nur für Hauptseite
+   ======================================== */
+nav {
+    width: 280px;
+    height: 100vh;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    overflow-y: auto;
+    padding: 30px 0;
+    z-index: 100;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+}
+
 nav::-webkit-scrollbar {
     width: 6px;
-    /* Breite der Scrollbar */
 }
 
 nav::-webkit-scrollbar-thumb {
     background: var(--accent);
-    /* Lila Farbe */
     border-radius: 10px;
-    /* Abgerundete Ecken */
 }
 
-/* Logo-Bereich oben in der Sidebar */
+/* Logo in Sidebar */
 nav .logo {
     text-align: center;
     margin-bottom: 40px;
@@ -164,6 +136,7 @@ nav .logo p {
     margin-top: 5px;
 }
 
+/* Navigation Sections */
 nav .nav-section {
     margin-bottom: 25px;
 }
@@ -177,68 +150,49 @@ nav .nav-label {
     padding: 0 25px 10px;
 }
 
-/* Navigation Links - Einzelne Menüpunkte */
+/* Navigation Links */
 nav a {
     display: flex;
-    /* Flexbox für Icon + Text nebeneinander */
     align-items: center;
-    /* Vertikal zentrieren */
     color: var(--text-secondary);
-    /* Graue Textfarbe */
     padding: 12px 25px;
-    /* Innenabstand */
     text-decoration: none;
-    /* Keine Unterstreichung */
     transition: all 0.3s ease;
-    /* Sanfte Animationen bei Hover */
     font-size: 0.9rem;
     font-weight: 500;
     border-left: 3px solid transparent;
-    /* Unsichtbarer linker Rand */
 }
 
-/* Hover-Effekt bei Maus über Link */
 nav a:hover {
     background: rgba(139, 92, 246, 0.1);
-    /* Leichter lila Hintergrund */
     color: var(--accent);
-    /* Lila Text */
     border-left-color: var(--accent);
-    /* Lila linker Rand */
     padding-left: 30px;
-    /* Verschiebt sich leicht nach rechts */
 }
 
-/* Aktiver Link (aktueller Abschnitt) */
 nav a.active {
     background: rgba(139, 92, 246, 0.15);
     color: var(--accent);
     border-left-color: var(--accent);
 }
 
-/* Icons vor den Links (Emojis) */
 nav a .icon {
     margin-right: 12px;
-    /* Abstand zwischen Icon und Text */
     font-size: 1.1rem;
 }
 
 /* ========================================
-           SUCHLEISTE IN DER SIDEBAR
-           ======================================== */
+   SUCHLEISTE
+   ======================================== */
 .search-container {
     position: relative;
-    /* Für absolute Positionierung der Kinder */
     padding: 0 20px;
     margin-bottom: 25px;
 }
 
-/* Suchfeld (Input) */
 .search-container input {
     width: 100%;
-    /* Volle Breite */
     padding: 12px 40px 12px 15px;
-    /* Platz für Icon rechts */
     background: var(--bg-secondary);
     border: 2px solid var(--border);
     border-radius: 10px;
@@ -248,46 +202,30 @@ nav a .icon {
     font-family: 'Inter', sans-serif;
 }
 
-/* Wenn Suchfeld fokussiert ist (angeklickt) */
 .search-container input:focus {
     outline: none;
-    /* Entfernt Standard-Browser-Outline */
     border-color: var(--accent);
-    /* Lila Rand */
     background: var(--bg);
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-    /* Leuchteffekt */
 }
 
-/* Platzhalter-Text im Suchfeld */
 .search-container input::placeholder {
     color: var(--text-secondary);
 }
 
-/* Lupe-Icon rechts im Suchfeld */
 .search-icon {
     position: absolute;
-    /* Absolute Positionierung */
     right: 35px;
-    /* Von rechts */
     top: 50%;
-    /* Mittig vertikal */
     transform: translateY(-50%);
-    /* Exakte Zentrierung */
     pointer-events: none;
-    /* Klicks gehen durch (zum Input) */
     opacity: 0.5;
-    /* Halbtransparent */
 }
 
-/* ========================================
-           SUCHERGEBNISSE DROPDOWN
-           ======================================== */
+/* Suchergebnisse Dropdown */
 .search-results {
     position: absolute;
-    /* Über dem Inhalt schwebend */
     top: 100%;
-    /* Direkt unter dem Suchfeld */
     left: 20px;
     right: 20px;
     background: var(--bg-secondary);
@@ -295,22 +233,16 @@ nav a .icon {
     border-radius: 10px;
     margin-top: 8px;
     max-height: 400px;
-    /* Maximale Höhe */
     overflow-y: auto;
-    /* Scrollen bei vielen Ergebnissen */
     display: none;
-    /* Standardmäßig versteckt */
     z-index: 1000;
-    /* Über allem anderen */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Zeigt Suchergebnisse an (wird per JavaScript gesetzt) */
 .search-results.active {
     display: block;
 }
 
-/* Scrollbar in Suchergebnissen */
 .search-results::-webkit-scrollbar {
     width: 6px;
 }
@@ -320,29 +252,22 @@ nav a .icon {
     border-radius: 10px;
 }
 
-/* Einzelnes Suchergebnis */
 .search-result-item {
     padding: 12px 15px;
     border-bottom: 1px solid var(--border);
-    /* Trennlinie */
     cursor: pointer;
-    /* Zeiger-Cursor beim Hover */
     transition: all 0.2s ease;
 }
 
-/* Letztes Ergebnis ohne Trennlinie */
 .search-result-item:last-child {
     border-bottom: none;
 }
 
-/* Hover-Effekt auf Suchergebnis */
 .search-result-item:hover {
     background: rgba(139, 92, 246, 0.1);
     padding-left: 20px;
-    /* Verschiebt sich leicht */
 }
 
-/* Titel des Suchergebnisses */
 .search-result-title {
     color: var(--text);
     font-weight: 600;
@@ -350,14 +275,12 @@ nav a .icon {
     margin-bottom: 4px;
 }
 
-/* Kontext-Text (Vorschau) */
 .search-result-context {
     color: var(--text-secondary);
     font-size: 0.8rem;
     line-height: 1.4;
 }
 
-/* Hervorgehobene Suchbegriffe im Ergebnis */
 .search-highlight {
     background: rgba(139, 92, 246, 0.3);
     color: var(--accent);
@@ -366,7 +289,6 @@ nav a .icon {
     border-radius: 3px;
 }
 
-/* "Keine Ergebnisse" Nachricht */
 .search-no-results {
     padding: 20px;
     text-align: center;
@@ -375,24 +297,83 @@ nav a .icon {
 }
 
 /* ========================================
-           MAIN CONTENT BEREICH
-           Der Hauptinhalt rechts neben der Sidebar
-           ======================================== */
+   MAIN CONTENT
+   ======================================== */
+/* Für Hauptseite mit Sidebar */
 main {
     margin-left: 280px;
-    /* Platz für Sidebar links */
     padding: 60px 80px;
-    /* Großzügiger Innenabstand */
     max-width: 1400px;
-    /* Maximale Breite für Lesbarkeit */
     position: relative;
     z-index: 1;
-    /* Über dem animierten Hintergrund */
 }
 
 /* ========================================
-           HERO-BEREICH (Große Willkommens-Box)
-           ======================================== */
+   ZURÜCK-BUTTON (für Detailseiten)
+   ======================================== */
+.back-button {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    z-index: 1000;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.back-button:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateX(-5px);
+}
+
+/* Fixierter Zurück-Button (optional) */
+.back-button.fixed {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    z-index: 1000;
+}
+
+/* ========================================
+   PAGE HEADER (für Detailseiten)
+   ======================================== */
+.page-header {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    background: var(--bg-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+}
+
+.page-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   HERO SECTION (für Hauptseite)
+   ======================================== */
 .hero {
     text-align: center;
     margin-bottom: 80px;
@@ -402,10 +383,8 @@ main {
     border: 1px solid var(--border);
     position: relative;
     overflow: hidden;
-    /* Versteckt rotierende Animation */
 }
 
-/* Rotierender Farbverlauf im Hintergrund */
 .hero::before {
     content: '';
     position: absolute;
@@ -415,38 +394,25 @@ main {
     height: 200%;
     background: var(--bg-gradient);
     opacity: 0.05;
-    /* Sehr transparent */
     animation: rotate 20s linear infinite;
-    /* Rotiert 20 Sekunden */
 }
 
-/* Animation: Endlose Rotation */
 @keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Hauptüberschrift im Hero */
 .hero h1 {
     font-size: 3.5rem;
     font-weight: 700;
-    /* Gradient-Text-Effekt */
     background: var(--bg-gradient);
     -webkit-background-clip: text;
-    /* Webkit-Browser */
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: 15px;
     position: relative;
-    /* Über dem rotierenden Hintergrund */
 }
 
-/* Untertitel im Hero */
 .hero p {
     font-size: 1.2rem;
     color: var(--text-secondary);
@@ -456,68 +422,63 @@ main {
 }
 
 /* ========================================
-           SECTIONS - Inhaltsbereiche
-           ======================================== */
-section {
+   SECTIONS & CONTENT
+   ======================================== */
+section, .content-section {
     background: var(--card);
     padding: 40px;
     border-radius: 16px;
     margin-bottom: 40px;
     border: 1px solid var(--border);
     transition: all 0.3s ease;
-    animation: fadeIn 0.6s ease-out;
-    /* Einblenden beim Laden */
 }
 
-/* Fade-In Animation für Sections */
+/* Nur für Hauptseite: Animation beim Laden */
+.main-page section {
+    animation: fadeIn 0.6s ease-out;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
-        /* Startet unsichtbar */
         transform: translateY(20px);
-        /* 20px nach unten verschoben */
     }
-
     to {
         opacity: 1;
-        /* Endet sichtbar */
         transform: translateY(0);
-        /* An normaler Position */
     }
 }
 
-/* Hover-Effekt auf Sections */
-section:hover {
+section:hover, .content-section:hover {
     border-color: var(--accent);
-    /* Lila Rand */
     box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1);
-    /* Leuchten */
     transform: translateY(-2px);
-    /* Hebt sich leicht */
 }
 
-/* Klickbare Sections - zusätzliche Styles */
+/* Klickbare Sections */
 .clickable-section {
     cursor: pointer;
-    /* Zeiger-Cursor */
     position: relative;
 }
 
 .clickable-section:hover {
     transform: translateY(-4px) scale(1.01);
-    /* Hebt sich stärker */
     box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
 }
 
 .clickable-section:active {
     transform: translateY(-2px) scale(0.99);
-    /* Klick-Feedback */
+}
+
+/* Kleinere Sections für Detailseiten */
+.content-section {
+    padding: 35px;
+    margin-bottom: 25px;
 }
 
 /* ========================================
-           ÜBERSCHRIFTEN
-           ======================================== */
-/* H2 - Hauptüberschriften der Sections */
+   ÜBERSCHRIFTEN
+   ======================================== */
 h2 {
     color: var(--text);
     font-size: 2rem;
@@ -525,23 +486,26 @@ h2 {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 2px solid var(--border);
-    /* Unterstrich */
     display: flex;
     align-items: center;
 }
 
-/* Farbiger Balken vor H2 */
-h2::before {
+/* Balken vor H2 nur auf Hauptseite */
+.main-page h2::before {
     content: '';
     width: 4px;
     height: 28px;
     background: var(--accent);
-    /* Lila vertikaler Balken */
     margin-right: 15px;
     border-radius: 2px;
 }
 
-/* H3 - Unterüberschriften */
+/* Auf Detailseiten: kleineres H2 */
+.detail-page h2 {
+    font-size: 1.8rem;
+    gap: 12px;
+}
+
 h3 {
     color: var(--text);
     font-size: 1.3rem;
@@ -551,38 +515,36 @@ h3 {
     align-items: center;
 }
 
-/* Pfeil-Icon vor H3 */
-h3::before {
+/* Pfeil vor H3 nur auf Hauptseite */
+.main-page h3::before {
     content: '▶';
-    /* Unicode Dreieck */
     color: var(--primary);
-    /* Hellblau */
     margin-right: 10px;
     font-size: 0.8rem;
 }
 
-/* Normaler Text (Paragraphen) */
 p {
     color: var(--text-secondary);
     margin-bottom: 15px;
     font-size: 1rem;
 }
 
+/* Detailseiten: etwas größerer Text */
+.detail-page p {
+    font-size: 1.05rem;
+}
+
 /* ========================================
-           CODE BLOCKS - Für Programmcode
-           ======================================== */
+   CODE BLOCKS
+   ======================================== */
 pre {
     background: var(--code-bg);
-    /* Sehr dunkler Hintergrund */
     color: #d4d4d4;
-    /* Helle Schrift */
     padding: 25px;
     border-radius: 12px;
     overflow-x: auto;
-    /* Horizontales Scrollen bei langem Code */
     line-height: 1.6;
     font-family: 'JetBrains Mono', 'Courier New', monospace;
-    /* Code-Schriftart */
     font-size: 0.9rem;
     border: 1px solid #21262d;
     margin: 20px 0;
@@ -590,8 +552,8 @@ pre {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* "C#" Label oben rechts im Code-Block */
-pre::before {
+/* "C#" Label - nur auf Hauptseite */
+.main-page pre::before {
     content: 'C#';
     position: absolute;
     top: 10px;
@@ -604,7 +566,6 @@ pre::before {
     border-radius: 6px;
 }
 
-/* Scrollbar in Code-Blocks */
 pre::-webkit-scrollbar {
     height: 8px;
 }
@@ -614,16 +575,19 @@ pre::-webkit-scrollbar-thumb {
     border-radius: 10px;
 }
 
-/* Inline Code (z.B. `variable` im Text) */
+/* Inline Code */
 code {
     background: rgba(139, 92, 246, 0.15);
-    /* Leicht lila Hintergrund */
     color: var(--accent);
     padding: 3px 8px;
     border-radius: 4px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9em;
+    font-variant-ligatures: none;
+    -webkit-font-feature-settings: "liga" 0;
+    font-feature-settings: "liga" 0;
 }
+
 normal{
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9em;
@@ -631,73 +595,42 @@ normal{
             -webkit-font-feature-settings: "liga" 0; /* Für ältere Safari/Chrome Versionen */
             font-feature-settings: "liga" 0;
         }
+/* ========================================
+   SYNTAX HIGHLIGHTING
+   ======================================== */
+.k { color: #c678dd; font-weight: 500; }  /* Keywords */
+.t { color: #4ec9b0; }                     /* Types */
+.s { color: #ce9178; }                     /* Strings */
+.c { color: #6a9955; font-style: italic; } /* Comments */
 
 /* ========================================
-           SYNTAX HIGHLIGHTING - Farbige Code-Elemente
-           ======================================== */
-.k {
-    color: #c678dd;
-    font-weight: 500;
-}
-
-/* Keywords (if, class, public) */
-.t {
-    color: #4ec9b0;
-}
-
-/* Types (int, string, bool) */
-.s {
-    color: #ce9178;
-}
-
-/* Strings ("Text") */
-.c {
-    color: #6a9955;
-    font-style: italic;
-}
-
-/* Comments (// ...) */
-
-/* ========================================
-           GRID LAYOUT - Zweispaltig
-           ======================================== */
+   GRID LAYOUT
+   ======================================== */
 .grid {
     display: grid;
-    /* auto-fit = passt Anzahl der Spalten automatisch an */
-    /* minmax(350px, 1fr) = Mindestens 350px, sonst gleich breit */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 25px;
-    /* Abstand zwischen Grid-Items */
     margin: 25px 0;
 }
 
-/* Einzelne Grid-Karte */
 .grid-item {
     background: rgba(139, 92, 246, 0.05);
-    /* Leicht lila */
     padding: 25px;
     border-radius: 12px;
     border: 1px solid rgba(139, 92, 246, 0.2);
     transition: all 0.3s ease;
 }
 
-/* Hover auf Grid-Item */
 .grid-item:hover {
     background: rgba(139, 92, 246, 0.1);
-    /* Dunkler */
     transform: translateY(-4px);
-    /* Hebt sich */
     box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
 }
 
 /* ========================================
-           INFO BOXES - Farbige Hinweis-Boxen
-           ======================================== */
-/* Allgemeine Info-Box (Blau) */
-.info-box {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-    border-left: 4px solid var(--primary);
-    /* Blauer linker Rand */
+   INFO BOXES
+   ======================================== */
+.info-box, .warning-box, .success-box {
     padding: 20px;
     margin: 20px 0;
     border-radius: 8px;
@@ -705,45 +638,36 @@ normal{
     align-items: start;
 }
 
-/* Glühbirnen-Icon vor Info-Box */
+/* Info Box */
+.info-box {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-left: 4px solid var(--primary);
+}
+
 .info-box::before {
     content: '💡';
     font-size: 1.5rem;
     margin-right: 15px;
 }
 
-/* Warn-Box (Orange) */
+/* Warning Box */
 .warning-box {
     background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
     border-left: 4px solid var(--warning);
-    /* Orange */
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px;
-    display: flex;
-    align-items: start;
 }
 
-/* Warn-Icon */
 .warning-box::before {
     content: '⚠️';
     font-size: 1.5rem;
     margin-right: 15px;
 }
 
-/* Erfolgs-Box (Grün) */
+/* Success Box */
 .success-box {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
     border-left: 4px solid var(--success);
-    /* Grün */
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px;
-    display: flex;
-    align-items: start;
 }
 
-/* Häkchen-Icon */
 .success-box::before {
     content: '✅';
     font-size: 1.5rem;
@@ -751,57 +675,116 @@ normal{
 }
 
 /* ========================================
-           TAGS - Kleine Labels (z.B. ".NET 8")
-           ======================================== */
+   EXAMPLE BOXES (für Detailseiten)
+   ======================================== */
+.example-box {
+    background: rgba(139, 92, 246, 0.05);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.example-box h4 {
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+/* ========================================
+   TABELLEN (für Detailseiten)
+   ======================================== */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.comparison-table th {
+    background: var(--bg-secondary);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.comparison-table tr:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+/* ========================================
+   LISTEN
+   ======================================== */
+ul {
+    margin-left: 25px;
+    color: var(--text-secondary);
+}
+
+li {
+    margin: 8px 0;
+}
+
+strong {
+    color: var(--text);
+}
+
+/* ========================================
+   TAGS
+   ======================================== */
 .tag {
     display: inline-block;
     background: rgba(139, 92, 246, 0.2);
     color: var(--accent);
     padding: 6px 14px;
     border-radius: 20px;
-    /* Abgerundete Pillen-Form */
     font-size: 0.8rem;
     font-weight: 600;
     margin: 5px 5px 5px 0;
 }
 
 /* ========================================
-           RESPONSIVE DESIGN - Anpassung an Bildschirmgröße
-           ======================================== */
-/* Tablets (1024px und kleiner) */
+   RESPONSIVE DESIGN
+   ======================================== */
+/* Tablets */
 @media (max-width: 1024px) {
     nav {
         width: 240px;
-        /* Schmalere Sidebar */
     }
-
+    
     main {
         margin-left: 240px;
         padding: 40px 40px;
-        /* Weniger Padding */
     }
-
+    
     .hero h1 {
         font-size: 2.5rem;
-        /* Kleinere Überschrift */
     }
 }
 
-/* Smartphones (768px und kleiner) */
+/* Smartphones */
 @media (max-width: 768px) {
     nav {
         transform: translateX(-100%);
-        /* Sidebar versteckt */
     }
-
+    
     main {
         margin-left: 0;
-        /* Kein Platz für Sidebar */
         padding: 30px 20px;
     }
-
+    
     .grid {
         grid-template-columns: 1fr;
-        /* Nur 1 Spalte */
+    }
+    
+    .back-button.fixed {
+        position: static;
+    }
+    
+    body.detail-page {
+        padding: 20px 10px;
     }
 }
