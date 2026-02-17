@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Null-Handling - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>❓ Null-Handling</h1>
+            <p>Sicher mit null-Werten umgehen und NullReferenceException vermeiden</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Was ist null?</h2>
+            <p>
+                <code>null</code> bedeutet "kein Wert" oder "nicht vorhanden". Es ist ein leerer Platzhalter für Reference Types. Problematisch wird es, wenn du auf eine null-Referenz zugreifst – das verursacht die berüchtigte <code>NullReferenceException</code>.
+            </p>
+
+            <div class="warning-box">
+                <div>
+                    <strong>⚠️ NullReferenceException</strong> ist eine der häufigsten Fehlerquellen in C# (und vielen anderen Sprachen). Tony Hoare, der Erfinder von null, nannte es seinen "Milliarden-Dollar-Fehler"!
+                </div>
+            </div>
+
+            <pre><span class="t">string</span>? name = <span class="k">null</span>;  <span class="c">// name enthält nichts</span>
+
+<span class="c">// ❌ Gefährlich – wirft NullReferenceException!</span>
+Console.WriteLine(name.Length);  <span class="c">// CRASH!</span>
+
+<span class="c">// ✅ Sicher</span>
+Console.WriteLine(name?.Length ?? 0);  <span class="c">// 0</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>❓ Nullable Types</h2>
+            <p>
+                Mit einem <code>?</code> nach dem Typ kannst du ausdrücken, dass eine Variable null sein darf.
+            </p>
+
+            <pre><span class="c">// Value Types können normalerweise NICHT null sein</span>
+<span class="t">int</span> zahl = <span class="k">null</span>;     <span class="c">// ❌ Fehler!</span>
+
+<span class="c">// Mit ? darf er null sein</span>
+<span class="t">int</span>? nullableZahl = <span class="k">null</span>;   <span class="c">// ✅</span>
+<span class="t">bool</span>? vielleicht = <span class="k">null</span>;    <span class="c">// ✅</span>
+<span class="t">DateTime</span>? datum = <span class="k">null</span>;     <span class="c">// ✅</span>
+
+<span class="c">// Reference Types (string, object, Klassen) können immer null sein</span>
+<span class="c">// In modernem C# zeigst du das explizit mit ?</span>
+<span class="t">string</span>? optionalerText = <span class="k">null</span>;
+
+<span class="c">// HasValue und Value für Nullable Value Types</span>
+<span class="k">if</span> (nullableZahl.HasValue)
+{
+    Console.WriteLine(nullableZahl.Value);  <span class="c">// Sicherer Zugriff</span>
+}
+
+<span class="c">// Oder mit GetValueOrDefault</span>
+<span class="t">int</span> wert = nullableZahl.GetValueOrDefault(0);  <span class="c">// 0 wenn null</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔗 Null-Operatoren</h2>
+
+            <h3>❓ ?. – Null-Conditional Operator</h3>
+            <p>Greift nur zu, wenn das Objekt <strong>nicht null</strong> ist. Gibt sonst null zurück.</p>
+
+            <pre><span class="t">string</span>? name = <span class="k">null</span>;
+
+<span class="c">// ❌ Crash wenn name null ist</span>
+<span class="t">int</span> len = name.Length;
+
+<span class="c">// ✅ Gibt null zurück wenn name null ist</span>
+<span class="t">int</span>? len = name?.Length;   <span class="c">// null, kein Crash</span>
+
+<span class="c">// Methoden aufrufen</span>
+<span class="t">string</span>? groß = name?.ToUpper();  <span class="c">// null, kein Crash</span>
+
+<span class="c">// Verketten – mehrere Ebenen</span>
+<span class="t">string</span>? city = person?.Address?.City;  <span class="c">// null wenn person ODER Address null</span>
+
+<span class="c">// Arrays und Indexer</span>
+<span class="t">string</span>? erster = namen?[0];  <span class="c">// null wenn namen null</span></pre>
+
+            <h3>?? – Null-Coalescing Operator</h3>
+            <p>Gibt den linken Wert zurück – oder einen Standardwert, wenn der linke null ist.</p>
+
+            <pre><span class="t">string</span>? name = <span class="k">null</span>;
+
+<span class="c">// Wenn name null → "Unbekannt" verwenden</span>
+<span class="t">string</span> anzeige = name ?? <span class="s">"Unbekannt"</span>;
+Console.WriteLine(anzeige);  <span class="c">// "Unbekannt"</span>
+
+<span class="c">// Kombinieren mit ?.!</span>
+<span class="t">string</span> ergebnis = name?.ToUpper() ?? <span class="s">"KEIN NAME"</span>;
+
+<span class="c">// Mehrfach verketten</span>
+<span class="t">string</span> text = a ?? b ?? c ?? <span class="s">"Fallback"</span>;  <span class="c">// Erster Nicht-Null-Wert</span></pre>
+
+            <h3>??= – Null-Coalescing Assignment</h3>
+            <p>Weist einen Wert zu – <strong>nur wenn die Variable null ist</strong>.</p>
+
+            <pre><span class="t">string</span>? name = <span class="k">null</span>;
+
+<span class="c">// Traditionell</span>
+<span class="k">if</span> (name == <span class="k">null</span>) name = <span class="s">"Standard"</span>;
+
+<span class="c">// Kurzform mit ??=</span>
+name ??= <span class="s">"Standard"</span>;  <span class="c">// Weist "Standard" zu, wenn name null ist</span>
+
+<span class="c">// Nützlich für Lazy Initialization</span>
+<span class="k">private</span> <span class="t">List</span>&lt;<span class="t">string</span>&gt;? _items;
+
+<span class="k">public</span> <span class="t">List</span>&lt;<span class="t">string</span>&gt; Items
+{
+    <span class="k">get</span> => _items ??= <span class="k">new</span> <span class="t">List</span>&lt;<span class="t">string</span>&gt;();
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Pattern Matching für Null-Checks</h2>
+
+            <pre><span class="c">// Klassischer null-Check</span>
+<span class="k">if</span> (name != <span class="k">null</span>) { ... }
+
+<span class="c">// Modern mit Pattern Matching</span>
+<span class="k">if</span> (name <span class="k">is not null</span>) { ... }  <span class="c">// Klarer lesbar</span>
+<span class="k">if</span> (name <span class="k">is null</span>) { ... }
+
+<span class="c">// Wert direkt erfassen</span>
+<span class="k">if</span> (obj <span class="k">is string</span> text)
+{
+    Console.WriteLine(text.ToUpper());  <span class="c">// text ist string, nie null</span>
+}
+
+<span class="c">// Switch Expression mit null</span>
+<span class="t">string</span> nachricht = alter <span class="k">switch</span>
+{
+    <span class="k">null</span> <normal>=></normal> <span class="s">"Kein Alter angegeben"</span>,
+    < 0 <normal>=></normal> <span class="s">"Ungültiges Alter"</span>,
+    < 18 <normal>=></normal> <span class="s">"Minderjährig"</span>,
+    _ <normal>=></normal> <span class="s">"Erwachsen"</span>
+};</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ ! – Null-Forgiving Operator</h2>
+            <p>
+                Sagt dem Compiler: "Ich garantiere, dass dieser Wert nicht null ist." Nur sparsam einsetzen!
+            </p>
+
+            <pre><span class="c">// Compiler warnt normalerweise hier (name könnte null sein)</span>
+<span class="t">string</span>? name = GetName();
+<span class="t">int</span> len = name!.Length;  <span class="c">// ! sagt: "Ich bin sicher, es ist nicht null"</span>
+
+<span class="c">// Sinnvoller Einsatz: Nach Validierung</span>
+<span class="t">string</span>? input = ReadInput();
+<span class="k">if</span> (!<span class="t">string</span>.IsNullOrEmpty(input))
+{
+    <span class="t">int</span> len = input.Length;  <span class="c">// Kein ! nötig, Compiler weiß es</span>
+}</pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>⚠️ Vorsicht mit !:</strong> Du umgehst damit die Null-Sicherheit des Compilers. Wenn du falsch liegst, gibt es trotzdem eine NullReferenceException zur Laufzeit!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Best Practices</h2>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Gute Strategien für null-sicheren Code:</strong>
+                    <ul>
+                        <li>Nullable Reference Types aktivieren (<code>&lt;Nullable&gt;enable&lt;/Nullable&gt;</code> in .csproj)</li>
+                        <li>Immer <code>?.Length</code> statt <code>.Length</code> wenn null möglich</li>
+                        <li><code>?? "Standardwert"</code> für Fallback-Werte</li>
+                        <li><code>string.IsNullOrEmpty()</code> und <code>IsNullOrWhiteSpace()</code> für Strings</li>
+                        <li>Früh validieren und früh zurückgeben ("Guard Clause")</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🛡️ Guard Clauses – Früh validieren</h3>
+            <pre><span class="c">// ❌ Tief verschachtelter Code</span>
+<span class="k">public void</span> VerarbeiteBestellung(<span class="t">Bestellung</span>? bestellung)
+{
+    <span class="k">if</span> (bestellung != <span class="k">null</span>)
+    {
+        <span class="k">if</span> (bestellung.Kunde != <span class="k">null</span>)
+        {
+            <span class="c">// Hauptlogik hier - tief verschachtelt!</span>
+        }
+    }
+}
+
+<span class="c">// ✅ Guard Clauses – früh raus bei null</span>
+<span class="k">public void</span> VerarbeiteBestellung(<span class="t">Bestellung</span>? bestellung)
+{
+    <span class="k">if</span> (bestellung <span class="k">is null</span>)
+        <span class="k">throw new</span> <span class="t">ArgumentNullException</span>(<span class="k">nameof</span>(bestellung));
+
+    <span class="k">if</span> (bestellung.Kunde <span class="k">is null</span>)
+        <span class="k">throw new</span> <span class="t">InvalidOperationException</span>(<span class="s">"Bestellung ohne Kunde!"</span>);
+
+    <span class="c">// Hauptlogik – flach und übersichtlich</span>
+    SendeBestätigung(bestellung.Kunde);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><code>?</code> nach Typ = Nullable (<code>int?</code>, <code>string?</code>)</li>
+                        <li><code>?.</code> – Null-Conditional: greift nur zu wenn nicht null</li>
+                        <li><code>??</code> – Null-Coalescing: Standardwert wenn null</li>
+                        <li><code>??=</code> – Null-Coalescing Assignment: nur zuweisen wenn null</li>
+                        <li><code>is not null</code> – Modernes Pattern Matching für Null-Checks</li>
+                        <li><code>!</code> – Null-Forgiving: nur wenn du 100% sicher bist</li>
+                        <li><strong>Guard Clauses:</strong> Früh validieren, flachen Code schreiben</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Schau dir jetzt <strong>"Dateien & I/O"</strong> an – wie du Dateien liest, schreibst und Verzeichnisse verwaltest!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>📚 Collections</h1>
+            <p>Listen, Wörterbücher und weitere Datenstrukturen für deine Programme</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Was sind Collections?</h2>
+            <p>
+                Eine <strong>Collection</strong> ist ein Container, der mehrere Werte speichert. Im Gegensatz zu normalen Variablen (die nur einen Wert speichern) können Collections viele Werte auf einmal verwalten.
+            </p>
+            <div class="example-box">
+                <h4>🏠 Analogie: Schubladen vs. Schrank</h4>
+                <p>
+                    Eine normale Variable ist wie <strong>eine einzelne Schublade</strong> – sie speichert genau einen Wert.<br>
+                    Eine Collection ist wie ein <strong>ganzer Schrank</strong> – er hat viele Fächer und kann viele Dinge speichern.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📦 Arrays – Die Basis</h2>
+            <p>
+                Arrays sind die einfachste Collection. Sie haben eine <strong>feste Größe</strong>, die nach der Erstellung nicht mehr geändert werden kann.
+            </p>
+
+            <pre><span class="c">// Array erstellen (feste Größe!)</span>
+<span class="t">int</span>[] zahlen = { 1, 2, 3, 4, 5 };
+<span class="t">string</span>[] namen = <span class="k">new string</span>[3];  <span class="c">// Array mit 3 leeren Plätzen</span>
+
+<span class="c">// Zugriff über Index (beginnt bei 0!)</span>
+namen[0] = <span class="s">"Anna"</span>;
+namen[1] = <span class="s">"Bob"</span>;
+namen[2] = <span class="s">"Clara"</span>;
+
+Console.WriteLine(zahlen[0]);   <span class="c">// 1</span>
+Console.WriteLine(zahlen[4]);   <span class="c">// 5</span>
+Console.WriteLine(zahlen.Length); <span class="c">// 5 (Anzahl Elemente)</span>
+
+<span class="c">// Mehrdimensionale Arrays (Tabellen)</span>
+<span class="t">int</span>[,] matrix = <span class="k">new int</span>[3, 3];
+matrix[0, 0] = 1;
+matrix[1, 1] = 5;</pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>⚠️ Index-Out-of-Range:</strong> Wenn du auf einen Index zugreifst, der nicht existiert, bekommst du eine Exception! Array mit 5 Elementen: gültige Indizes sind 0–4.
+                </div>
+            </div>
+
+            <h3>🔄 Array durchlaufen</h3>
+            <pre><span class="t">string</span>[] früchte = { <span class="s">"Apfel"</span>, <span class="s">"Banane"</span>, <span class="s">"Kirsche"</span> };
+
+<span class="c">// Mit for (wenn du den Index brauchst)</span>
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < früchte.Length; i++) 
+{
+    Console.WriteLine(<span class="s">$"Index {i}: {früchte[i]}"</span>);
+}
+
+<span class="c">// Mit foreach (einfacher, wenn du nur Werte brauchst)</span>
+<span class="k">foreach</span> (<span class="t">string</span> frucht <span class="k">in</span> früchte) 
+{
+    Console.WriteLine(frucht);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 List&lt;T&gt; – Die flexible Liste</h2>
+            <p>
+                Im Gegensatz zu Arrays kann eine <code>List&lt;T&gt;</code> <strong>dynamisch wachsen und schrumpfen</strong>. Sie ist die am häufigsten verwendete Collection in C#.
+            </p>
+
+            <pre><span class="c">// List erstellen</span>
+<span class="t">List</span>&lt;<span class="t">int</span>&gt; zahlen = <span class="k">new</span> <span class="t">List</span>&lt;<span class="t">int</span>&gt;();
+<span class="t">List</span>&lt;<span class="t">string</span>&gt; namen = <span class="k">new</span>() { <span class="s">"Anna"</span>, <span class="s">"Bob"</span> };  <span class="c">// Moderne Syntax</span>
+
+<span class="c">// Hinzufügen</span>
+zahlen.Add(10);
+zahlen.Add(20);
+zahlen.Add(30);
+
+<span class="c">// Entfernen</span>
+zahlen.Remove(20);       <span class="c">// Entfernt den Wert 20</span>
+zahlen.RemoveAt(0);      <span class="c">// Entfernt Element an Index 0</span>
+
+<span class="c">// Prüfen</span>
+<span class="t">bool</span> hatDrei = zahlen.Contains(30);  <span class="c">// true</span>
+<span class="t">int</span> anzahl = zahlen.Count;           <span class="c">// Anzahl Elemente</span>
+
+<span class="c">// Sortieren</span>
+zahlen.Sort();
+
+<span class="c">// Index finden</span>
+<span class="t">int</span> pos = namen.IndexOf(<span class="s">"Bob"</span>);  <span class="c">// 1</span></pre>
+
+            <h3>📊 Nützliche List-Methoden</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Methode</th>
+                        <th>Was sie macht</th>
+                        <th>Beispiel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Add(x)</code></td>
+                        <td>Fügt am Ende hinzu</td>
+                        <td><code>list.Add("Max")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Insert(i, x)</code></td>
+                        <td>Fügt an Position i ein</td>
+                        <td><code>list.Insert(0, "Erster")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Remove(x)</code></td>
+                        <td>Entfernt ersten Treffer</td>
+                        <td><code>list.Remove("Max")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Clear()</code></td>
+                        <td>Leert die Liste komplett</td>
+                        <td><code>list.Clear()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Contains(x)</code></td>
+                        <td>Prüft ob Wert vorhanden</td>
+                        <td><code>list.Contains("Bob")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Sort()</code></td>
+                        <td>Sortiert die Liste</td>
+                        <td><code>list.Sort()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Reverse()</code></td>
+                        <td>Dreht Reihenfolge um</td>
+                        <td><code>list.Reverse()</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🗂️ Dictionary&lt;TKey, TValue&gt; – Schlüssel-Wert-Paare</h2>
+            <p>
+                Ein <code>Dictionary</code> speichert Werte mit einem <strong>Schlüssel</strong> (Key). Das ist wie ein echtes Wörterbuch: Du suchst ein Wort (Key) und findest die Erklärung (Value).
+            </p>
+
+            <pre><span class="c">// Dictionary erstellen</span>
+<span class="t">Dictionary</span>&lt;<span class="t">string</span>, <span class="t">int</span>&gt; alter = <span class="k">new</span>()
+{
+    { <span class="s">"Max"</span>, 25 },
+    { <span class="s">"Anna"</span>, 30 },
+    { <span class="s">"Bob"</span>, 22 }
+};
+
+<span class="c">// Zugriff über Key</span>
+Console.WriteLine(alter[<span class="s">"Max"</span>]);  <span class="c">// 25</span>
+
+<span class="c">// Sicherer Zugriff (kein Fehler wenn Key nicht vorhanden)</span>
+<span class="k">if</span> (alter.TryGetValue(<span class="s">"Lisa"</span>, <span class="k">out int</span> lisasAlter))
+{
+    Console.WriteLine(<span class="s">$"Lisa ist {lisasAlter}"</span>);
+}
+<span class="k">else</span>
+{
+    Console.WriteLine(<span class="s">"Lisa nicht gefunden"</span>);
+}
+
+<span class="c">// Hinzufügen & Ändern</span>
+alter[<span class="s">"Lisa"</span>] = 28;   <span class="c">// Fügt hinzu oder überschreibt</span>
+alter.Add(<span class="s">"Tom"</span>, 35);  <span class="c">// Fehler wenn Key schon vorhanden!</span>
+
+<span class="c">// Entfernen</span>
+alter.Remove(<span class="s">"Bob"</span>);
+
+<span class="c">// Durchlaufen</span>
+<span class="k">foreach</span> (<span class="k">var</span> pair <span class="k">in</span> alter)
+{
+    Console.WriteLine(<span class="s">$"{pair.Key}: {pair.Value} Jahre"</span>);
+}</pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>💡 TryGetValue immer bevorzugen!</strong> Direkter Zugriff mit <code>alter["Lisa"]</code> wirft eine Exception wenn der Key nicht existiert. <code>TryGetValue</code> ist sicher!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Weitere wichtige Collections</h2>
+
+            <div class="grid">
+                <div class="example-box">
+                    <h4>🔢 HashSet&lt;T&gt; – Eindeutige Werte</h4>
+                    <p>Speichert nur <strong>einzigartige</strong> Werte – keine Duplikate!</p>
+                    <pre><span class="t">HashSet</span>&lt;<span class="t">string</span>&gt; tags = <span class="k">new</span>()
+{
+    <span class="s">"C#"</span>, <span class="s">"coding"</span>, <span class="s">"C#"</span>  <span class="c">// "C#" nur einmal!</span>
+};
+<span class="c">// Enthält: "C#", "coding"</span>
+
+tags.Add(<span class="s">"dotnet"</span>);
+<span class="t">bool</span> hat = tags.Contains(<span class="s">"C#"</span>);  <span class="c">// true</span></pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>📤 Queue&lt;T&gt; – Warteschlange (FIFO)</h4>
+                    <p><strong>F</strong>irst <strong>I</strong>n, <strong>F</strong>irst <strong>O</strong>ut – Wer zuerst kommt, kommt zuerst raus.</p>
+                    <pre><span class="t">Queue</span>&lt;<span class="t">string</span>&gt; warteschlange = <span class="k">new</span>();
+warteschlange.Enqueue(<span class="s">"Erster"</span>);
+warteschlange.Enqueue(<span class="s">"Zweiter"</span>);
+
+<span class="t">string</span> nächster = warteschlange.Dequeue();
+<span class="c">// "Erster" (Warteschlange: "Zweiter")</span>
+
+<span class="t">string</span> kuck = warteschlange.Peek();
+<span class="c">// Schaut rein ohne zu entfernen</span></pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>📚 Stack&lt;T&gt; – Stapel (LIFO)</h4>
+                    <p><strong>L</strong>ast <strong>I</strong>n, <strong>F</strong>irst <strong>O</strong>ut – Wie ein Tellerstapel!</p>
+                    <pre><span class="t">Stack</span>&lt;<span class="t">int</span>&gt; stapel = <span class="k">new</span>();
+stapel.Push(1);
+stapel.Push(2);
+stapel.Push(3);
+
+<span class="t">int</span> oben = stapel.Pop();  <span class="c">// 3 (oben)</span>
+<span class="t">int</span> kuck = stapel.Peek(); <span class="c">// 2 (ohne entfernen)</span></pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔗 LinkedList&lt;T&gt; – Verkettete Liste</h4>
+                    <p>Effizient beim Einfügen/Löschen in der Mitte.</p>
+                    <pre><span class="t">LinkedList</span>&lt;<span class="t">int</span>&gt; liste = <span class="k">new</span>();
+liste.AddFirst(1);
+liste.AddLast(3);
+liste.AddAfter(liste.First, 2);
+<span class="c">// 1 → 2 → 3</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚖️ Wann welche Collection?</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Collection</th>
+                        <th>Wann verwenden?</th>
+                        <th>Stärke</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Array</code></td>
+                        <td>Feste Anzahl bekannt</td>
+                        <td>Schnell, wenig Overhead</td>
+                    </tr>
+                    <tr>
+                        <td><code>List&lt;T&gt;</code></td>
+                        <td>Dynamische Sammlung</td>
+                        <td>Flexibel, viele Methoden</td>
+                    </tr>
+                    <tr>
+                        <td><code>Dictionary&lt;K,V&gt;</code></td>
+                        <td>Schnelles Nachschlagen per Key</td>
+                        <td>O(1) Zugriff per Key</td>
+                    </tr>
+                    <tr>
+                        <td><code>HashSet&lt;T&gt;</code></td>
+                        <td>Nur eindeutige Werte</td>
+                        <td>Kein Duplikat-Management nötig</td>
+                    </tr>
+                    <tr>
+                        <td><code>Queue&lt;T&gt;</code></td>
+                        <td>Aufgaben-Warteschlange</td>
+                        <td>FIFO-Reihenfolge garantiert</td>
+                    </tr>
+                    <tr>
+                        <td><code>Stack&lt;T&gt;</code></td>
+                        <td>Undo-Funktion, Parsing</td>
+                        <td>LIFO-Reihenfolge garantiert</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><strong>Arrays</strong> – feste Größe, schnell, Indizes beginnen bei 0</li>
+                        <li><strong>List&lt;T&gt;</strong> – dynamisch, viele Hilfsmethoden, Standard-Wahl</li>
+                        <li><strong>Dictionary</strong> – Schlüssel-Wert-Paare, schnelles Nachschlagen</li>
+                        <li><strong>HashSet</strong> – nur eindeutige Werte, keine Duplikate</li>
+                        <li><strong>Queue/Stack</strong> – spezielle Reihenfolgen (FIFO/LIFO)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Jetzt wo du Collections kennst, schau dir <strong>"OOP"</strong> an – damit lernst du, eigene Datenstrukturen und komplexe Typen zu bauen!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

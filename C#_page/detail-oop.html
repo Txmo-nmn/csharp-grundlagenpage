@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP - Objektorientierung - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>🎯 Objektorientierung (OOP)</h1>
+            <p>Kapselung, Vererbung, Polymorphie und Abstraktion verstehen</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🧩 Was ist OOP?</h2>
+            <p>
+                Objektorientierte Programmierung (OOP) ist ein Programmierparadigma, bei dem Code in <strong>Klassen</strong> und <strong>Objekte</strong> organisiert wird. Statt langen Prozeduren schreibt man Baupläne (Klassen), aus denen man Instanzen (Objekte) erstellt.
+            </p>
+            <div class="example-box">
+                <h4>🏗️ Analogie: Bauplan und Häuser</h4>
+                <p>
+                    Eine <strong>Klasse</strong> ist wie ein Bauplan für ein Haus – er beschreibt, wie das Haus aussieht und was es kann.<br>
+                    Ein <strong>Objekt</strong> ist ein konkretes, tatsächliches Haus, das nach diesem Bauplan gebaut wurde.<br>
+                    Aus einem Bauplan kannst du <strong>viele Häuser</strong> bauen – jedes ist ein eigenes Objekt!
+                </p>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>Die 4 Säulen der OOP:</strong> Kapselung · Vererbung · Polymorphie · Abstraktion
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔨 Klassen und Objekte</h2>
+
+            <pre><span class="c">// Klasse definieren = Bauplan erstellen</span>
+<span class="k">public class</span> <span class="t">Auto</span>
+{
+    <span class="c">// Eigenschaften (Properties) - Was hat ein Auto?</span>
+    <span class="k">public string</span> Marke { <span class="k">get; set;</span> }
+    <span class="k">public string</span> Farbe { <span class="k">get; set;</span> }
+    <span class="k">public int</span> Baujahr { <span class="k">get; set;</span> }
+    <span class="k">private int</span> _kilometerstand = 0;  <span class="c">// Privates Feld</span>
+
+    <span class="c">// Konstruktor - Wird beim Erstellen aufgerufen</span>
+    <span class="k">public</span> Auto(<span class="t">string</span> marke, <span class="t">string</span> farbe, <span class="t">int</span> baujahr)
+    {
+        Marke = marke;
+        Farbe = farbe;
+        Baujahr = baujahr;
+    }
+
+    <span class="c">// Methoden - Was kann ein Auto?</span>
+    <span class="k">public void</span> Fahren(<span class="t">int</span> km)
+    {
+        _kilometerstand += km;
+        Console.WriteLine(<span class="s">$"Gefahren! Kilometerstand: {_kilometerstand}"</span>);
+    }
+
+    <span class="k">public string</span> BeschreibeDich() =>
+        <span class="s">$"{Farbe} {Marke} ({Baujahr}), {_kilometerstand} km"</span>;
+}
+
+<span class="c">// Objekte erstellen (Instanzen des Bauplans)</span>
+<span class="t">Auto</span> meinAuto = <span class="k">new</span> <span class="t">Auto</span>(<span class="s">"BMW"</span>, <span class="s">"Blau"</span>, 2020);
+<span class="t">Auto</span> nochEinsAuto = <span class="k">new</span> <span class="t">Auto</span>(<span class="s">"VW"</span>, <span class="s">"Rot"</span>, 2018);
+
+meinAuto.Fahren(150);
+Console.WriteLine(meinAuto.BeschreibeDich());</pre>
+
+            <h3>🔑 Zugriffsmodifizierer</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Modifizierer</th>
+                        <th>Sichtbar für</th>
+                        <th>Wann nutzen?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>public</code></td>
+                        <td>Alle</td>
+                        <td>API-Methoden, Properties</td>
+                    </tr>
+                    <tr>
+                        <td><code>private</code></td>
+                        <td>Nur diese Klasse</td>
+                        <td>Interne Felder, Hilfsmethoden</td>
+                    </tr>
+                    <tr>
+                        <td><code>protected</code></td>
+                        <td>Diese Klasse + Unterklassen</td>
+                        <td>Vererbungs-Szenarien</td>
+                    </tr>
+                    <tr>
+                        <td><code>internal</code></td>
+                        <td>Nur dieses Projekt</td>
+                        <td>Projektinterne Klassen</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🔒 Säule 1: Kapselung</h2>
+            <p>
+                Kapselung bedeutet, interne Details einer Klasse zu <strong>verstecken</strong> und nur kontrolliert nach außen zugänglich zu machen. So schützt du die Integrität deiner Daten.
+            </p>
+
+            <pre><span class="k">public class</span> <span class="t">Bankkonto</span>
+{
+    <span class="c">// private: Von außen nicht direkt änderbar!</span>
+    <span class="k">private decimal</span> _kontostand = 0;
+
+    <span class="c">// public: Getter erlaubt Lesen, aber kein direktes Setzen</span>
+    <span class="k">public decimal</span> Kontostand => _kontostand;
+
+    <span class="c">// Kontrollierte Methoden für Änderungen</span>
+    <span class="k">public bool</span> Einzahlen(<span class="t">decimal</span> betrag)
+    {
+        <span class="k">if</span> (betrag <= 0) <span class="k">return false</span>;  <span class="c">// Validierung!</span>
+        _kontostand += betrag;
+        <span class="k">return true</span>;
+    }
+
+    <span class="k">public bool</span> Abheben(<span class="t">decimal</span> betrag)
+    {
+        <span class="k">if</span> (betrag > _kontostand) <span class="k">return false</span>;  <span class="c">// Schutz!</span>
+        _kontostand -= betrag;
+        <span class="k">return true</span>;
+    }
+}
+
+<span class="t">Bankkonto</span> konto = <span class="k">new</span> <span class="t">Bankkonto</span>();
+konto.Einzahlen(500);
+<span class="c">// konto._kontostand = 1000;  ❌ Fehler! Private Feld</span>
+Console.WriteLine(konto.Kontostand);  <span class="c">// ✅ 500</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>👨‍👩‍👦 Säule 2: Vererbung</h2>
+            <p>
+                Vererbung erlaubt es, eine neue Klasse auf Basis einer bestehenden zu erstellen. Die <strong>Unterklasse</strong> erbt alle Eigenschaften und Methoden der <strong>Basisklasse</strong>.
+            </p>
+
+            <pre><span class="c">// Basisklasse (Parent)</span>
+<span class="k">public class</span> <span class="t">Tier</span>
+{
+    <span class="k">public string</span> Name { <span class="k">get; set;</span> }
+    <span class="k">public int</span> Alter { <span class="k">get; set;</span> }
+
+    <span class="k">public virtual void</span> MachGeräusch()  <span class="c">// virtual = überschreibbar</span>
+    {
+        Console.WriteLine(<span class="s">"..."</span>);
+    }
+
+    <span class="k">public void</span> Essen() => Console.WriteLine(<span class="s">$"{Name} frisst"</span>);
+}
+
+<span class="c">// Unterklasse erbt von Tier</span>
+<span class="k">public class</span> <span class="t">Hund</span> : <span class="t">Tier</span>
+{
+    <span class="k">public string</span> Rasse { <span class="k">get; set;</span> }
+
+    <span class="c">// override = überschreibt die Basisklassen-Methode</span>
+    <span class="k">public override void</span> MachGeräusch()
+    {
+        Console.WriteLine(<span class="s">"Wuff!"</span>);
+    }
+
+    <span class="k">public void</span> Apportieren() => Console.WriteLine(<span class="s">"Holt den Ball!"</span>);
+}
+
+<span class="k">public class</span> <span class="t">Katze</span> : <span class="t">Tier</span>
+{
+    <span class="k">public override void</span> MachGeräusch() => Console.WriteLine(<span class="s">"Miau!"</span>);
+}
+
+<span class="c">// Verwendung</span>
+<span class="t">Hund</span> bello = <span class="k">new</span> <span class="t">Hund</span>() { Name = <span class="s">"Bello"</span>, Alter = 3, Rasse = <span class="s">"Labrador"</span> };
+bello.Essen();           <span class="c">// Geerbt von Tier: "Bello frisst"</span>
+bello.MachGeräusch();   <span class="c">// Überschrieben: "Wuff!"</span>
+bello.Apportieren();    <span class="c">// Nur Hund hat das: "Holt den Ball!"</span></pre>
+
+            <div class="warning-box">
+                <div>
+                    <strong>⚠️ Einfachvererbung:</strong> In C# kann eine Klasse nur von <strong>einer einzigen</strong> Basisklasse erben. Mehrere Interfaces sind aber erlaubt!
+                </div>
+            </div>
+
+            <h3>🔑 base – Zugriff auf Basisklasse</h3>
+            <pre><span class="k">public class</span> <span class="t">ElektrischerHund</span> : <span class="t">Hund</span>
+{
+    <span class="k">public int</span> Akkustand { <span class="k">get; set;</span> }
+
+    <span class="k">public override void</span> MachGeräusch()
+    {
+        <span class="c">// base ruft die Methode der Elternklasse auf</span>
+        <span class="k">base</span>.MachGeräusch();  <span class="c">// "Wuff!" von Hund</span>
+        Console.WriteLine(<span class="s">"*BEEP*"</span>);
+    }
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎭 Säule 3: Polymorphie</h2>
+            <p>
+                Polymorphie bedeutet "viele Formen". Objekte unterschiedlicher Klassen können über einen gemeinsamen Typ verwendet werden – jedes verhält sich dann auf seine eigene Art.
+            </p>
+
+            <pre><span class="t">Tier</span>[] tiere = 
+{
+    <span class="k">new</span> <span class="t">Hund</span>() { Name = <span class="s">"Bello"</span> },
+    <span class="k">new</span> <span class="t">Katze</span>() { Name = <span class="s">"Mieze"</span> },
+    <span class="k">new</span> <span class="t">Hund</span>() { Name = <span class="s">"Rex"</span> }
+};
+
+<span class="c">// Jedes Tier macht sein eigenes Geräusch!</span>
+<span class="k">foreach</span> (<span class="t">Tier</span> tier <span class="k">in</span> tiere)
+{
+    Console.Write(<span class="s">$"{tier.Name}: "</span>);
+    tier.MachGeräusch();  <span class="c">// Polymorphie in Aktion!</span>
+}
+<span class="c">// Bello: Wuff!
+// Mieze: Miau!
+// Rex: Wuff!</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Interfaces – Verträge definieren</h2>
+            <p>
+                Ein <strong>Interface</strong> definiert einen Vertrag: Es sagt <em>was</em> eine Klasse können muss, aber nicht <em>wie</em> sie es macht.
+            </p>
+
+            <pre><span class="c">// Interface = Vertrag</span>
+<span class="k">public interface</span> <span class="t">IFlyable</span>
+{
+    <span class="k">void</span> Fliegen();              <span class="c">// Muss implementiert werden</span>
+    <span class="t">int</span> MaxHöhe { <span class="k">get;</span> }       <span class="c">// Property-Vertrag</span>
+}
+
+<span class="k">public interface</span> <span class="t">ISchwimmbar</span>
+{
+    <span class="k">void</span> Schwimmen();
+}
+
+<span class="c">// Klasse implementiert mehrere Interfaces!</span>
+<span class="k">public class</span> <span class="t">Ente</span> : <span class="t">Tier</span>, <span class="t">IFlyable</span>, <span class="t">ISchwimmbar</span>
+{
+    <span class="k">public int</span> MaxHöhe => 500;  <span class="c">// Interface-Property</span>
+
+    <span class="k">public void</span> Fliegen() => Console.WriteLine(<span class="s">"Quak-quak-flatter!"</span>);
+    <span class="k">public void</span> Schwimmen() => Console.WriteLine(<span class="s">"Planschen!"</span>);
+
+    <span class="k">public override void</span> MachGeräusch() => Console.WriteLine(<span class="s">"Quak!"</span>);
+}
+
+<span class="c">// Interface als Typ verwenden</span>
+<span class="t">IFlyable</span>[] fliegendeObjekte = 
+{
+    <span class="k">new</span> <span class="t">Ente</span>(),
+    <span class="c">// new Flugzeug(), usw.</span>
+};
+<span class="k">foreach</span> (<span class="k">var</span> obj <span class="k">in</span> fliegendeObjekte) obj.Fliegen();</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><strong>Klasse</strong> = Bauplan, <strong>Objekt</strong> = konkrete Instanz</li>
+                        <li><strong>Kapselung:</strong> private Felder, public Methoden für kontrollierten Zugriff</li>
+                        <li><strong>Vererbung:</strong> Unterklassen erben von Basisklasse, <code>override</code> für Anpassung</li>
+                        <li><strong>Polymorphie:</strong> verschiedene Objekte, gleiche Methode, unterschiedliches Verhalten</li>
+                        <li><strong>Interface:</strong> Vertrag – was muss die Klasse können? Mehrere erlaubt!</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Lerne jetzt <strong>"Generics & LINQ"</strong> – damit kannst du typsicheren Code für beliebige Typen schreiben und Daten elegant abfragen!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

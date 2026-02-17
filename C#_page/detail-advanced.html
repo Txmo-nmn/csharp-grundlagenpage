@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generics & LINQ - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>🔮 Generics & LINQ</h1>
+            <p>Typsichere Platzhalter und elegante Datenabfragen</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🧩 Was sind Generics?</h2>
+            <p>
+                Generics erlauben dir, Code zu schreiben, der mit <strong>beliebigen Datentypen</strong> funktioniert – ohne die Typsicherheit zu verlieren. Das <code>T</code> ist ein Platzhalter (Type Parameter) für einen echten Typ.
+            </p>
+            <div class="example-box">
+                <h4>📦 Analogie: Der universelle Behälter</h4>
+                <p>
+                    Stell dir eine Box vor, die irgendetwas enthalten kann – aber immer nur <em>genau einen Typ</em> auf einmal. Du entscheidest beim Erstellen, was rein kommt: <code>Box&lt;string&gt;</code> für Text, <code>Box&lt;int&gt;</code> für Zahlen.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📦 Generische Klassen</h2>
+
+            <pre><span class="c">// Generische Klasse mit Typ-Parameter T</span>
+<span class="k">public class</span> <span class="t">Box</span>&lt;T&gt;
+{
+    <span class="k">public</span> T Inhalt { <span class="k">get; set;</span> }
+
+    <span class="k">public</span> Box(T inhalt)
+    {
+        Inhalt = inhalt;
+    }
+
+    <span class="k">public void</span> Zeigen() => Console.WriteLine(<span class="s">$"Inhalt: {Inhalt}"</span>);
+}
+
+<span class="c">// Gleiche Klasse, verschiedene Typen!</span>
+<span class="t">Box</span>&lt;<span class="t">string</span>&gt; textBox = <span class="k">new</span>(<span class="s">"Hallo Welt"</span>);
+<span class="t">Box</span>&lt;<span class="t">int</span>&gt; zahlenBox = <span class="k">new</span>(42);
+<span class="t">Box</span>&lt;<span class="t">bool</span>&gt; boolBox = <span class="k">new</span>(<span class="k">true</span>);
+
+textBox.Zeigen();   <span class="c">// Inhalt: Hallo Welt</span>
+zahlenBox.Zeigen(); <span class="c">// Inhalt: 42</span></pre>
+
+            <h3>⚡ Generische Methoden</h3>
+            <pre><span class="c">// Generische Methode</span>
+<span class="k">public static</span> T Größer&lt;T&gt;(T a, T b) <span class="k">where</span> T : <span class="t">IComparable</span>&lt;T&gt;
+{
+    <span class="k">return</span> a.CompareTo(b) > 0 ? a : b;
+}
+
+<span class="c">// Funktioniert für int, double, string, etc.!</span>
+Console.WriteLine(Größer(5, 3));          <span class="c">// 5</span>
+Console.WriteLine(Größer(3.14, 2.71));   <span class="c">// 3.14</span>
+Console.WriteLine(Größer(<span class="s">"Zebra"</span>, <span class="s">"Affe"</span>)); <span class="c">// Zebra</span></pre>
+
+            <h3>🔒 Constraints – Einschränkungen</h3>
+            <p>Mit <code>where</code> kannst du den Typ-Parameter einschränken:</p>
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>Constraint</th><th>Bedeutung</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>where T : class</code></td><td>T muss ein Reference Type sein</td></tr>
+                    <tr><td><code>where T : struct</code></td><td>T muss ein Value Type sein</td></tr>
+                    <tr><td><code>where T : new()</code></td><td>T muss einen parameterlosen Konstruktor haben</td></tr>
+                    <tr><td><code>where T : IComparable</code></td><td>T muss IComparable implementieren</td></tr>
+                    <tr><td><code>where T : Tier</code></td><td>T muss Tier oder Unterklasse sein</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 LINQ – Language Integrated Query</h2>
+            <p>
+                LINQ (gesprochen "link") ist eine mächtige Abfragesprache, die direkt in C# eingebaut ist. Damit kannst du Collections filtern, sortieren und transformieren – wie SQL, aber für C#-Objekte.
+            </p>
+
+            <pre><span class="c">// Setup: Eine Liste von Personen</span>
+<span class="k">var</span> personen = <span class="k">new</span> <span class="t">List</span>&lt;<span class="t">Person</span>&gt;()
+{
+    <span class="k">new</span>() { Name = <span class="s">"Anna"</span>, Alter = 28, Stadt = <span class="s">"Berlin"</span> },
+    <span class="k">new</span>() { Name = <span class="s">"Bob"</span>, Alter = 17, Stadt = <span class="s">"Hamburg"</span> },
+    <span class="k">new</span>() { Name = <span class="s">"Clara"</span>, Alter = 34, Stadt = <span class="s">"Berlin"</span> },
+    <span class="k">new</span>() { Name = <span class="s">"Dan"</span>, Alter = 22, Stadt = <span class="s">"München"</span> }
+};</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Die wichtigsten LINQ-Methoden</h2>
+
+            <h3>🔎 Where – Filtern</h3>
+            <pre><span class="c">// Nur Erwachsene</span>
+<span class="k">var</span> erwachsene = personen.Where(p => p.Alter >= 18).ToList();
+<span class="c">// Anna (28), Clara (34), Dan (22)</span>
+
+<span class="c">// Berliner Erwachsene</span>
+<span class="k">var</span> berliner = personen
+    .Where(p => p.Alter >= 18 &amp;&amp; p.Stadt == <span class="s">"Berlin"</span>)
+    .ToList();</pre>
+
+            <h3>📋 Select – Transformieren</h3>
+            <pre><span class="c">// Nur Namen extrahieren</span>
+<span class="t">List</span>&lt;<span class="t">string</span>&gt; namen = personen.Select(p => p.Name).ToList();
+<span class="c">// ["Anna", "Bob", "Clara", "Dan"]</span>
+
+<span class="c">// Anonymes Objekt erstellen</span>
+<span class="k">var</span> kompakt = personen.Select(p => <span class="k">new</span> { p.Name, p.Alter });
+<span class="c">// [{Name: "Anna", Alter: 28}, ...]</span></pre>
+
+            <h3>📊 OrderBy – Sortieren</h3>
+            <pre><span class="c">// Nach Alter aufsteigend</span>
+<span class="k">var</span> nachAlter = personen.OrderBy(p => p.Alter).ToList();
+
+<span class="c">// Nach Name absteigend</span>
+<span class="k">var</span> nachNameDesc = personen.OrderByDescending(p => p.Name);
+
+<span class="c">// Erst nach Stadt, dann nach Alter</span>
+<span class="k">var</span> komplex = personen.OrderBy(p => p.Stadt).ThenBy(p => p.Alter);</pre>
+
+            <h3>🧮 Aggregation – Berechnungen</h3>
+            <pre><span class="c">// Statistiken</span>
+<span class="t">int</span> anzahl = personen.Count();
+<span class="t">double</span> durchschnittsalter = personen.Average(p => p.Alter);
+<span class="t">int</span> älteste = personen.Max(p => p.Alter);
+<span class="t">int</span> jüngste = personen.Min(p => p.Alter);
+<span class="t">int</span> gesamtAlter = personen.Sum(p => p.Alter);
+
+Console.WriteLine(<span class="s">$"Durchschnitt: {durchschnittsalter:F1} Jahre"</span>);</pre>
+
+            <h3>🔬 Weitere nützliche LINQ-Methoden</h3>
+            <pre><span class="c">// Prüfen</span>
+<span class="t">bool</span> irgendwer = personen.Any(p => p.Alter > 30);    <span class="c">// true (Clara)</span>
+<span class="t">bool</span> alle = personen.All(p => p.Alter >= 18);        <span class="c">// false (Bob 17)</span>
+
+<span class="c">// Einzelne Elemente holen</span>
+<span class="t">Person</span> erste = personen.First(p => p.Stadt == <span class="s">"Berlin"</span>);   <span class="c">// Anna</span>
+<span class="t">Person</span>? vielleicht = personen.FirstOrDefault(p => p.Alter > 100); <span class="c">// null</span>
+<span class="t">Person</span> einzige = personen.Single(p => p.Name == <span class="s">"Dan"</span>);     <span class="c">// Dan</span>
+
+<span class="c">// Distinct – Duplikate entfernen</span>
+<span class="k">var</span> städte = personen.Select(p => p.Stadt).Distinct();
+<span class="c">// ["Berlin", "Hamburg", "München"]</span>
+
+<span class="c">// Take & Skip – Paginierung</span>
+<span class="k">var</span> ersteDrei = personen.Take(3);
+<span class="k">var</span> ohneErste = personen.Skip(1);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔗 LINQ verketten (Method Chaining)</h2>
+            <p>
+                Der wahre Vorteil von LINQ: Du kannst Methoden <strong>beliebig verketten</strong> und komplexe Abfragen kurz und lesbar schreiben.
+            </p>
+
+            <pre><span class="c">// Komplex, aber lesbar!</span>
+<span class="k">var</span> result = personen
+    .Where(p => p.Alter >= 18)          <span class="c">// Nur Erwachsene</span>
+    .OrderBy(p => p.Name)               <span class="c">// Alphabetisch sortiert</span>
+    .Select(p => <span class="s">$"{p.Name} ({p.Stadt})"</span>) <span class="c">// Namen formatieren</span>
+    .Take(3)                            <span class="c">// Nur ersten 3</span>
+    .ToList();                          <span class="c">// Als Liste materialisieren</span>
+
+<span class="c">// result: ["Anna (Berlin)", "Clara (Berlin)", "Dan (München)"]</span></pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>💡 Lazy Evaluation:</strong> LINQ-Abfragen werden erst ausgeführt, wenn du sie abrufst (z.B. mit <code>ToList()</code>, <code>First()</code> oder in einer <code>foreach</code>-Schleife). Das spart Performance!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏷️ Lambda-Ausdrücke</h2>
+            <p>
+                Lambdas sind <strong>anonyme Funktionen</strong> – kurze Einzel-Ausdrücke ohne eigenen Namen. Du verwendest sie ständig in LINQ.
+            </p>
+
+            <pre><span class="c">// Grundsyntax: (parameter) => ausdruck</span>
+<span class="t">Func</span>&lt;<span class="t">int</span>, <span class="t">int</span>&gt; doppelt = x => x * 2;
+Console.WriteLine(doppelt(5));  <span class="c">// 10</span>
+
+<span class="c">// Mehrere Parameter</span>
+<span class="t">Func</span>&lt;<span class="t">int</span>, <span class="t">int</span>, <span class="t">int</span>&gt; addiere = (a, b) => a + b;
+
+<span class="c">// Mit Methodenkörper</span>
+<span class="t">Func</span>&lt;<span class="t">string</span>, <span class="t">bool</span>&gt; istLang = text => 
+{
+    <span class="k">int</span> länge = text.Length;
+    <span class="k">return</span> länge > 10;
+};
+
+<span class="c">// In LINQ</span>
+<span class="k">var</span> großeZahlen = zahlen.Where(x => x > 100);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><strong>Generics:</strong> Typsichere Platzhalter <code>T</code> für wiederverwendbaren Code</li>
+                        <li><strong>Constraints:</strong> Mit <code>where</code> den Typ-Parameter einschränken</li>
+                        <li><strong>LINQ:</strong> Elegante Abfragesprache für Collections</li>
+                        <li><code>Where</code> filtert, <code>Select</code> transformiert, <code>OrderBy</code> sortiert</li>
+                        <li><code>Any</code>, <code>All</code>, <code>Count</code>, <code>Sum</code> für Prüfungen und Berechnungen</li>
+                        <li><strong>Lambdas:</strong> Anonyme Kurzfunktionen <code>x => x * 2</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Schau dir als Nächstes <strong>"Async/Await"</strong> an – damit machst du deine Programme nicht-blockierend und schnell!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

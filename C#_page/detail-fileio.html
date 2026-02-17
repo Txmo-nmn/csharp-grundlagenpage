@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dateien & I/O - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>📁 Dateien & I/O</h1>
+            <p>Dateien lesen, schreiben und Verzeichnisse verwalten</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Überblick</h2>
+            <p>
+                I/O steht für Input/Output – der Austausch von Daten mit dem Dateisystem. C# bietet dafür viele mächtige Klassen im Namespace <code>System.IO</code>.
+            </p>
+            <div class="example-box">
+                <h4>📂 Die wichtigsten Klassen:</h4>
+                <ul>
+                    <li><code>File</code> – Statische Methoden für einfache Datei-Operationen</li>
+                    <li><code>Directory</code> – Ordner erstellen, löschen, auflisten</li>
+                    <li><code>Path</code> – Pfade sicher zusammenbauen und analysieren</li>
+                    <li><code>StreamReader/Writer</code> – Zeile-für-Zeile lesen/schreiben (große Dateien)</li>
+                    <li><code>FileStream</code> – Binäre Daten, maximale Kontrolle</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📄 Dateien lesen</h2>
+
+            <h3>📚 Kleine Dateien – auf einmal laden</h3>
+            <pre><span class="c">// Kompletten Inhalt als einen String lesen</span>
+<span class="t">string</span> inhalt = <span class="t">File</span>.ReadAllText(<span class="s">"daten.txt"</span>);
+
+<span class="c">// Alle Zeilen als Array lesen</span>
+<span class="t">string</span>[] zeilen = <span class="t">File</span>.ReadAllLines(<span class="s">"daten.txt"</span>);
+<span class="k">foreach</span> (<span class="t">string</span> zeile <span class="k">in</span> zeilen)
+{
+    Console.WriteLine(zeile);
+}
+
+<span class="c">// Mit Encoding (z.B. UTF-8 explizit)</span>
+<span class="t">string</span> inhalt = <span class="t">File</span>.ReadAllText(<span class="s">"daten.txt"</span>, <span class="t">Encoding</span>.UTF8);
+
+<span class="c">// Asynchron (empfohlen für I/O)</span>
+<span class="t">string</span> inhalt = <span class="k">await</span> <span class="t">File</span>.ReadAllTextAsync(<span class="s">"daten.txt"</span>);</pre>
+
+            <h3>🌊 Große Dateien – Zeile für Zeile</h3>
+            <pre><span class="c">// StreamReader für große Dateien (speichereffizient)</span>
+<span class="k">using var</span> reader = <span class="k">new</span> <span class="t">StreamReader</span>(<span class="s">"groß.txt"</span>);
+<span class="k">while</span> (!reader.EndOfStream)
+{
+    <span class="t">string</span>? zeile = reader.ReadLine();
+    <span class="k">if</span> (zeile != <span class="k">null</span>)
+        Console.WriteLine(zeile);
+}
+
+<span class="c">// Asynchron und speichereffizient (C# 8+)</span>
+<span class="k">await foreach</span> (<span class="t">string</span> zeile <span class="k">in</span> <span class="t">File</span>.ReadLinesAsync(<span class="s">"groß.txt"</span>))
+{
+    Console.WriteLine(zeile);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>✍️ Dateien schreiben</h2>
+
+            <pre><span class="c">// Komplett schreiben (überschreibt vorhandene Datei)</span>
+<span class="t">File</span>.WriteAllText(<span class="s">"output.txt"</span>, <span class="s">"Hallo Welt!\nZweite Zeile."</span>);
+
+<span class="c">// Mehrere Zeilen schreiben</span>
+<span class="t">string</span>[] zeilen = { <span class="s">"Zeile 1"</span>, <span class="s">"Zeile 2"</span>, <span class="s">"Zeile 3"</span> };
+<span class="t">File</span>.WriteAllLines(<span class="s">"liste.txt"</span>, zeilen);
+
+<span class="c">// Anhängen (fügt am Ende hinzu)</span>
+<span class="t">File</span>.AppendAllText(<span class="s">"log.txt"</span>, <span class="s">$"[{DateTime.Now}] Fehler aufgetreten\n"</span>);
+
+<span class="c">// StreamWriter für viele Schreiboperationen</span>
+<span class="k">using var</span> writer = <span class="k">new</span> <span class="t">StreamWriter</span>(<span class="s">"output.txt"</span>);
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 1000; i++)
+{
+    <span class="k">await</span> writer.WriteLineAsync(<span class="s">$"Zeile {i}"</span>);
+}
+
+<span class="c">// StreamWriter für Anhängen</span>
+<span class="k">using var</span> appender = <span class="k">new</span> <span class="t">StreamWriter</span>(<span class="s">"log.txt"</span>, append: <span class="k">true</span>);
+appender.WriteLine(<span class="s">"Neuer Eintrag"</span>);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🗂️ Verzeichnisse verwalten</h2>
+
+            <pre><span class="c">// Prüfen ob Datei/Ordner existiert</span>
+<span class="k">if</span> (<span class="t">File</span>.Exists(<span class="s">"datei.txt"</span>))
+    Console.WriteLine(<span class="s">"Datei vorhanden!"</span>);
+
+<span class="k">if</span> (<span class="t">Directory</span>.Exists(<span class="s">"MeinOrdner"</span>))
+    Console.WriteLine(<span class="s">"Ordner vorhanden!"</span>);
+
+<span class="c">// Ordner erstellen (auch verschachtelt)</span>
+<span class="t">Directory</span>.CreateDirectory(<span class="s">@"Logs\2026\Februar"</span>);
+
+<span class="c">// Alle Dateien in einem Ordner auflisten</span>
+<span class="t">string</span>[] txtDateien = <span class="t">Directory</span>.GetFiles(<span class="s">"."</span>, <span class="s">"*.txt"</span>);
+<span class="k">foreach</span> (<span class="t">string</span> datei <span class="k">in</span> txtDateien)
+    Console.WriteLine(datei);
+
+<span class="c">// Alle Unterordner auflisten</span>
+<span class="t">string</span>[] unterordner = <span class="t">Directory</span>.GetDirectories(<span class="s">"."</span>);
+
+<span class="c">// Rekursiv – alle Dateien in allen Unterordnern</span>
+<span class="t">string</span>[] alleLog = <span class="t">Directory</span>.GetFiles(<span class="s">"."</span>, <span class="s">"*.log"</span>, <span class="t">SearchOption</span>.AllDirectories);
+
+<span class="c">// Löschen</span>
+<span class="t">File</span>.Delete(<span class="s">"temp.txt"</span>);
+<span class="t">Directory</span>.Delete(<span class="s">"AlterOrdner"</span>, recursive: <span class="k">true</span>);  <span class="c">// recursive = auch Inhalt</span>
+
+<span class="c">// Kopieren und verschieben</span>
+<span class="t">File</span>.Copy(<span class="s">"original.txt"</span>, <span class="s">"backup.txt"</span>, overwrite: <span class="k">true</span>);
+<span class="t">File</span>.Move(<span class="s">"alt.txt"</span>, <span class="s">"neu.txt"</span>);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🗺️ Path – Pfade richtig handhaben</h2>
+            <p>
+                Verwende immer <code>Path.Combine</code> statt Strings manuell zu verbinden – so funktioniert dein Code auf Windows (Backslash) und Linux (Slash) gleichermaßen!
+            </p>
+
+            <pre><span class="c">// ❌ Schlecht – plattformspezifisch!</span>
+<span class="t">string</span> pfad = <span class="s">"C:\\Users\\Max\\"</span> + <span class="s">"Dokumente"</span>;
+
+<span class="c">// ✅ Gut – Path.Combine nutzen</span>
+<span class="t">string</span> pfad = <span class="t">Path</span>.Combine(<span class="s">"C:\\Users"</span>, <span class="s">"Max"</span>, <span class="s">"Dokumente"</span>);
+
+<span class="c">// Nützliche Pfad-Operationen</span>
+<span class="t">string</span> vollPfad = <span class="s">@"C:\Users\Max\report.pdf"</span>;
+
+Console.WriteLine(<span class="t">Path</span>.GetFileName(vollPfad));      <span class="c">// report.pdf</span>
+Console.WriteLine(<span class="t">Path</span>.GetFileNameWithoutExtension(vollPfad)); <span class="c">// report</span>
+Console.WriteLine(<span class="t">Path</span>.GetExtension(vollPfad));     <span class="c">// .pdf</span>
+Console.WriteLine(<span class="t">Path</span>.GetDirectoryName(vollPfad)); <span class="c">// C:\Users\Max</span>
+Console.WriteLine(<span class="t">Path</span>.GetFullPath(<span class="s">"relative.txt"</span>)); <span class="c">// Absoluter Pfad</span>
+
+<span class="c">// Spezialpfade</span>
+<span class="t">string</span> desktop = <span class="t">Environment</span>.GetFolderPath(<span class="t">Environment</span>.SpecialFolder.Desktop);
+<span class="t">string</span> temp = <span class="t">Path</span>.GetTempPath();
+<span class="t">string</span> tempDatei = <span class="t">Path</span>.GetTempFileName();  <span class="c">// Erstellt eine temp-Datei</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Datei-Informationen abfragen</h2>
+
+            <pre><span class="t">FileInfo</span> info = <span class="k">new</span> <span class="t">FileInfo</span>(<span class="s">"report.pdf"</span>);
+
+Console.WriteLine(<span class="s">$"Name: {info.Name}"</span>);
+Console.WriteLine(<span class="s">$"Größe: {info.Length} Bytes"</span>);
+Console.WriteLine(<span class="s">$"Erstellt: {info.CreationTime}"</span>);
+Console.WriteLine(<span class="s">$"Geändert: {info.LastWriteTime}"</span>);
+Console.WriteLine(<span class="s">$"Existiert: {info.Exists}"</span>);
+
+<span class="c">// Größe menschenlesbar</span>
+<span class="t">double</span> mb = info.Length / 1024.0 / 1024.0;
+Console.WriteLine(<span class="s">$"Größe: {mb:F2} MB"</span>);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>⚠️ Fehlerbehandlung bei I/O</h2>
+
+            <pre><span class="k">try</span>
+{
+    <span class="t">string</span> inhalt = <span class="t">File</span>.ReadAllText(<span class="s">"datei.txt"</span>);
+    Console.WriteLine(inhalt);
+}
+<span class="k">catch</span> (<span class="t">FileNotFoundException</span>)
+{
+    Console.WriteLine(<span class="s">"Datei nicht gefunden!"</span>);
+}
+<span class="k">catch</span> (<span class="t">UnauthorizedAccessException</span>)
+{
+    Console.WriteLine(<span class="s">"Keine Berechtigung!"</span>);
+}
+<span class="k">catch</span> (<span class="t">IOException</span> ex)
+{
+    Console.WriteLine(<span class="s">$"I/O-Fehler: {ex.Message}"</span>);
+}</pre>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Tipp:</strong> Prüfe mit <code>File.Exists()</code> vor dem Lesen, ob die Datei vorhanden ist – aber behandle trotzdem Exceptions, da sich das Dateisystem zwischen Check und Zugriff ändern kann (Race Condition).
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><code>File.ReadAllText</code> / <code>ReadAllLines</code> für kleine Dateien</li>
+                        <li><code>StreamReader</code> für große Dateien (Zeile für Zeile)</li>
+                        <li><code>File.WriteAllText</code> und <code>AppendAllText</code> zum Schreiben/Anhängen</li>
+                        <li><code>Directory.Exists</code>, <code>CreateDirectory</code>, <code>GetFiles</code></li>
+                        <li><code>Path.Combine</code> – plattformübergreifend Pfade erstellen</li>
+                        <li>Immer <code>using</code> für Streams und Exceptions behandeln</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Lerne jetzt <strong>"Design Patterns"</strong> – bewährte Lösungsmuster für häufige Programmierprobleme!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

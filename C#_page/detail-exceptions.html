@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exceptions - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>🛡️ Exception Handling</h1>
+            <p>Fehler abfangen, behandeln und robuste Programme schreiben</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Was ist eine Exception?</h2>
+            <p>
+                Eine <strong>Exception</strong> (Ausnahme) ist ein Fehler, der zur Laufzeit auftritt – wenn dein Programm auf eine Situation stößt, mit der es nicht umgehen kann. Ohne Behandlung stürzt das Programm ab.
+            </p>
+            <div class="example-box">
+                <h4>🌍 Analogie: Der Notfallplan</h4>
+                <p>
+                    Stell dir vor, du folgst einem Kochrezept (dein Programm), aber plötzlich fehlt eine Zutat (Fehler). Ohne Notfallplan ist das Kochen vorbei. Mit einem Plan (<code>try-catch</code>) weißt du: "Wenn die Zutat fehlt, nehme ich Ersatz."
+                </p>
+            </div>
+
+            <h3>🔥 Häufige Exceptions</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Exception</th>
+                        <th>Wann tritt sie auf?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>NullReferenceException</code></td>
+                        <td>Zugriff auf null-Referenz</td>
+                    </tr>
+                    <tr>
+                        <td><code>IndexOutOfRangeException</code></td>
+                        <td>Array-Index außerhalb des Bereichs</td>
+                    </tr>
+                    <tr>
+                        <td><code>DivideByZeroException</code></td>
+                        <td>Division durch null</td>
+                    </tr>
+                    <tr>
+                        <td><code>FormatException</code></td>
+                        <td>Ungültiges Format (z.B. <code>int.Parse("abc")</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>FileNotFoundException</code></td>
+                        <td>Datei nicht gefunden</td>
+                    </tr>
+                    <tr>
+                        <td><code>ArgumentException</code></td>
+                        <td>Ungültiges Argument übergeben</td>
+                    </tr>
+                    <tr>
+                        <td><code>OverflowException</code></td>
+                        <td>Zahl überschreitet Datentyp-Limit</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 try-catch-finally</h2>
+            <p>
+                Das Grundkonstrukt für Exception-Handling: Versuche etwas, fange Fehler ab, und führe Aufräumarbeiten durch.
+            </p>
+
+            <pre><span class="k">try</span>
+{
+    <span class="c">// Hier steht Code, der einen Fehler werfen KÖNNTE</span>
+    <span class="t">int</span> zahl = <span class="t">int</span>.Parse(<span class="s">"abc"</span>);  <span class="c">// Wirft FormatException!</span>
+    Console.WriteLine(<span class="s">$"Zahl: {zahl}"</span>);
+}
+<span class="k">catch</span> (<span class="t">FormatException</span> ex)
+{
+    <span class="c">// Wird nur bei FormatException ausgeführt</span>
+    Console.WriteLine(<span class="s">$"Ungültiges Format: {ex.Message}"</span>);
+}
+<span class="k">catch</span> (<span class="t">OverflowException</span> ex)
+{
+    <span class="c">// Wird bei zu großen Zahlen ausgeführt</span>
+    Console.WriteLine(<span class="s">$"Zahl zu groß: {ex.Message}"</span>);
+}
+<span class="k">catch</span> (<span class="t">Exception</span> ex)
+{
+    <span class="c">// Fängt ALLE anderen Exceptions (immer zuletzt!)</span>
+    Console.WriteLine(<span class="s">$"Unbekannter Fehler: {ex.Message}"</span>);
+}
+<span class="k">finally</span>
+{
+    <span class="c">// Wird IMMER ausgeführt – egal ob Fehler oder nicht!</span>
+    Console.WriteLine(<span class="s">"Aufräumen abgeschlossen."</span>);
+}</pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>💡 Reihenfolge der catch-Blöcke:</strong> Spezifischere Exceptions (wie <code>FormatException</code>) immer <strong>vor</strong> allgemeineren (<code>Exception</code>) – sonst werden die spezifischen nie erreicht!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Exceptions werfen (throw)</h2>
+            <p>
+                Du kannst auch selbst Exceptions auslösen, wenn dein Code eine ungültige Situation erkennt.
+            </p>
+
+            <pre><span class="k">public void</span> SetzeAlter(<span class="t">int</span> alter)
+{
+    <span class="k">if</span> (alter < 0)
+        <span class="k">throw new</span> <span class="t">ArgumentException</span>(<span class="s">"Alter darf nicht negativ sein!"</span>, <span class="k">nameof</span>(alter));
+
+    <span class="k">if</span> (alter > 150)
+        <span class="k">throw new</span> <span class="t">ArgumentOutOfRangeException</span>(<span class="k">nameof</span>(alter), <span class="s">"Unrealistisches Alter!"</span>);
+
+    _alter = alter;
+}
+
+<span class="c">// Direkt re-throw (behält originalen Stack-Trace)</span>
+<span class="k">catch</span> (<span class="t">Exception</span> ex)
+{
+    Console.WriteLine(<span class="s">$"Fehler protokolliert: {ex.Message}"</span>);
+    <span class="k">throw</span>;  <span class="c">// Wirft die gleiche Exception weiter!</span>
+}</pre>
+
+            <h3>📝 Eigene Exception-Klassen</h3>
+            <pre><span class="c">// Eigene Exception erstellen</span>
+<span class="k">public class</span> <span class="t">ZuJungException</span> : <span class="t">Exception</span>
+{
+    <span class="k">public int</span> Alter { <span class="k">get;</span> }
+
+    <span class="k">public</span> ZuJungException(<span class="t">int</span> alter)
+        : <span class="k">base</span>(<span class="s">$"Person mit Alter {alter} ist zu jung!"</span>)
+    {
+        Alter = alter;
+    }
+}
+
+<span class="c">// Verwenden</span>
+<span class="k">if</span> (person.Alter < 18)
+    <span class="k">throw new</span> <span class="t">ZuJungException</span>(person.Alter);
+
+<span class="c">// Abfangen</span>
+<span class="k">catch</span> (<span class="t">ZuJungException</span> ex)
+{
+    Console.WriteLine(<span class="s">$"Zu jung: {ex.Alter} Jahre"</span>);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>♻️ using – Ressourcen automatisch freigeben</h2>
+            <p>
+                Das <code>using</code>-Statement stellt sicher, dass Ressourcen (Dateien, Verbindungen, Streams) <strong>automatisch freigegeben</strong> werden – auch bei einem Fehler.
+            </p>
+
+            <pre><span class="c">// Klassische Syntax</span>
+<span class="k">using</span> (<span class="k">var</span> reader = <span class="k">new</span> <span class="t">StreamReader</span>(<span class="s">"datei.txt"</span>))
+{
+    <span class="t">string</span> inhalt = reader.ReadToEnd();
+}  <span class="c">// reader.Dispose() wird automatisch aufgerufen</span>
+
+<span class="c">// Moderne Syntax (C# 8+) – kürzer!</span>
+<span class="k">using var</span> writer = <span class="k">new</span> <span class="t">StreamWriter</span>(<span class="s">"output.txt"</span>);
+writer.WriteLine(<span class="s">"Hallo!"</span>);
+<span class="c">// Dispose am Ende des Scopes automatisch</span>
+
+<span class="c">// Auch mit async</span>
+<span class="k">await using var</span> stream = <span class="k">new</span> <span class="t">FileStream</span>(<span class="s">"groß.bin"</span>, <span class="t">FileMode</span>.Open);</pre>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Regel:</strong> Alles, was <code>IDisposable</code> implementiert (Streams, Connections, HttpClient, etc.) sollte in einem <code>using</code>-Block verwendet werden!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🧹 Best Practices</h2>
+
+            <div class="warning-box">
+                <div>
+                    <strong>❌ Leere catch-Blöcke – Nie machen!</strong>
+                    <pre><span class="k">catch</span> (<span class="t">Exception</span> ex)
+{
+    <span class="c">// Komplett leer = Fehler wird verschluckt!</span>
+    <span class="c">// Das ist sehr schlecht!</span>
+}</pre>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Gut:</strong>
+                    <ul>
+                        <li>Nur Exceptions fangen, die du auch behandeln kannst</li>
+                        <li>Spezifische Exceptions vor allgemeinen fangen</li>
+                        <li>Immer <code>ex.Message</code> oder Stack-Trace loggen</li>
+                        <li>Mit <code>throw;</code> weiterwerfen, wenn du nicht vollständig behandeln kannst</li>
+                        <li>Eigene Exceptions für Business-Logik-Fehler erstellen</li>
+                        <li><code>using</code> für alle Ressourcen verwenden</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔍 TryParse – Exception-freie Konvertierung</h3>
+            <pre><span class="c">// ❌ Schlecht: Kann Exception werfen</span>
+<span class="t">int</span> zahl = <span class="t">int</span>.Parse(eingabe);
+
+<span class="c">// ✅ Gut: Gibt false zurück wenn ungültig</span>
+<span class="k">if</span> (<span class="t">int</span>.TryParse(eingabe, <span class="k">out int</span> zahl))
+{
+    Console.WriteLine(<span class="s">$"Zahl: {zahl}"</span>);
+}
+<span class="k">else</span>
+{
+    Console.WriteLine(<span class="s">"Ungültige Eingabe!"</span>);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><code>try-catch-finally</code> – Fehler abfangen und behandeln</li>
+                        <li>Spezifische Exceptions zuerst, <code>Exception</code> zuletzt</li>
+                        <li><code>throw</code> und <code>throw new</code> – Exceptions auslösen</li>
+                        <li>Eigene Exception-Klassen für Business-Logik</li>
+                        <li><code>using</code> – Automatisches Freigeben von Ressourcen</li>
+                        <li><code>TryParse</code> – Exception-freie Konvertierung</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Schau dir jetzt <strong>"String-Operationen"</strong> an – Strings effizient verarbeiten und formatieren!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

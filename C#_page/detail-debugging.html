@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing & Debugging - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>🐛 Testing & Debugging</h1>
+            <p>Fehler finden, beheben und deinen Code absichern</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Warum testen?</h2>
+            <p>
+                Code ohne Tests ist wie ein Gebäude ohne Fundament – es kann eine Zeit lang stehen, aber irgendwann bricht es zusammen. Tests geben dir die <strong>Sicherheit, Änderungen zu machen</strong>, ohne Angst vor ungewollten Nebeneffekten.
+            </p>
+
+            <div class="grid">
+                <div class="example-box">
+                    <h4>✅ Mit Tests</h4>
+                    <ul>
+                        <li>Fehler früh entdecken (billig zu beheben)</li>
+                        <li>Sicheres Refactoring</li>
+                        <li>Dokumentation durch Code</li>
+                        <li>Besseres Design (testbarer Code = guter Code)</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <h4>❌ Ohne Tests</h4>
+                    <ul>
+                        <li>Fehler erst in Produktion entdeckt (teuer!)</li>
+                        <li>Angst vor Änderungen ("Never touch a running system")</li>
+                        <li>Schwer wartbarer Code</li>
+                        <li>Regressionen: Behobene Fehler kehren zurück</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🧪 Unit Tests mit xUnit</h2>
+            <p>
+                Unit Tests testen einzelne Methoden oder Klassen <strong>isoliert</strong>. xUnit ist das populärste Test-Framework für C#.
+            </p>
+
+            <h3>📦 Testprojekt erstellen</h3>
+            <pre><span class="c">// In der Terminal/Konsole:</span>
+dotnet new xunit -n MeinProjekt.Tests
+dotnet add reference ../MeinProjekt/MeinProjekt.csproj</pre>
+
+            <h3>🔬 Erster Test</h3>
+            <pre><span class="k">using</span> Xunit;
+
+<span class="c">// Der Code, den wir testen wollen</span>
+<span class="k">public class</span> <span class="t">Rechner</span>
+{
+    <span class="k">public int</span> Addiere(<span class="t">int</span> a, <span class="t">int</span> b) => a + b;
+    <span class="k">public int</span> Dividiere(<span class="t">int</span> a, <span class="t">int</span> b)
+    {
+        <span class="k">if</span> (b == 0) <span class="k">throw new</span> <span class="t">DivideByZeroException</span>();
+        <span class="k">return</span> a / b;
+    }
+}
+
+<span class="c">// Die Tests</span>
+<span class="k">public class</span> <span class="t">RechnerTests</span>
+{
+    <span class="k">private readonly</span> <span class="t">Rechner</span> _rechner = <span class="k">new</span>();
+
+    [<span class="t">Fact</span>]  <span class="c">// Ein einzelner Test</span>
+    <span class="k">public void</span> Addiere_ZweiPositiveZahlen_GibtSummeZurück()
+    {
+        <span class="c">// Arrange – Vorbereitung</span>
+        <span class="t">int</span> a = 5, b = 3;
+
+        <span class="c">// Act – Aktion ausführen</span>
+        <span class="t">int</span> ergebnis = _rechner.Addiere(a, b);
+
+        <span class="c">// Assert – Ergebnis prüfen</span>
+        Assert.Equal(8, ergebnis);
+    }
+
+    [<span class="t">Theory</span>]  <span class="c">// Test mit vielen Eingaben</span>
+    [<span class="t">InlineData</span>(10, 2, 5)]
+    [<span class="t">InlineData</span>(20, 4, 5)]
+    [<span class="t">InlineData</span>(9, 3, 3)]
+    <span class="k">public void</span> Dividiere_GültigeEingaben_GibtErgebnisZurück(<span class="t">int</span> a, <span class="t">int</span> b, <span class="t">int</span> erwartet)
+    {
+        Assert.Equal(erwartet, _rechner.Dividiere(a, b));
+    }
+
+    [<span class="t">Fact</span>]
+    <span class="k">public void</span> Dividiere_DurchNull_WirftException()
+    {
+        <span class="c">// Prüft ob eine Exception geworfen wird</span>
+        Assert.Throws&lt;<span class="t">DivideByZeroException</span>&gt;(() => _rechner.Dividiere(5, 0));
+    }
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Assertions – Was du prüfen kannst</h2>
+
+            <pre><span class="c">// Gleichheit</span>
+Assert.Equal(5, ergebnis);
+Assert.NotEqual(0, ergebnis);
+
+<span class="c">// Boolean</span>
+Assert.True(istGültig);
+Assert.False(hatFehler);
+
+<span class="c">// Null</span>
+Assert.Null(ergebnis);
+Assert.NotNull(user);
+
+<span class="c">// Strings</span>
+Assert.Equal(<span class="s">"Hallo"</span>, text, ignoreCase: <span class="k">true</span>);
+Assert.Contains(<span class="s">"Max"</span>, vollText);
+Assert.StartsWith(<span class="s">"Hallo"</span>, begrüßung);
+
+<span class="c">// Collections</span>
+Assert.Empty(leereListe);
+Assert.Single(eineElementListe);
+Assert.Collection(liste,
+    item => Assert.Equal(<span class="s">"Anna"</span>, item),
+    item => Assert.Equal(<span class="s">"Bob"</span>, item));
+
+<span class="c">// Exceptions</span>
+<span class="k">var</span> ex = Assert.Throws&lt;<span class="t">ArgumentException</span>&gt;(() => methode(-1));
+Assert.Contains(<span class="s">"negativ"</span>, ex.Message);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Debugging-Techniken</h2>
+
+            <h3>🖨️ Ausgaben für Debugging</h3>
+            <pre><span class="c">// Console.WriteLine – für schnelles Debugging</span>
+Console.WriteLine(<span class="s">$"Wert von x: {x}"</span>);
+Console.WriteLine(<span class="s">$"Liste hat {liste.Count} Elemente"</span>);
+
+<span class="c">// Debug.WriteLine – nur im Debug-Build sichtbar</span>
+<span class="k">using</span> System.Diagnostics;
+Debug.WriteLine(<span class="s">$"Debug: {variable}"</span>);
+Debug.Assert(x > 0, <span class="s">"x muss positiv sein!"</span>);
+
+<span class="c">// Conditional Compilation</span>
+<span class="k">#if DEBUG</span>
+    Console.WriteLine(<span class="s">"Ich erscheine nur im Debug-Build"</span>);
+<span class="k">#endif</span></pre>
+
+            <h3>⏱️ Performance messen</h3>
+            <pre><span class="k">using</span> System.Diagnostics;
+
+<span class="k">var</span> stopwatch = <span class="t">Stopwatch</span>.StartNew();
+
+<span class="c">// Dein Code hier</span>
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 1_000_000; i++)
+{
+    <span class="c">// ...</span>
+}
+
+stopwatch.Stop();
+Console.WriteLine(<span class="s">$"Dauer: {stopwatch.ElapsedMilliseconds} ms"</span>);</pre>
+
+            <h3>🔬 Debugger in Visual Studio / VS Code</h3>
+            <div class="example-box">
+                <h4>Wichtige Debugger-Funktionen:</h4>
+                <ul>
+                    <li><strong>Breakpoint</strong> (F9): Hält das Programm an einer Zeile an</li>
+                    <li><strong>Step Over</strong> (F10): Nächste Zeile ausführen, Methode nicht betreten</li>
+                    <li><strong>Step Into</strong> (F11): In die Methode hineinsteigen</li>
+                    <li><strong>Step Out</strong> (Shift+F11): Aktuelle Methode verlassen</li>
+                    <li><strong>Watch</strong>: Variablen-Werte in Echtzeit beobachten</li>
+                    <li><strong>Immediate Window</strong>: Code im Pausezustand ausführen</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏗️ TDD – Test Driven Development</h2>
+            <p>
+                TDD ist ein Entwicklungsansatz, bei dem du <strong>zuerst den Test schreibst</strong>, dann den Code, der ihn bestehen lässt.
+            </p>
+
+            <div class="example-box">
+                <h4>🔄 Der TDD-Zyklus: Red → Green → Refactor</h4>
+                <ul>
+                    <li>🔴 <strong>Red:</strong> Schreibe einen Test, der fehlschlägt (weil der Code noch nicht existiert)</li>
+                    <li>🟢 <strong>Green:</strong> Schreibe den minimalen Code, um den Test zu bestehen</li>
+                    <li>🔵 <strong>Refactor:</strong> Verbessere den Code, ohne das Verhalten zu ändern</li>
+                </ul>
+            </div>
+
+            <pre><span class="c">// Schritt 1: Test schreiben (schlägt fehl!)</span>
+[<span class="t">Fact</span>]
+<span class="k">public void</span> Validiere_GültigeEmail_GibtTrueZurück()
+{
+    <span class="k">var</span> validator = <span class="k">new</span> <span class="t">EmailValidator</span>();
+    Assert.True(validator.Validiere(<span class="s">"max@example.com"</span>));
+}
+
+<span class="c">// Schritt 2: Minimale Implementierung</span>
+<span class="k">public class</span> <span class="t">EmailValidator</span>
+{
+    <span class="k">public bool</span> Validiere(<span class="t">string</span> email) => email.Contains(<span class="s">"@"</span>);
+}
+
+<span class="c">// Schritt 3: Refactoring & mehr Tests</span>
+<span class="k">public bool</span> Validiere(<span class="t">string</span> email)
+    => !<span class="t">string</span>.IsNullOrEmpty(email)
+    &amp;&amp; email.Contains(<span class="s">"@"</span>)
+    &amp;&amp; email.Contains(<span class="s">"."</span>);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li>Unit Tests mit xUnit: <code>[Fact]</code> für einzelne Tests, <code>[Theory]</code> für viele Eingaben</li>
+                        <li>AAA-Muster: <strong>Arrange</strong> → <strong>Act</strong> → <strong>Assert</strong></li>
+                        <li>Assertions: <code>Equal</code>, <code>True</code>, <code>Throws</code>, <code>Contains</code>, etc.</li>
+                        <li>Debugging: Breakpoints, Step Over/Into/Out, Watch</li>
+                        <li><strong>TDD:</strong> Erst Test, dann Code – Red → Green → Refactor</li>
+                        <li>Stopwatch für Performance-Messungen</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>🎉 Herzlichen Glückwunsch!</strong>
+                    <p>Du hast das gesamte C# Developer Handbook durchgearbeitet! Kehre zur <strong>Übersicht</strong> zurück, um Themen zu wiederholen oder als Referenz nachzuschlagen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

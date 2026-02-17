@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strings - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>📝 String-Operationen</h1>
+            <p>Text effizient verarbeiten, formatieren und manipulieren</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🧱 String-Grundlagen</h2>
+            <p>
+                Strings in C# sind <strong>immutable</strong> (unveränderlich): Jede Operation, die einen String "verändert", erstellt tatsächlich einen neuen String. Der alte bleibt unverändert.
+            </p>
+
+            <pre><span class="t">string</span> original = <span class="s">"Hallo"</span>;
+<span class="t">string</span> groß = original.ToUpper();  <span class="c">// Neuer String!</span>
+
+<span class="c">// original ist noch "Hallo", nicht "HALLO"</span>
+Console.WriteLine(original);  <span class="c">// Hallo</span>
+Console.WriteLine(groß);      <span class="c">// HALLO</span></pre>
+
+            <div class="info-box">
+                <div>
+                    <strong>💡 Wichtig:</strong> Da Strings immutable sind, ist <code>string + string</code> in Schleifen sehr ineffizient. Nutze dafür <code>StringBuilder</code>!
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 String-Formatierung</h2>
+
+            <h3>⭐ String-Interpolation (Empfohlen)</h3>
+            <pre><span class="t">string</span> name = <span class="s">"Max"</span>;
+<span class="t">int</span> alter = 25;
+<span class="t">double</span> preis = 19.99;
+<span class="t">DateTime</span> datum = DateTime.Now;
+
+<span class="c">// $ vor dem String = Interpolation</span>
+Console.WriteLine(<span class="s">$"Hallo {name}, du bist {alter} Jahre alt."</span>);
+
+<span class="c">// Formatierung direkt im String</span>
+Console.WriteLine(<span class="s">$"Preis: {preis:C}"</span>);           <span class="c">// 19,99 €</span>
+Console.WriteLine(<span class="s">$"Preis: {preis:F2}"</span>);          <span class="c">// 19,99 (2 Nachkommastellen)</span>
+Console.WriteLine(<span class="s">$"Datum: {datum:dd.MM.yyyy}"</span>); <span class="c">// 17.02.2026</span>
+Console.WriteLine(<span class="s">$"Hex: {255:X}"</span>);              <span class="c">// FF</span>
+Console.WriteLine(<span class="s">$"Prozent: {0.75:P0}"</span>);        <span class="c">// 75 %</span>
+
+<span class="c">// Ausrichtung und Padding</span>
+Console.WriteLine(<span class="s">$"|{name,-10}|"</span>);   <span class="c">// |Max       | (linksbündig, 10 Zeichen)</span>
+Console.WriteLine(<span class="s">$"|{name,10}|"</span>);    <span class="c">// |       Max| (rechtsbündig)</span></pre>
+
+            <h3>📋 Format-Kürzel Übersicht</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>Format</th><th>Bedeutung</th><th>Beispiel</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>:C</code></td><td>Währung</td><td><code>19,99 €</code></td></tr>
+                    <tr><td><code>:F2</code></td><td>Fixed, 2 Dezimalstellen</td><td><code>3,14</code></td></tr>
+                    <tr><td><code>:N0</code></td><td>Zahl mit Tausender-Trenner</td><td><code>1.234.567</code></td></tr>
+                    <tr><td><code>:P0</code></td><td>Prozent, 0 Dezimalstellen</td><td><code>75 %</code></td></tr>
+                    <tr><td><code>:X</code></td><td>Hexadezimal</td><td><code>FF</code></td></tr>
+                    <tr><td><code>:dd.MM.yyyy</code></td><td>Datum formatiert</td><td><code>17.02.2026</code></td></tr>
+                    <tr><td><code>:HH:mm</code></td><td>Uhrzeit</td><td><code>14:30</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Wichtige String-Methoden</h2>
+
+            <pre><span class="t">string</span> text = <span class="s">"  Hallo Welt!  "</span>;
+
+<span class="c">// Groß-/Kleinschreibung</span>
+text.ToUpper();          <span class="c">// "  HALLO WELT!  "</span>
+text.ToLower();          <span class="c">// "  hallo welt!  "</span>
+
+<span class="c">// Leerzeichen entfernen</span>
+text.Trim();             <span class="c">// "Hallo Welt!"</span>
+text.TrimStart();        <span class="c">// "Hallo Welt!  " (nur links)</span>
+text.TrimEnd();          <span class="c">// "  Hallo Welt!" (nur rechts)</span>
+
+<span class="c">// Suchen und Prüfen</span>
+text.Contains(<span class="s">"Welt"</span>);    <span class="c">// true</span>
+text.StartsWith(<span class="s">"  H"</span>);  <span class="c">// true</span>
+text.EndsWith(<span class="s">"  "</span>);     <span class="c">// true</span>
+text.IndexOf(<span class="s">"Welt"</span>);    <span class="c">// 8 (Position)</span>
+text.Length;             <span class="c">// 15</span>
+
+<span class="c">// Ersetzen</span>
+text.Replace(<span class="s">"Welt"</span>, <span class="s">"C#"</span>);   <span class="c">// "  Hallo C#!  "</span>
+text.Replace(<span class="s">" "</span>, <span class="s">""</span>);         <span class="c">// "HalloWelt!"</span>
+
+<span class="c">// Ausschneiden</span>
+text.Substring(7, 4);            <span class="c">// "Welt"</span>
+text[2..7];                      <span class="c">// "Hallo" (moderne Range-Syntax)</span></pre>
+
+            <h3>✂️ Teilen und Verbinden</h3>
+            <pre><span class="c">// Split – String aufteilen</span>
+<span class="t">string</span> csv = <span class="s">"Anna,Bob,Clara,Dan"</span>;
+<span class="t">string</span>[] teile = csv.Split(<span class="s">','</span>);
+<span class="c">// ["Anna", "Bob", "Clara", "Dan"]</span>
+
+<span class="t">string</span> satz = <span class="s">"Hallo Welt hier"</span>;
+<span class="t">string</span>[] wörter = satz.Split(<span class="s">' '</span>);
+<span class="c">// ["Hallo", "Welt", "hier"]</span>
+
+<span class="c">// Join – Array zu String verbinden</span>
+<span class="t">string</span> zusammen = <span class="t">string</span>.Join(<span class="s">", "</span>, teile);
+<span class="c">// "Anna, Bob, Clara, Dan"</span>
+
+<span class="t">string</span> mitLinie = <span class="t">string</span>.Join(<span class="s">" | "</span>, <span class="k">new</span>[] { <span class="s">"A"</span>, <span class="s">"B"</span>, <span class="s">"C"</span> });
+<span class="c">// "A | B | C"</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ StringBuilder – Für viele Änderungen</h2>
+            <p>
+                Wenn du viele String-Operationen in einer Schleife durchführst, ist <code>StringBuilder</code> deutlich effizienter – er erstellt keinen neuen String bei jeder Änderung.
+            </p>
+
+            <pre><span class="c">// ❌ Schlecht – erstellt 1000 neue Strings!</span>
+<span class="t">string</span> result = <span class="s">""</span>;
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 1000; i++)
+{
+    result += <span class="s">$"Zeile {i}\n"</span>;  <span class="c">// Sehr ineffizient!</span>
+}
+
+<span class="c">// ✅ Gut – modifiziert intern, kein neuer String</span>
+<span class="k">var</span> sb = <span class="k">new</span> <span class="t">StringBuilder</span>();
+<span class="k">for</span> (<span class="t">int</span> i = 0; i < 1000; i++)
+{
+    sb.AppendLine(<span class="s">$"Zeile {i}"</span>);
+}
+<span class="t">string</span> result = sb.ToString();  <span class="c">// Am Ende einmal konvertieren</span>
+
+<span class="c">// Weitere StringBuilder-Methoden</span>
+sb.Append(<span class="s">"Text"</span>);        <span class="c">// Hinzufügen</span>
+sb.AppendLine(<span class="s">"Zeile"</span>);   <span class="c">// Mit Zeilenumbruch</span>
+sb.Insert(0, <span class="s">"Anfang"</span>);  <span class="c">// An Position einfügen</span>
+sb.Replace(<span class="s">"alt"</span>, <span class="s">"neu"</span>); <span class="c">// Ersetzen</span>
+sb.Clear();               <span class="c">// Leeren</span></pre>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Faustregel:</strong> Nutze <code>StringBuilder</code> wenn du mehr als ~5 String-Verkettungen in einer Schleife hast. Für ein paar einzelne Operationen ist <code>+</code> oder Interpolation absolut in Ordnung.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔤 Sonderzeichen und Verbatim-Strings</h2>
+
+            <pre><span class="c">// Escape-Sequenzen</span>
+<span class="t">string</span> tab = <span class="s">"Name:\tMax"</span>;        <span class="c">// Tab</span>
+<span class="t">string</span> zeile = <span class="s">"Hallo\nWelt"</span>;     <span class="c">// Zeilenumbruch</span>
+<span class="t">string</span> anführ = <span class="s">"Er sagte \"Hallo\""</span>; <span class="c">// Anführungszeichen</span>
+<span class="t">string</span> backslash = <span class="s">"C:\\Users\\Max"</span>;  <span class="c">// Backslash</span>
+
+<span class="c">// Verbatim-String mit @ (keine Escape-Sequenzen nötig)</span>
+<span class="t">string</span> pfad = <span class="s">@"C:\Users\Max\Documents"</span>;
+<span class="t">string</span> mehrZeilig = <span class="s">@"Zeile 1
+Zeile 2
+Zeile 3"</span>;
+
+<span class="c">// Raw String Literals (C# 11+) – keine Escapes nötig</span>
+<span class="t">string</span> json = <span class="s">"""
+{
+    "name": "Max",
+    "alter": 25
+}
+"""</span>;</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 String vergleichen</h2>
+
+            <pre><span class="t">string</span> a = <span class="s">"Hallo"</span>;
+<span class="t">string</span> b = <span class="s">"hallo"</span>;
+
+<span class="c">// == prüft Gleichheit (case-sensitiv)</span>
+Console.WriteLine(a == b);  <span class="c">// false</span>
+
+<span class="c">// Groß-/Kleinschreibung ignorieren</span>
+Console.WriteLine(a.Equals(b, <span class="t">StringComparison</span>.OrdinalIgnoreCase));  <span class="c">// true</span>
+
+<span class="c">// string.IsNullOrEmpty – sicherer Null-Check</span>
+<span class="t">string</span>? eingabe = <span class="k">null</span>;
+<span class="k">if</span> (<span class="t">string</span>.IsNullOrEmpty(eingabe))
+    Console.WriteLine(<span class="s">"Kein Text eingegeben"</span>);
+
+<span class="c">// IsNullOrWhiteSpace – auch für nur Leerzeichen</span>
+<span class="k">if</span> (<span class="t">string</span>.IsNullOrWhiteSpace(<span class="s">"   "</span>))
+    Console.WriteLine(<span class="s">"Nur Leerzeichen!"</span>);  <span class="c">// Wird ausgegeben</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li>Strings sind <strong>immutable</strong> – jede Änderung erstellt einen neuen String</li>
+                        <li><strong>Interpolation</strong> mit <code>$"..."</code> ist die moderne, lesbare Art</li>
+                        <li>Format-Codes: <code>:C</code> (Währung), <code>:F2</code> (Dezimalstellen), <code>:P0</code> (Prozent)</li>
+                        <li>Wichtige Methoden: <code>Trim</code>, <code>Split</code>, <code>Replace</code>, <code>Contains</code></li>
+                        <li><strong>StringBuilder</strong> für viele Verkettungen in Schleifen</li>
+                        <li><code>@"..."</code> für Verbatim-Strings ohne Escape-Sequenzen</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Lerne nun <strong>"Null-Handling"</strong> – wie du sicher mit null-Werten umgehst und die häufigste Exception (NullReferenceException) vermeidest!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

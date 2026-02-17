@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async/Await - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>⏱️ Async / Await</h1>
+            <p>Nicht-blockierende Programmierung für schnelle, reaktive Anwendungen</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Was ist Asynchronität?</h2>
+            <p>
+                Stell dir vor, du bestellst Kaffee im Café. Du <strong>wartest nicht untätig</strong> – du liest die Zeitung, schreibst eine Nachricht. Wenn der Kaffee fertig ist, wirst du informiert.
+            </p>
+            <p>
+                In der Programmierung ist es genauso: Anstatt das Programm zu blockieren, bis eine langsame Operation (Netzwerk, Datei) fertig ist, kann es währenddessen andere Dinge tun.
+            </p>
+            <div class="grid">
+                <div class="example-box">
+                    <h4>❌ Synchron (blockierend)</h4>
+                    <pre>Console.WriteLine(<span class="s">"Start"</span>);
+<span class="t">string</span> data = DownloadData();  <span class="c">// BLOCKIERT! Alles wartet...</span>
+Console.WriteLine(<span class="s">"Fertig"</span>);</pre>
+                    <p>Das Programm friert ein, bis der Download fertig ist.</p>
+                </div>
+                <div class="example-box">
+                    <h4>✅ Asynchron (nicht-blockierend)</h4>
+                    <pre>Console.WriteLine(<span class="s">"Start"</span>);
+<span class="t">string</span> data = <span class="k">await</span> DownloadDataAsync();
+Console.WriteLine(<span class="s">"Fertig"</span>);</pre>
+                    <p>Das Programm kann während des Downloads andere Aufgaben erledigen.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚙️ async und await – Die Keywords</h2>
+
+            <pre><span class="c">// "async" markiert eine asynchrone Methode</span>
+<span class="k">public async</span> <span class="t">Task</span>&lt;<span class="t">string</span>&gt; LadeDatenAsync()
+{
+    <span class="k">var</span> client = <span class="k">new</span> <span class="t">HttpClient</span>();
+
+    <span class="c">// "await" wartet auf das Ergebnis, ohne zu blockieren</span>
+    <span class="t">string</span> result = <span class="k">await</span> client.GetStringAsync(<span class="s">"https://api.example.com/data"</span>);
+
+    <span class="k">return</span> result;
+}
+
+<span class="c">// Verwendung</span>
+<span class="t">string</span> daten = <span class="k">await</span> LadeDatenAsync();</pre>
+
+            <h3>📋 Rückgabetypen</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Rückgabetyp</th>
+                        <th>Verwendung</th>
+                        <th>Beispiel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Task&lt;T&gt;</code></td>
+                        <td>Gibt einen Wert zurück</td>
+                        <td><code>async Task&lt;string&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Task</code></td>
+                        <td>Kein Rückgabewert (= async void)</td>
+                        <td><code>async Task</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>ValueTask&lt;T&gt;</code></td>
+                        <td>Performance-optimiert (oft synchron)</td>
+                        <td><code>async ValueTask&lt;int&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <div>
+                    <strong>⚠️ async void vermeiden!</strong> Nutze <code>async void</code> <strong>nur</strong> für Event-Handler (z.B. Button-Klick). In allen anderen Fällen immer <code>async Task</code>.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌐 Praxisbeispiele</h2>
+
+            <h3>📡 HTTP-Request</h3>
+            <pre><span class="k">public async</span> <span class="t">Task</span>&lt;<span class="t">string</span>&gt; GetUserAsync(<span class="t">int</span> userId)
+{
+    <span class="k">using var</span> client = <span class="k">new</span> <span class="t">HttpClient</span>();
+    <span class="k">var</span> response = <span class="k">await</span> client.GetAsync(<span class="s">$"https://api.example.com/users/{userId}"</span>);
+
+    response.EnsureSuccessStatusCode();  <span class="c">// Wirft Exception bei Fehler</span>
+
+    <span class="t">string</span> json = <span class="k">await</span> response.Content.ReadAsStringAsync();
+    <span class="k">return</span> json;
+}</pre>
+
+            <h3>📁 Datei lesen/schreiben</h3>
+            <pre><span class="c">// Datei asynchron lesen</span>
+<span class="k">public async</span> <span class="t">Task</span>&lt;<span class="t">string</span>&gt; LeseDateiAsync(<span class="t">string</span> pfad)
+{
+    <span class="k">return await</span> <span class="t">File</span>.ReadAllTextAsync(pfad);
+}
+
+<span class="c">// Datei asynchron schreiben</span>
+<span class="k">public async</span> <span class="t">Task</span> SchreibeDateiAsync(<span class="t">string</span> pfad, <span class="t">string</span> inhalt)
+{
+    <span class="k">await</span> <span class="t">File</span>.WriteAllTextAsync(pfad, inhalt);
+    Console.WriteLine(<span class="s">"Datei gespeichert!"</span>);
+}</pre>
+
+            <h3>⏳ Task.Delay – Asynchrones Warten</h3>
+            <pre><span class="k">public async</span> <span class="t">Task</span> ZeigeAnimation()
+{
+    <span class="k">for</span> (<span class="t">int</span> i = 0; i < 5; i++)
+    {
+        Console.Write(<span class="s">"."</span>);
+        <span class="k">await</span> <span class="t">Task</span>.Delay(500);  <span class="c">// 500ms warten, ohne zu blockieren</span>
+    }
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Parallele Ausführung</h2>
+            <p>
+                Der größte Leistungsvorteil: Du kannst <strong>mehrere asynchrone Operationen gleichzeitig</strong> starten!
+            </p>
+
+            <h3>Task.WhenAll – Alle gleichzeitig</h3>
+            <pre><span class="c">// ❌ Sequentiell: 3x warten (langsam)</span>
+<span class="t">string</span> a = <span class="k">await</span> LadeDatenAsync(<span class="s">"url1"</span>);  <span class="c">// 2 Sek warten</span>
+<span class="t">string</span> b = <span class="k">await</span> LadeDatenAsync(<span class="s">"url2"</span>);  <span class="c">// 2 Sek warten</span>
+<span class="t">string</span> c = <span class="k">await</span> LadeDatenAsync(<span class="s">"url3"</span>);  <span class="c">// 2 Sek warten</span>
+<span class="c">// Gesamt: ~6 Sekunden</span>
+
+<span class="c">// ✅ Parallel: Alle gleichzeitig starten (schnell)</span>
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; taskA = LadeDatenAsync(<span class="s">"url1"</span>);
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; taskB = LadeDatenAsync(<span class="s">"url2"</span>);
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; taskC = LadeDatenAsync(<span class="s">"url3"</span>);
+
+<span class="t">string</span>[] results = <span class="k">await</span> <span class="t">Task</span>.WhenAll(taskA, taskB, taskC);
+<span class="c">// Gesamt: ~2 Sekunden!</span></pre>
+
+            <h3>Task.WhenAny – Der Schnellste gewinnt</h3>
+            <pre><span class="c">// Nimm die schnellste Antwort</span>
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; server1 = LadeVonServer(<span class="s">"server1"</span>);
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; server2 = LadeVonServer(<span class="s">"server2"</span>);
+
+<span class="t">Task</span>&lt;<span class="t">string</span>&gt; erster = <span class="k">await</span> <span class="t">Task</span>.WhenAny(server1, server2);
+<span class="t">string</span> ergebnis = <span class="k">await</span> erster;</pre>
+
+            <h3>🕐 Timeout mit CancellationToken</h3>
+            <pre><span class="c">// Abbruch nach 5 Sekunden</span>
+<span class="k">using var</span> cts = <span class="k">new</span> <span class="t">CancellationTokenSource</span>(TimeSpan.FromSeconds(5));
+
+<span class="k">try</span>
+{
+    <span class="t">string</span> result = <span class="k">await</span> LadeDatenAsync(<span class="s">"url"</span>, cts.Token);
+}
+<span class="k">catch</span> (<span class="t">OperationCanceledException</span>)
+{
+    Console.WriteLine(<span class="s">"Timeout! Zu langsam."</span>);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>⚠️ Typische Fehler</h2>
+
+            <div class="warning-box">
+                <div>
+                    <strong>❌ .Result oder .Wait() blockiert den Thread!</strong>
+                    <pre><span class="c">// ❌ FALSCH: Blockiert und kann zu Deadlock führen!</span>
+<span class="t">string</span> data = LadeDatenAsync().Result;
+
+<span class="c">// ✅ RICHTIG: await benutzen!</span>
+<span class="t">string</span> data = <span class="k">await</span> LadeDatenAsync();</pre>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <div>
+                    <strong>✅ Async "all the way":</strong>
+                    <p>Wenn du eine asynchrone Methode aufrufst, sollte die aufrufende Methode auch async sein – bis ganz nach oben! Mische nicht synchronen und asynchronen Code.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><code>async</code> markiert eine Methode als asynchron</li>
+                        <li><code>await</code> wartet auf das Ergebnis, ohne zu blockieren</li>
+                        <li>Rückgabetypen: <code>Task&lt;T&gt;</code> oder <code>Task</code></li>
+                        <li><code>Task.WhenAll</code> führt mehrere Tasks gleichzeitig aus</li>
+                        <li><code>CancellationToken</code> für Timeouts und Abbrüche</li>
+                        <li>Niemals <code>.Result</code> oder <code>.Wait()</code> verwenden!</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Lerne jetzt <strong>"Exception Handling"</strong> – wie du mit async-Code und normalen Fehlern professionell umgehst!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

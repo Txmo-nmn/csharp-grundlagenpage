@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Patterns - Detailansicht</title>
+    <link rel="stylesheet" href="unified-style.css">
+</head>
+<body class="detail-page">
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <div class="page-header">
+            <h1>🏗️ Design Patterns & Best Practices</h1>
+            <p>Bewährte Lösungsmuster für professionellen, wartbaren Code</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Was sind Design Patterns?</h2>
+            <p>
+                Design Patterns sind <strong>bewährte Lösungsschablonen</strong> für häufig auftretende Probleme in der Softwareentwicklung. Du musst das Rad nicht neu erfinden – nutze was schon tausende Entwickler vor dir perfektioniert haben.
+            </p>
+            <div class="example-box">
+                <h4>🏗️ Analogie: Architektur-Blaupausen</h4>
+                <p>
+                    Wie ein Architekt nicht jedes Mal von Grund auf überlegt, wie man Türen baut, nutzt ein guter Entwickler bewährte Muster. Das spart Zeit und vermeidet bekannte Fehler.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🧱 SOLID Prinzipien</h2>
+            <p>Die fünf Grundprinzipien für gutes OOP-Design:</p>
+
+            <div class="example-box">
+                <h4>S – Single Responsibility Principle</h4>
+                <p>Eine Klasse sollte <strong>nur eine Aufgabe</strong> haben und nur einen Grund haben, sich zu ändern.</p>
+                <pre><span class="c">// ❌ Macht zu viel</span>
+<span class="k">public class</span> <span class="t">User</span>
+{
+    <span class="k">public void</span> Speichern() { <span class="c">/* DB-Logik */</span> }
+    <span class="k">public void</span> SendeEmail() { <span class="c">/* E-Mail-Logik */</span> }
+    <span class="k">public void</span> ValidiereDaten() { <span class="c">/* Validierungslogik */</span> }
+}
+
+<span class="c">// ✅ Jede Klasse hat eine Aufgabe</span>
+<span class="k">public class</span> <span class="t">UserRepository</span> { <span class="c">/* nur DB-Operationen */</span> }
+<span class="k">public class</span> <span class="t">EmailService</span>    { <span class="c">/* nur E-Mail senden */</span> }
+<span class="k">public class</span> <span class="t">UserValidator</span>  { <span class="c">/* nur Validierung */</span> }</pre>
+            </div>
+
+            <div class="example-box">
+                <h4>O – Open/Closed Principle</h4>
+                <p>Offen für <strong>Erweiterung</strong>, geschlossen für <strong>Änderung</strong>. Nutze Polymorphie!</p>
+                <pre><span class="c">// ❌ Muss geändert werden für jede neue Tierart</span>
+<span class="k">public string</span> GetGeräusch(<span class="t">string</span> tier)
+{
+    <span class="k">if</span> (tier == <span class="s">"Hund"</span>) <span class="k">return</span> <span class="s">"Wuff"</span>;
+    <span class="k">if</span> (tier == <span class="s">"Katze"</span>) <span class="k">return</span> <span class="s">"Miau"</span>;
+    <span class="c">// Bei jedem neuen Tier: Code ändern!</span>
+}
+
+<span class="c">// ✅ Erweiterbar ohne Änderung</span>
+<span class="k">public abstract class</span> <span class="t">Tier</span>
+{
+    <span class="k">public abstract string</span> MachGeräusch();
+}
+<span class="c">// Neue Tiere: Neue Klasse – alter Code unberührt!</span></pre>
+            </div>
+
+            <div class="example-box">
+                <h4>D – Dependency Inversion Principle</h4>
+                <p>Hänge von <strong>Abstraktionen</strong> (Interfaces) ab, nicht von konkreten Implementierungen.</p>
+                <pre><span class="c">// ❌ Direkte Abhängigkeit – schwer testbar</span>
+<span class="k">public class</span> <span class="t">UserService</span>
+{
+    <span class="k">private</span> <span class="t">SqlDatabase</span> _db = <span class="k">new</span> <span class="t">SqlDatabase</span>();  <span class="c">// Fest verdrahtet!</span>
+}
+
+<span class="c">// ✅ Abhängigkeit von Interface (Dependency Injection)</span>
+<span class="k">public class</span> <span class="t">UserService</span>
+{
+    <span class="k">private readonly</span> <span class="t">IDatabase</span> _db;
+
+    <span class="k">public</span> UserService(<span class="t">IDatabase</span> db)  <span class="c">// Injiziert von außen</span>
+    {
+        _db = db;  <span class="c">// Kann SqlDatabase, TestDatabase, etc. sein</span>
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔄 Pattern: Singleton</h2>
+            <p>
+                Stellt sicher, dass von einer Klasse nur <strong>eine einzige Instanz</strong> existiert (z.B. für Konfiguration oder Logging).
+            </p>
+
+            <pre><span class="k">public sealed class</span> <span class="t">Logger</span>
+{
+    <span class="c">// Die einzige Instanz</span>
+    <span class="k">private static</span> <span class="t">Logger</span>? _instance;
+    <span class="k">private static readonly object</span> _lock = <span class="k">new</span> <span class="t">object</span>();
+
+    <span class="c">// Privater Konstruktor – verhindert new Logger()</span>
+    <span class="k">private</span> Logger() { }
+
+    <span class="c">// Thread-safe Zugriff auf die Instanz</span>
+    <span class="k">public static</span> <span class="t">Logger</span> Instance
+    {
+        <span class="k">get</span>
+        {
+            <span class="k">lock</span> (_lock)
+            {
+                <span class="k">return</span> _instance ??= <span class="k">new</span> <span class="t">Logger</span>();
+            }
+        }
+    }
+
+    <span class="k">public void</span> Log(<span class="t">string</span> message)
+        => Console.WriteLine(<span class="s">$"[{DateTime.Now:HH:mm}] {message}"</span>);
+}
+
+<span class="c">// Verwendung</span>
+Logger.Instance.Log(<span class="s">"Anwendung gestartet"</span>);
+Logger.Instance.Log(<span class="s">"Fehler aufgetreten"</span>);</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🏭 Pattern: Factory</h2>
+            <p>
+                Kapselt die Objekterstellung. Der Aufrufer muss nicht wissen, welche konkrete Klasse instanziiert wird.
+            </p>
+
+            <pre><span class="k">public abstract class</span> <span class="t">Fahrzeug</span>
+{
+    <span class="k">public abstract string</span> FahrArt();
+}
+
+<span class="k">public class</span> <span class="t">Auto</span> : <span class="t">Fahrzeug</span>
+{
+    <span class="k">public override string</span> FahrArt() => <span class="s">"Fahren auf der Straße"</span>;
+}
+
+<span class="k">public class</span> <span class="t">Boot</span> : <span class="t">Fahrzeug</span>
+{
+    <span class="k">public override string</span> FahrArt() => <span class="s">"Fahren auf dem Wasser"</span>;
+}
+
+<span class="c">// Factory – entscheidet, was erstellt wird</span>
+<span class="k">public static class</span> <span class="t">FahrzeugFactory</span>
+{
+    <span class="k">public static</span> <span class="t">Fahrzeug</span> Erstelle(<span class="t">string</span> typ) => typ <span class="k">switch</span>
+    {
+        <span class="s">"auto"</span> <normal>=></normal> <span class="k">new</span> <span class="t">Auto</span>(),
+        <span class="s">"boot"</span> <normal>=></normal> <span class="k">new</span> <span class="t">Boot</span>(),
+        _ <normal>=></normal> <span class="k">throw new</span> <span class="t">ArgumentException</span>(<span class="s">$"Unbekannter Typ: {typ}"</span>)
+    };
+}
+
+<span class="c">// Verwendung</span>
+<span class="t">Fahrzeug</span> fahrzeug = FahrzeugFactory.Erstelle(<span class="s">"auto"</span>);
+Console.WriteLine(fahrzeug.FahrArt());  <span class="c">// "Fahren auf der Straße"</span></pre>
+        </div>
+
+        <div class="content-section">
+            <h2>📦 Pattern: Repository</h2>
+            <p>
+                Trennt die Datenzugriffs-Logik vom Rest der Anwendung. Macht Code testbar!
+            </p>
+
+            <pre><span class="c">// Interface definiert den Vertrag</span>
+<span class="k">public interface</span> <span class="t">IUserRepository</span>
+{
+    <span class="t">User</span>? GetById(<span class="t">int</span> id);
+    <span class="t">IEnumerable</span>&lt;<span class="t">User</span>&gt; GetAll();
+    <span class="k">void</span> Speichern(<span class="t">User</span> user);
+    <span class="k">void</span> Löschen(<span class="t">int</span> id);
+}
+
+<span class="c">// Konkrete Implementierung (SQL-Datenbank)</span>
+<span class="k">public class</span> <span class="t">SqlUserRepository</span> : <span class="t">IUserRepository</span>
+{
+    <span class="k">public</span> <span class="t">User</span>? GetById(<span class="t">int</span> id)
+    {
+        <span class="c">// SQL-Query hier...</span>
+        <span class="k">return null</span>;
+    }
+    <span class="c">// ... andere Implementierungen</span>
+}
+
+<span class="c">// Für Tests (InMemory)</span>
+<span class="k">public class</span> <span class="t">InMemoryUserRepository</span> : <span class="t">IUserRepository</span>
+{
+    <span class="k">private</span> <span class="t">List</span>&lt;<span class="t">User</span>&gt; _users = <span class="k">new</span>();
+
+    <span class="k">public</span> <span class="t">User</span>? GetById(<span class="t">int</span> id)
+        => _users.FirstOrDefault(u => u.Id == id);
+    <span class="c">// ... einfache In-Memory-Implementierung</span>
+}
+
+<span class="c">// Service nutzt Interface (egal welche Implementierung)</span>
+<span class="k">public class</span> <span class="t">UserService</span>
+{
+    <span class="k">private readonly</span> <span class="t">IUserRepository</span> _repo;
+
+    <span class="k">public</span> UserService(<span class="t">IUserRepository</span> repo) => _repo = repo;
+
+    <span class="k">public</span> <span class="t">User</span>? GetUser(<span class="t">int</span> id) => _repo.GetById(id);
+}</pre>
+        </div>
+
+        <div class="content-section">
+            <h2>🏷️ Naming Conventions</h2>
+
+            <div class="grid">
+                <div class="example-box">
+                    <h4>PascalCase</h4>
+                    <pre><span class="c">// Klassen</span>
+<span class="k">public class</span> <span class="t">UserManager</span> { }
+
+<span class="c">// Methoden</span>
+<span class="k">public void</span> BerechneGesamtPreis() { }
+
+<span class="c">// Properties</span>
+<span class="k">public string</span> VollständigerName { <span class="k">get; set;</span> }</pre>
+                </div>
+                <div class="example-box">
+                    <h4>camelCase & _underscore</h4>
+                    <pre><span class="c">// Lokale Variablen</span>
+<span class="k">var</span> anzahlProdukte = 10;
+
+<span class="c">// Private Felder</span>
+<span class="k">private string</span> _vorname;
+<span class="k">private readonly</span> <span class="t">ILogger</span> _logger;</pre>
+                </div>
+                <div class="example-box">
+                    <h4>Interfaces</h4>
+                    <pre><span class="c">// Interfaces beginnen mit I</span>
+<span class="k">public interface</span> <span class="t">IRepository</span> { }
+<span class="k">public interface</span> <span class="t">ILogger</span> { }
+<span class="k">public interface</span> <span class="t">IEmailService</span> { }</pre>
+                </div>
+                <div class="example-box">
+                    <h4>Konstanten</h4>
+                    <pre><span class="c">// Konstanten: PascalCase</span>
+<span class="k">const int</span> MaxVersuche = 3;
+<span class="k">const string</span> ApiBaseUrl = <span class="s">"..."</span>;
+
+<span class="c">// Nicht mehr SCREAMING_CASE nutzen!</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Zusammenfassung</h2>
+            <div class="success-box">
+                <div>
+                    <strong>✅ Was du gelernt hast:</strong>
+                    <ul>
+                        <li><strong>SOLID:</strong> 5 Prinzipien für wartbaren, erweiterungsfähigen Code</li>
+                        <li><strong>Singleton:</strong> Genau eine Instanz global verfügbar</li>
+                        <li><strong>Factory:</strong> Objekterstellung kapseln und flexibel gestalten</li>
+                        <li><strong>Repository:</strong> Datenzugriff hinter einem Interface abstrahieren</li>
+                        <li><strong>Naming:</strong> PascalCase für Klassen/Methoden, camelCase für Variablen, <code>_</code> für private Felder, <code>I</code> für Interfaces</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box">
+                <div>
+                    <strong>➡️ Nächster Schritt:</strong>
+                    <p>Schau dir nun <strong>"Testing & Debugging"</strong> an – wie du deine Patterns und deinen Code absicherst!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
